@@ -4,7 +4,7 @@ A top-down co-op zombie escape game by Tront (Trent Sterling). Five chapters, fo
 
 Play: https://tront.xyz/deadends/
 
-Left 4 Dead pacing in a Flash-game body. Safe room to safe room. Reach the red door, get everyone inside, seal it. Online co-op is experimental; the AI fills empty slots.
+Left 4 Dead pacing in a Flash-game body. Safe room to safe room. Reach the red door, get everyone inside, seal it. PLAY ONLINE drops you into the public room with whoever is there (or opens it if empty); private rooms use a code or invite link. The AI fills empty slots. Online co-op is experimental.
 
 ## Files
 
@@ -32,6 +32,7 @@ node tools/verify.mjs https://tront.xyz/deadends/  # same against the live site
 node tools/campaign.mjs                            # autopilot plays all five chapters, one row each
 node tools/campaign.mjs versions/dead_ends_v14.html --port=9341   # compare against a frozen build
 node tools/coop.mjs                                # two Chromes over real PeerJS: invite link, doors, seal, finish
+node tools/lobby.mjs                               # public room: host alone, second tab, second browser, host loss recovery
 node tools/og-shot.mjs                             # regenerates og-image.png from the live menu
 ```
 

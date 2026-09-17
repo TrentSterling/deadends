@@ -34,17 +34,18 @@ try {
     await sleep(1500);
   }
   const shots = [];
-  for (let i = 0; i < 8; i++) {
-    await sleep(900);
+  for (let i = 0; i < Number(process.env.SHOTS || 8); i++) {
+    await sleep(Number(process.env.GAP || 900));
     if (i % 3 === 2) await page.eval(`(()=>{const ps=DEAD_ENDS.state.players.filter(p=>!p.dead);const c=ps[Math.floor(Math.random()*ps.length)]||{x:0,y:0};for(let k=0;k<18;k++){const a=Math.random()*Math.PI*2,d=150+Math.random()*200;const x=c.x+Math.cos(a)*d,y=c.y+Math.sin(a)*d;if(DEAD_ENDS.free&&!DEAD_ENDS.free(x,y,14))continue;DEAD_ENDS.spawn(x,y,'common',true);}})()`);
     const f = `${out}/og-candidate-${i}.png`;
     await page.shot(f, CLIP);
     // Score: live infected within 420 px of the squad centre, plus a bonus for active fire near it.
-    const sc = await page.eval('(()=>{const ps=DEAD_ENDS.state.players.filter(p=>!p.dead);const cx=ps.reduce((a,p)=>a+p.x,0)/ps.length,cy=ps.reduce((a,p)=>a+p.y,0)/ps.length;const near=DEAD_ENDS.state.zombies.filter(z=>z.hp>0&&Math.hypot(z.x-cx,z.y-cy)<420).length;const fire=(DEAD_ENDS.getExtra().firePools||[]).filter(f=>f.life>1&&Math.hypot(f.x-cx,f.y-cy)<500).length;return {near,fire,score:near+(fire?25:0)}})()');
+    const sc = await page.eval('(()=>{const ps=DEAD_ENDS.state.players.filter(p=>!p.dead);const cx=ps.reduce((a,p)=>a+p.x,0)/ps.length,cy=ps.reduce((a,p)=>a+p.y,0)/ps.length;const near=DEAD_ENDS.state.zombies.filter(z=>z.hp>0&&Math.hypot(z.x-cx,z.y-cy)<420).length;const fire=(DEAD_ENDS.getExtra().firePools||[]).filter(f=>f.life>1&&Math.hypot(f.x-cx,f.y-cy)<500).length;const firing=ps.filter(p=>p.firing||p.recoil>0||p.cool>0).length;return {near,fire,firing,score:near+(fire?25:0)+firing*12}})()');
     shots.push({f, ...sc});
     console.log('candidate', i, JSON.stringify(sc));
   }
   const best = shots.slice().sort((a, b) => b.score - a.score)[0];
-  copyFileSync(best.f, resolve('og-image.png'));
-  console.log('wrote og-image.png from', best.f);
+  const dest = process.env.OUT || 'og-image.png';
+  copyFileSync(best.f, resolve(dest));
+  console.log('wrote', dest, 'from', best.f, JSON.stringify(best));
 } finally { page.kill(); }

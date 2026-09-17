@@ -17,16 +17,17 @@ Single-file top-down co-op zombie escape game. Live at https://tront.xyz/deadend
 - Bots are GOAP planners. Do not simplify them into follow-and-shoot.
 - Select then use with the mouse. No per-item bespoke keys.
 - No em dashes in player-facing strings or docs. Discord links are `tront.xyz/discord/`.
+- The public room is code `LOBBY` on a fixed PeerJS id; the v16 state machine reads `netStatus` strings from the host/join flows ("Room not found", "unavailable-id", "Online room ready"). Keep those strings if you touch hostRoom/joinRoom.
 - Online co-op is "experimental" until a real separate-network friend session succeeds. Never call BroadcastChannel or headless runs a multiplayer test.
 
 ## Workflow
 
 1. Edit `index.html` in place. Bump the `buildCredit111` string and `DEAD_ENDS.build`, add a `CHANGELOG.md` entry. New versions are appended as a block at the end of the script (the file is base game plus V4..V15 layers that wrap functions by reassignment); in-place edits are fine when a single line owns the behaviour.
-2. Before any push: `node tools/verify.mjs` (smoke, 17 checks), `node tools/campaign.mjs` (autopilot must win 5/5), `node tools/coop.mjs` (two Chromes over PeerJS, all checks). Run the campaign against the previous frozen build too when a change touches routes, AI or the director.
+2. Before any push: `node tools/verify.mjs` (smoke, 17 checks), `node tools/campaign.mjs` (autopilot must win 5/5), `node tools/coop.mjs` (two Chromes over PeerJS, all checks), `node tools/lobby.mjs` (public room, 7 checks). Run the campaign against the previous frozen build too when a change touches routes, AI or the director.
 3. Freeze a copy in `versions/` when a build is worth diffing against later.
 4. Commit and push. Pages deploys from `main` in about a minute. Re-run `verify.mjs` against the live URL.
 5. New v14 or later prop or run state that clients must see goes into the snapshot (`makeBaseSnapshot` prop rows, or a wrapper on `makeSnapshot` like v15's `seal`) and gets applied in the client state handler. The delta encoder compares rows by length and value, so appending a column is safe.
 
 ## Public hooks
 
-`window.DEAD_ENDS`: `state` (phase, players, zombies, props, pickups, camera, net fields), `start()`, `setInvincible(v)`, `teleport(x,y,slot)`, `simulate(seconds)`, `aimAt(x,y)`, `shoot`, plus performance helpers `getPerformance()`, `exportPerformance()`, `resetPerformance()`, `warmSprites()`. Dev tools on `F2`, profiler on `F4`. v15 adds `joinFromHash()`, `assignCallsign()`, `getV15()`; v14 adds `getV14()` (doors, seal, weapons) and `debugV14`. `sample()`, `startMap(n,seed)`, `setAuto(v)`, `selectMap`, `MAPS`, `press(key,v)`, `goMenu` drive the harnesses.
+`window.DEAD_ENDS`: `state` (phase, players, zombies, props, pickups, camera, net fields), `start()`, `setInvincible(v)`, `teleport(x,y,slot)`, `simulate(seconds)`, `aimAt(x,y)`, `shoot`, plus performance helpers `getPerformance()`, `exportPerformance()`, `resetPerformance()`, `warmSprites()`. Dev tools on `F2`, profiler on `F4`. v16 adds `quickPlay()`, `getLobby16()`; v15 adds `joinFromHash()`, `assignCallsign()`, `getV15()`, `getNet15()`; v14 adds `getV14()` (doors, seal, weapons) and `debugV14`. `sample()`, `startMap(n,seed)`, `setAuto(v)`, `selectMap`, `MAPS`, `press(key,v)`, `goMenu` drive the harnesses.

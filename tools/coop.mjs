@@ -72,9 +72,9 @@ try {
   let doorSeen = null;
   if (doorId !== null) {
     await A.eval(`DEAD_ENDS.debugV14.door(${doorId})`);
-    await sleep(1500);
-    doorSeen = await B.eval(`(DEAD_ENDS.getV14().doors.find(d=>d.id===${doorId})||{}).open`);
-    check('sync: host-opened door shows open on the client', doorSeen === true, `door ${doorId} client open=${doorSeen}`);
+    const tDoor = Date.now();
+    doorSeen = await until(() => B.eval(`(DEAD_ENDS.getV14().doors.find(d=>d.id===${doorId})||{}).open===true`), {timeout: 6000, every: 100, label: 'door replicate'}).then(() => true).catch(() => false);
+    check('sync: host-opened door shows open on the client', doorSeen, `door ${doorId} seen after ${Date.now() - tDoor} ms`);
   }
   const t1 = Date.now();
   let doorAgree = 0, doorDisagree = 0, doorOpenSeen = 0, sealSeen = 0, snapshotsMoved = 0, lastPos = null, weaponSeen = false;

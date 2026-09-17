@@ -28,27 +28,34 @@ export async function launch({port, width = 1280, height = 800, headless = true}
     else if (m.method) for (const l of listeners) l(m);
   };
   const send = (method, params = {}, sessionId) => new Promise((res, rej) => { const id = ++seq; pending.set(id, {res, rej}); ws.send(JSON.stringify({id, method, params, sessionId})); });
-  const {targetId} = await send('Target.createTarget', {url: 'about:blank'});
-  const {sessionId} = await send('Target.attachToTarget', {targetId, flatten: true});
-  const logs = [];
-  listeners.push(m => {
-    if (m.sessionId !== sessionId) return;
-    if (m.method === 'Runtime.consoleAPICalled') logs.push(m.params.type + ': ' + m.params.args.map(a => a.value ?? a.description ?? '').join(' '));
-    if (m.method === 'Runtime.exceptionThrown') logs.push('EXCEPTION: ' + (m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text));
-  });
-  const call = (method, params) => send(method, params, sessionId);
-  await call('Page.enable'); await call('Runtime.enable'); await call('Log.enable');
-  await call('Emulation.setDeviceMetricsOverride', {width, height, deviceScaleFactor: 1, mobile: false});
-  const page = {
-    logs, proc, dir,
-    goto: url => call('Page.navigate', {url}),
-    eval: async (expr) => { const r = await call('Runtime.evaluate', {expression: expr, returnByValue: true, awaitPromise: true}); if (r.exceptionDetails) throw new Error('eval: ' + (r.exceptionDetails.exception?.description || r.exceptionDetails.text)); return r.result.value; },
-    shot: async (file, clip) => { const {data} = await call('Page.captureScreenshot', clip ? {format: 'png', clip: {scale: 1, ...clip}} : {format: 'png'}); const fs = await import('node:fs'); fs.writeFileSync(file, Buffer.from(data, 'base64')); return file; },
-    mouse: (type, x, y, button = 'left') => call('Input.dispatchMouseEvent', {type, x, y, button, clickCount: 1, buttons: type === 'mouseReleased' ? 0 : 1}),
-    front: () => call('Page.bringToFront'),
-    kill: () => { try { proc.kill(); } catch {} },
-  };
-  return page;
+  // One browser can hold several pages (tabs). Sibling pages share the profile, so BroadcastChannel
+  // and localStorage are shared between them, exactly like a person opening two tabs.
+  async function makePage() {
+    const {targetId} = await send('Target.createTarget', {url: 'about:blank'});
+    const {sessionId} = await send('Target.attachToTarget', {targetId, flatten: true});
+    const logs = [];
+    listeners.push(m => {
+      if (m.sessionId !== sessionId) return;
+      if (m.method === 'Runtime.consoleAPICalled') logs.push(m.params.type + ': ' + m.params.args.map(a => a.value ?? a.description ?? '').join(' '));
+      if (m.method === 'Runtime.exceptionThrown') logs.push('EXCEPTION: ' + (m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text));
+    });
+    const call = (method, params) => send(method, params, sessionId);
+    await call('Page.enable'); await call('Runtime.enable'); await call('Log.enable');
+    await call('Emulation.setDeviceMetricsOverride', {width, height, deviceScaleFactor: 1, mobile: false});
+    const page = {
+      logs, proc, dir, targetId,
+      goto: url => call('Page.navigate', {url}),
+      eval: async (expr) => { const r = await call('Runtime.evaluate', {expression: expr, returnByValue: true, awaitPromise: true}); if (r.exceptionDetails) throw new Error('eval: ' + (r.exceptionDetails.exception?.description || r.exceptionDetails.text)); return r.result.value; },
+      shot: async (file, clip) => { const {data} = await call('Page.captureScreenshot', clip ? {format: 'png', clip: {scale: 1, ...clip}} : {format: 'png'}); const fs = await import('node:fs'); fs.writeFileSync(file, Buffer.from(data, 'base64')); return file; },
+      mouse: (type, x, y, button = 'left') => call('Input.dispatchMouseEvent', {type, x, y, button, clickCount: 1, buttons: type === 'mouseReleased' ? 0 : 1}),
+      front: () => call('Page.bringToFront'),
+      close: () => send('Target.closeTarget', {targetId}),
+      sibling: makePage,
+      kill: () => { try { proc.kill(); } catch {} },
+    };
+    return page;
+  }
+  return makePage();
 }
 export const sleep = ms => new Promise(r => setTimeout(r, ms));
 export async function until(fn, {timeout = 30000, every = 250, label = 'condition'} = {}) {

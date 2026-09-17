@@ -1,5 +1,13 @@
 # Changelog
 
+## v16 (2026-09-17) Public room
+
+- PLAY ONLINE on the main menu. It looks for the always-on public room (code `LOBBY`), joins it if someone is there, otherwise hosts it and starts the run at once so later arrivals drop in mid-chapter. Two tabs with no code and no link land in the same game in about a second (BroadcastChannel); a second browser or machine joins over WebRTC in about three.
+- Private rooms still work exactly as before: HOST WITH A CODE, the code box, and invite links. The co-op panel puts the public room first and the private tools underneath.
+- Public guests never sit on the "host disconnected" screen. If the public host closes the tab, the remaining players go back to the menu on their own and one of them re-hosts the room while the others rejoin (about 13 s in the harness, dominated by WebRTC close detection).
+- Room namespace bumped to v16.
+- Tooling: `tools/lobby.mjs` (tab hosts alone, second tab joins locally, separate browser joins mid-run, host closes, survivors recover), `tools/polish-v16.py` (the exact patch on the frozen v15), `tools/cdp.mjs` gained same-browser sibling tabs.
+
 ## v15 (2026-09-17) Co-op polish
 
 First build made after the game went live at https://tront.xyz/deadends/ and the first real two-player session.
