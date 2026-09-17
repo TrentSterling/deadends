@@ -11,7 +11,8 @@ Left 4 Dead pacing in a Flash-game body. Safe room to safe room. Reach the red d
 | Path | What |
 |---|---|
 | `index.html` | The game. One file, no build step. Canvas 2D, procedural art and audio, GOAP squad AI, AI Director, PeerJS 1.5.5 from CDN for internet co-op. |
-| `versions/` | Frozen prior builds (currently the v14 handoff build) kept for diffing and regression hunting. |
+| `versions/` | Frozen prior builds (v12, v13, v14 from the ChatGPT sessions) kept for diffing and regression hunting. |
+| `CHANGELOG.md` | Per-version notes, v15 onward. |
 | `NOTES.md` | Tribal knowledge handoff from the original ChatGPT sessions: design intent, systems, performance history, regressions, do-not-touch list. Read it before changing anything structural. |
 | `tools/` | Zero-dependency headless verification (Chrome DevTools Protocol from Node). |
 
@@ -26,11 +27,15 @@ Left 4 Dead pacing in a Flash-game body. Safe room to safe room. Reach the red d
 ## Verifying a build
 
 ```
-node tools/verify.mjs                              # boots index.html headlessly, live menu + solo run + reload
+node tools/verify.mjs                              # smoke: live menu, PeerJS, solo run, reload
 node tools/verify.mjs https://tront.xyz/deadends/  # same against the live site
+node tools/campaign.mjs                            # autopilot plays all five chapters, one row each
+node tools/campaign.mjs versions/dead_ends_v14.html --port=9341   # compare against a frozen build
+node tools/coop.mjs                                # two Chromes over real PeerJS: invite link, doors, seal, finish
+node tools/og-shot.mjs                             # regenerates og-image.png from the live menu
 ```
 
-Screenshots and `verify.json` land in `tools/out/` (gitignored). It is a regression gate, not a playtest, and headless timing says nothing about real GPU performance.
+Screenshots and JSON land in `tools/out/` (gitignored). These are regression gates, not playtests. Headless timing says nothing about real GPU performance, and two Chromes on one machine say nothing about internet latency.
 
 ## Credits
 

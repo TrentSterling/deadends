@@ -21,11 +21,12 @@ Single-file top-down co-op zombie escape game. Live at https://tront.xyz/deadend
 
 ## Workflow
 
-1. Edit `index.html` in place. The menu version badge is the `DEAD ENDS · NN` string.
-2. `node tools/verify.mjs` before any push. It boots the real page in headless Chrome, waits for Play Solo, screenshots the live menu, starts a solo run through `window.DEAD_ENDS`, simulates 5 s, reloads. All checks must pass.
+1. Edit `index.html` in place. Bump the `buildCredit111` string and `DEAD_ENDS.build`, add a `CHANGELOG.md` entry. New versions are appended as a block at the end of the script (the file is base game plus V4..V15 layers that wrap functions by reassignment); in-place edits are fine when a single line owns the behaviour.
+2. Before any push: `node tools/verify.mjs` (smoke, 17 checks), `node tools/campaign.mjs` (autopilot must win 5/5), `node tools/coop.mjs` (two Chromes over PeerJS, all checks). Run the campaign against the previous frozen build too when a change touches routes, AI or the director.
 3. Freeze a copy in `versions/` when a build is worth diffing against later.
 4. Commit and push. Pages deploys from `main` in about a minute. Re-run `verify.mjs` against the live URL.
+5. New v14 or later prop or run state that clients must see goes into the snapshot (`makeBaseSnapshot` prop rows, or a wrapper on `makeSnapshot` like v15's `seal`) and gets applied in the client state handler. The delta encoder compares rows by length and value, so appending a column is safe.
 
 ## Public hooks
 
-`window.DEAD_ENDS`: `state` (phase, players, zombies, props, pickups, camera, net fields), `start()`, `setInvincible(v)`, `teleport(x,y,slot)`, `simulate(seconds)`, `aimAt(x,y)`, `shoot`, plus performance helpers `getPerformance()`, `exportPerformance()`, `resetPerformance()`, `warmSprites()`. Dev tools on `F2`, profiler on `F4`.
+`window.DEAD_ENDS`: `state` (phase, players, zombies, props, pickups, camera, net fields), `start()`, `setInvincible(v)`, `teleport(x,y,slot)`, `simulate(seconds)`, `aimAt(x,y)`, `shoot`, plus performance helpers `getPerformance()`, `exportPerformance()`, `resetPerformance()`, `warmSprites()`. Dev tools on `F2`, profiler on `F4`. v15 adds `joinFromHash()`, `assignCallsign()`, `getV15()`; v14 adds `getV14()` (doors, seal, weapons) and `debugV14`. `sample()`, `startMap(n,seed)`, `setAuto(v)`, `selectMap`, `MAPS`, `press(key,v)`, `goMenu` drive the harnesses.
