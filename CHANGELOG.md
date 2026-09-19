@@ -1,5 +1,18 @@
 # Changelog
 
+## v19.5 (2026-09-19) Living streets / one-click co-op
+
+ChatGPT's v19, built on the shipped v18 this time (its base hash matches commit 3e8807d), so the v15 transport and the door and seal replication came along. v19 replaced the v16 public room with its own discovery. `tools/polish-v19.py` rebuilds `index.html` from `versions/dead_ends_v19-chatgpt.html` with the only two things that shipped after ChatGPT took its base: the reshot og-image meta and the 19.5 build label. Release notes, QA receipts and ChatGPT's own harness are in `chatgpt/v19/`.
+
+- Public play: 16 well-known rooms (`LOBBY`, `PUB02` to `PUB16`), four slots each. PLAY ONLINE joins the first room with a free slot or claims one; full squads spill into the next room. Same-origin tabs still meet over BroadcastChannel first. A discovery failure says "Local tabs only" instead of pretending to be global. Room namespace is v19; every machine must run this build (the welcome packet checks `protocol19`).
+- World epochs and client-ready acknowledgments: AI keeps a survivor until the joining browser has a world and keyframe, then hands it over. Stale inputs and previous-world snapshots are rejected. Fragment count, size and lifetime are bounded; malformed packets request recovery.
+- Preparation is live simulation. Weapons, hazards, damage and rescue keep working in the starting safehouse; only the Director's pacing and the chapter clock wait for departure. The starting shutter has a barred firing port: bullets pass the aperture, bodies and thrown items do not.
+- Infected senses: a shot alerts nearby infected only; idle infected wander, turn toward sounds, chase what they can see, investigate remembered positions and lose interest. Director mobs still pursue as directed pressure. F2 has a Senses tab.
+- The destination door really closes. Sealing needs a clear room and threshold; a downed or interrupted closer cancels the seal instead of granting a false win. Bot closers stay at the mechanism.
+- Found heavy rifles and auto shotguns persist across chapters and Continue; ammo pickups respect upgraded clip sizes. Special interrupts need a legal, in-range, unobstructed shove.
+- Stereo sound buses, distinct special tells and gun reports, a two-stage safehouse slam and latch. A hidden-host timer keeps the authoritative simulation running without rendering.
+- Tooling: `tools/lobby.mjs` reads v19's `getNetwork()` and accepts any public room code; `tools/cdp.mjs` launches Chrome with `--mute-audio` (v19's sound buses played through the speakers during headless runs). Gates on this build: verify 17/17, campaign 5/5, coop 18/18, lobby 7/7 (host loss recovered in 3.7 s versus 13 s on v16).
+
 ## v18 (2026-09-19) Readable by design
 
 ChatGPT's visual overhaul (its v15 readability pass, v17 environment art and chapter identity, v18 baked materials) merged onto the live v16 line. ChatGPT forked from v14, so its drops carry none of the co-op fixes; `tools/polish-v18.py` rebuilds `index.html` from the raw drop (`versions/dead_ends_v18-chatgpt.html`) plus every v15 and v16 edit and block. Wire format is unchanged, so the room namespace stays `v16`.

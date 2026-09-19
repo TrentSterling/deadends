@@ -8,7 +8,7 @@
 <meta name="description" content="A top-down co-op zombie bloodbath by Tront. Five chapters, smart squadmates, and one last push to the safehouse.">
 <meta property="og:title" content="DEAD ENDS by Tront">
 <meta property="og:url" content="https://tront.xyz/deadends/">
-<meta property="og:image" content="https://tront.xyz/deadends/og-image.png?v=2">
+<meta property="og:image" content="https://tront.xyz/deadends/og-image.png?v=1">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <link rel="canonical" href="https://tront.xyz/deadends/">
 <meta property="og:description" content="Grab a shotgun. Keep your squad alive. Reach the red door. A free browser game by Trent Sterling (Tront).">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DEAD ENDS by Tront">
 <meta name="twitter:description" content="Top-down co-op zombie escape. Four survivors, huge hordes, one red door. Free in the browser.">
-<meta name="twitter:image" content="https://tront.xyz/deadends/og-image.png?v=2">
+<meta name="twitter:image" content="https://tront.xyz/deadends/og-image.png?v=1">
 <link rel="author" href="https://tront.xyz/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23121919' d='M0 0h64v64H0z'/%3E%3Cpath fill='%23c55340' d='M14 5h36v56H14z'/%3E%3Cpath fill='%23e7d9bb' d='M37 32h6v5h-6zM21 13h22v5H21z'/%3E%3C/svg%3E">
 <style>
@@ -4270,7 +4270,7 @@ function installV19UI(){
  const help=$('coop').querySelector('.connection-help');help.innerHTML='<summary>Connection help</summary><p>Play online joins or opens a public squad. Full squads spill into another public room. Private rooms use a code or invite link. All players must use v19.</p><p>PeerJS provides global discovery; the host browser runs the game. If discovery is unavailable, the status explicitly says Local tabs only. Public host loss finds a new round, not a migrated copy of the old fight.</p><p>For sharing, serve index.html on HTTPS. Public services and restrictive networks can still prevent a connection; no always-on game server is bundled.</p>';
  $('coop').querySelector('.coop-roster .note').textContent='Four survivors. AI holds your slot until your world is synchronized.';
  $('guide').querySelector('.guide-notes').innerHTML='<p><b>Safehouse freedom.</b> Shoot through the barred center of the closed exit, heal, reload, or open it with E. The world keeps moving. Gunfire alerts nearby infected; timed hordes wait until you leave.</p><p><b>The last door.</b> Get everyone inside, clear any infected, then seal the red door from nearby. An open room is not invulnerable. Found weapons carry to the next chapter.</p><details><summary>More controls</summary><p>Space / RMB: shove · V: drag · X: squad order · Tab: map · Ctrl + wheel: zoom · F2: developer tools · F4: profiler · F8: record · F9: export</p></details>';
- buildCredit111.textContent='Build 19.5 · Living streets / one-click co-op';$('menu').dataset.build='19.5';
+ buildCredit111.textContent='Build 19 · Living streets / one-click co-op';$('menu').dataset.build='19';
 }
 const updateDevBefore19=updateDev11;updateDev11=function(force=false){const r=updateDevBefore19(force);
  if(!dev11.enabled||performance.now()-sim19.lastSenseUI<220&&!force)return r;sim19.lastSenseUI=performance.now();
@@ -4324,7 +4324,7 @@ function getNetwork19(){return {...netReport13(),protocol:19,transport:netTransp
  expectedEpoch:net19.stream,epoch:net13.epoch,malformedPackets:net19.malformed,stalePackets:net19.stale,
  chunksReassembled:v15.reassembled,chunkedMessages:v15.chunked,readyPeers:[...slotOwners].map(([slot,o])=>({slot,ready:!!o.ready19,transport:o.transport})),
  hostMigration:false,publicHostLoss:'Find another public round; no in-flight world migration',log:net19.log.slice()};}
-Object.assign(DEAD_ENDS,{build:'19.5',makeSnapshot,getPerformance:report8,getNetwork:getNetwork19,
+Object.assign(DEAD_ENDS,{build:'19',makeSnapshot,getPerformance:report8,getNetwork:getNetwork19,
  getPerception:()=>sensesSummary19(),getInfectedMind:id=>{const z=zombies.find(z=>z.id===id);return z?.ai19?JSON.parse(JSON.stringify(z.ai19)):null;},
  getV19:()=>({basis:'uploaded edited v18.5',network:getNetwork19(),senses:sensesSummary19(),seal:{...v14.safe},finalDoor:sim19.finalDoor?{...sim19.finalDoor}:null,staging:staging10()}),
  spawn:(...a)=>spawnZombie(...a),shove:()=>shove(players[localSlot]),canSee:sightClear19,

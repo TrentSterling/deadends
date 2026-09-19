@@ -1,0 +1,107 @@
+{
+  "method": "Peer-compatible simulated channel via test broker; distinct browser contexts; real JSON stringify/parse and <=16KiB messages enforced. NOT native RTC, PeerJS cloud, or separate-network NAT test.",
+  "checks": [
+    {
+      "name": "two clicks find same public room via JSON test broker; base64 keyframe arrives",
+      "pass": true,
+      "detail": {
+        "host": {
+          "mode": "host",
+          "players": [
+            {
+              "slot": 1,
+              "ready": true,
+              "transport": "peer"
+            }
+          ],
+          "z": 194,
+          "chunked": 13,
+          "counts": {
+            "sent": 33,
+            "received": 1,
+            "maxMessage": 8569,
+            "connections": 1,
+            "errors": []
+          }
+        },
+        "client": {
+          "mode": "client",
+          "transport": "peer",
+          "z": 194,
+          "chunks": 10,
+          "counts": {
+            "sent": 2,
+            "received": 26,
+            "maxMessage": 457,
+            "connections": 1,
+            "errors": []
+          }
+        }
+      }
+    },
+    {
+      "name": "native remote keyboard input moves authoritative survivor",
+      "pass": true,
+      "detail": {
+        "authoritativeDistance": 133.2499999999941
+      }
+    },
+    {
+      "name": "starting shutter and Claude tactical-door states over JSON test transport",
+      "pass": true,
+      "detail": {
+        "tacticalDoor": 10,
+        "startDoor": "open -> close replicated"
+      }
+    },
+    {
+      "name": "spawn after keyframe + delta death without missing-base crash",
+      "pass": true,
+      "detail": {
+        "addedThenRemoved": 291,
+        "errors": []
+      }
+    },
+    {
+      "name": "late join reconstructs over 100 persistent deaths from chunked keyframe",
+      "pass": true,
+      "detail": {
+        "transport": "peer",
+        "history": 195,
+        "reassembled": 1,
+        "errors": []
+      }
+    },
+    {
+      "name": "safehouse seal -> real Next button -> new ready handshake + upgrades + stale rejection",
+      "pass": true,
+      "detail": {
+        "map": 1,
+        "u": {
+          "rifle": true,
+          "auto": true
+        },
+        "clip": 14,
+        "epoch": 2
+      }
+    },
+    {
+      "name": "application-byte counters + chunk size bound on JSON test transport",
+      "pass": true,
+      "detail": {
+        "appBytes": 1862746,
+        "maxMessage": 9373,
+        "errors": []
+      }
+    },
+    {
+      "name": "JSON client leaves; bot takes over same survivor",
+      "pass": true,
+      "detail": {
+        "takeover": true
+      }
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

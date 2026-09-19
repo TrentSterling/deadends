@@ -1,0 +1,55 @@
+{
+  "checks": [
+    {
+      "name": "simultaneous one-button public election yields one host, one client",
+      "pass": true,
+      "detail": [
+        {
+          "mode": "host",
+          "room": "LOBBY",
+          "n": 2
+        },
+        {
+          "mode": "client",
+          "room": "LOBBY",
+          "n": 2
+        }
+      ]
+    },
+    {
+      "name": "hidden-host worker branch continues simulation and client input",
+      "pass": true,
+      "detail": {
+        "remoteMovementWhileHostHidden": 112.749999999995
+      }
+    },
+    {
+      "name": "public host loss finds a new round, not a fake preserved-world migration",
+      "pass": true,
+      "detail": {
+        "newRound": 100,
+        "mode": "host"
+      }
+    },
+    {
+      "name": "private room retains code join and explicit Start",
+      "pass": true,
+      "detail": {
+        "privateCode": "7NK4C",
+        "ready": true
+      }
+    },
+    {
+      "name": "cancel search stops outstanding async join/host work",
+      "pass": true,
+      "detail": {
+        "phase": "menu",
+        "mode": "solo",
+        "seeking": false
+      }
+    }
+  ],
+  "errors": [],
+  "method": "Native BroadcastChannel; network-library outage injected. Document.hidden override for host-background branch, not OS-throttling certification.",
+  "pass": true
+}

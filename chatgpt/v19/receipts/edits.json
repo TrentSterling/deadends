@@ -1,0 +1,185 @@
+{
+  "baseline_sha256": "596a7369885a53d2d24a644cfb6e015e9964da3c9c4e3a2fe4930d88e4b53cc8",
+  "edits": [
+    {
+      "label": "v19 state declared before callbacks",
+      "occurrences": 1
+    },
+    {
+      "label": "keep campaign clock separate from staging",
+      "occurrences": 1
+    },
+    {
+      "label": "simulate full world in preparation",
+      "removed_chars": 385
+    },
+    {
+      "label": "client can fire during preparation",
+      "occurrences": 1
+    },
+    {
+      "label": "allow equipment during preparation",
+      "occurrences": 1
+    },
+    {
+      "label": "walls protect, not staging immunity",
+      "occurrences": 1
+    },
+    {
+      "label": "scheduled director waits for departure",
+      "occurrences": 1
+    },
+    {
+      "label": "alarm hordes use the reachable exterior while the starting door is closed",
+      "occurrences": 1
+    },
+    {
+      "label": "initialize awareness after population",
+      "occurrences": 1
+    },
+    {
+      "label": "replace omniscient gunshot wake-up with hearing",
+      "occurrences": 1
+    },
+    {
+      "label": "bullets and firing port geometry",
+      "occurrences": 1
+    },
+    {
+      "label": "predict upgraded weapons with correct cadence",
+      "occurrences": 1
+    },
+    {
+      "label": "predict port shot geometry",
+      "occurrences": 1
+    },
+    {
+      "label": "use acquired targets and last-known positions",
+      "occurrences": 1
+    },
+    {
+      "label": "remove through-wall proximity waking",
+      "occurrences": 1
+    },
+    {
+      "label": "reuse goal flowfields for investigators",
+      "occurrences": 1
+    },
+    {
+      "label": "only attack a door actually blocking a known goal",
+      "occurrences": 1
+    },
+    {
+      "label": "no melee against remembered points or through walls",
+      "occurrences": 1
+    },
+    {
+      "label": "brute does not hit through doors",
+      "occurrences": 1
+    },
+    {
+      "label": "leaper cannot pin through doors",
+      "occurrences": 1
+    },
+    {
+      "label": "spitter retreat requires perceived survivor",
+      "occurrences": 1
+    },
+    {
+      "label": "a screamer can call when it sees a survivor through the bars",
+      "occurrences": 1
+    },
+    {
+      "label": "bot visibility uses explicit sight rays",
+      "occurrences": 1
+    },
+    {
+      "label": "bots do not start every distant ambient fight",
+      "occurrences": 1
+    },
+    {
+      "label": "bots can support through firing ports",
+      "occurrences": 1
+    },
+    {
+      "label": "staging bots heal, cover, do not leave",
+      "occurrences": 1
+    },
+    {
+      "label": "downed body blocks closing starting door",
+      "occurrences": 1
+    },
+    {
+      "label": "replace shove narrowphase",
+      "removed_chars": 469
+    },
+    {
+      "label": "remove cooldown-bypass wrapper",
+      "removed_chars": 691
+    },
+    {
+      "label": "carry found weapons between chapters",
+      "occurrences": 1
+    },
+    {
+      "label": "do not erase carry after start",
+      "occurrences": 1
+    },
+    {
+      "label": "validate optional upgrade flags in old and new saves",
+      "occurrences": 1
+    },
+    {
+      "label": "checkpoint writer includes weapons",
+      "occurrences": 2
+    },
+    {
+      "label": "identify save build",
+      "occurrences": 1
+    },
+    {
+      "label": "ammo rack respects heavy-rifle magazine",
+      "occurrences": 1
+    },
+    {
+      "label": "separate new simulation namespace",
+      "occurrences": 1
+    },
+    {
+      "label": "separate PeerJS namespace",
+      "occurrences": 2
+    },
+    {
+      "label": "barred aperture ray handling",
+      "occurrences": 1
+    },
+    {
+      "label": "destination doorway single renderer",
+      "removed_chars": 582
+    },
+    {
+      "label": "remove second decorative final door",
+      "removed_chars": 442
+    },
+    {
+      "label": "replace public room state machine, retain Claude wire fixes",
+      "removed_chars": 4080
+    },
+    {
+      "label": "shared positional audio bus",
+      "occurrences": 5
+    },
+    {
+      "label": "cache idle poses separately",
+      "occurrences": 2
+    },
+    {
+      "label": "lower idle arms",
+      "occurrences": 2
+    },
+    {
+      "label": "install v19 before startup",
+      "occurrences": 1
+    }
+  ]
+}

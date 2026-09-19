@@ -8,7 +8,7 @@
 <meta name="description" content="A top-down co-op zombie bloodbath by Tront. Five chapters, smart squadmates, and one last push to the safehouse.">
 <meta property="og:title" content="DEAD ENDS by Tront">
 <meta property="og:url" content="https://tront.xyz/deadends/">
-<meta property="og:image" content="https://tront.xyz/deadends/og-image.png?v=2">
+<meta property="og:image" content="https://tront.xyz/deadends/og-image.png?v=1">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <link rel="canonical" href="https://tront.xyz/deadends/">
 <meta property="og:description" content="Grab a shotgun. Keep your squad alive. Reach the red door. A free browser game by Trent Sterling (Tront).">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DEAD ENDS by Tront">
 <meta name="twitter:description" content="Top-down co-op zombie escape. Four survivors, huge hordes, one red door. Free in the browser.">
-<meta name="twitter:image" content="https://tront.xyz/deadends/og-image.png?v=2">
+<meta name="twitter:image" content="https://tront.xyz/deadends/og-image.png?v=1">
 <link rel="author" href="https://tront.xyz/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23121919' d='M0 0h64v64H0z'/%3E%3Cpath fill='%23c55340' d='M14 5h36v56H14z'/%3E%3Cpath fill='%23e7d9bb' d='M37 32h6v5h-6zM21 13h22v5H21z'/%3E%3C/svg%3E">
 <style>
@@ -255,20 +255,6 @@ body[data-build9] #perfPanel{max-width:calc(100vw - 32px)}
    co-op uses an input/snapshot transport; AI occupies unclaimed survivor slots.
    All art, map, sound synthesis, and game code are contained in this file. */
 (() => {
-/* V19 is a surgical continuation of Tront/Claude's uploaded 18.5.
-   Simulation, discovery and rendering stay separate. No art cache gates Play. */
-const sim19={time:0,noises:[],noiseId:0,fields:new Map(),fieldBudget:2,doorRevision:0,
-  finalDoor:null,lastShot:-99,prepShots:0,sightTests:0,heard:0,seen:0,fieldBuilds:0,
-  ambientSteps:0,stagingSteps:0,doorHits:0,blockedMelee:0,interrupts:0,sealsCancelled:0,
-  rayKind:'',sensesVisible:false,lastSenseUI:0,events:[],cueUntil:0};
-const net19={protocol:19,public:false,publicIndex:0,operation:0,internal:0,discovery:null,
-  offers:new Map(),candidates:new Map(),seeking:false,registering:false,cloud:'idle',
-  ready:false,awaiting:null,lastReady:0,hostSeen:0,readyPeers:0,deadline:0,heartbeat:0,
-  retries:0,rejoins:0,malformed:0,stale:0,chunkBytes:0,wireBytes:0,log:[],cancel:null,
-  stream:null,run:null,instance:Math.random().toString(36).slice(2),manual:false,
-  reconnectTimer:null,publicTimer:null,lastLobbyUI:0,localOnly:false};
-let soundBus19=null;const sound19={buses:null,cues:new Map(),ambientUntil:0};
-
 // V13 preferences and input routing are declared before legacy listeners.
 const options13={scale:1,hud:'standard',flash:false,quickWheel:false,scroll:'all',bindings:{}};
 const input13={synthetic:new WeakSet(),held:new Map(),binding:null,qDown:false,qAt:0,qTimer:0,wheel:false,choice:-1};
@@ -358,9 +344,9 @@ function paintWorld(){
 }
 // ---- Procedural audio: no recordings, downloads, or autoplay requirement. ----
 const audio={ctx:null,master:null,noise:null,muted:false,lastGrowl:0};
-function startAudio(){try{if(!audio.ctx){const A=window.AudioContext||window.webkitAudioContext;if(!A)return;const a=audio.ctx=new A;audio.master=a.createGain();audio.master.gain.value=audio.muted?0:Number($('volume').value)/100;const compressor=a.createDynamicsCompressor();compressor.threshold.value=-12;compressor.ratio.value=5;compressor.attack.value=.003;compressor.release.value=.16;audio.master.connect(compressor);compressor.connect(a.destination);audio.noise=a.createBuffer(1,a.sampleRate*.65,a.sampleRate);const data=audio.noise.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1;const wind=a.createBufferSource();wind.buffer=audio.noise;wind.loop=true;const f=a.createBiquadFilter();f.type='lowpass';f.frequency.value=380;const g=a.createGain();g.gain.value=.045;wind.connect(f);f.connect(g);g.connect(soundBus19||audio.master);wind.start()}audio.ctx.resume().catch(()=>{})}catch(e){console.warn('Audio unavailable',e)}}
-function noiseSound(duration,volume,frequency=1700,type='lowpass',rate=1,delay=0){if(!audio.ctx||audio.muted)return;const a=audio.ctx,t=a.currentTime+delay,s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=audio.noise;s.playbackRate.value=rate;f.type=type;f.frequency.value=frequency;g.gain.setValueAtTime(Math.max(.0001,volume),t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);s.connect(f);f.connect(g);g.connect(soundBus19||audio.master);s.start(t);s.stop(t+duration+.01)}
-function tone(freq,end,duration,volume=.1,type='sine',delay=0){if(!audio.ctx||audio.muted)return;const a=audio.ctx,t=a.currentTime+delay,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(1,end),t+duration);g.gain.setValueAtTime(Math.max(.0001,volume),t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(soundBus19||audio.master);o.start(t);o.stop(t+duration+.015)}
+function startAudio(){try{if(!audio.ctx){const A=window.AudioContext||window.webkitAudioContext;if(!A)return;const a=audio.ctx=new A;audio.master=a.createGain();audio.master.gain.value=audio.muted?0:Number($('volume').value)/100;const compressor=a.createDynamicsCompressor();compressor.threshold.value=-12;compressor.ratio.value=5;compressor.attack.value=.003;compressor.release.value=.16;audio.master.connect(compressor);compressor.connect(a.destination);audio.noise=a.createBuffer(1,a.sampleRate*.65,a.sampleRate);const data=audio.noise.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1;const wind=a.createBufferSource();wind.buffer=audio.noise;wind.loop=true;const f=a.createBiquadFilter();f.type='lowpass';f.frequency.value=380;const g=a.createGain();g.gain.value=.045;wind.connect(f);f.connect(g);g.connect(audio.master);wind.start()}audio.ctx.resume().catch(()=>{})}catch(e){console.warn('Audio unavailable',e)}}
+function noiseSound(duration,volume,frequency=1700,type='lowpass',rate=1,delay=0){if(!audio.ctx||audio.muted)return;const a=audio.ctx,t=a.currentTime+delay,s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=audio.noise;s.playbackRate.value=rate;f.type=type;f.frequency.value=frequency;g.gain.setValueAtTime(Math.max(.0001,volume),t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);s.connect(f);f.connect(g);g.connect(audio.master);s.start(t);s.stop(t+duration+.01)}
+function tone(freq,end,duration,volume=.1,type='sine',delay=0){if(!audio.ctx||audio.muted)return;const a=audio.ctx,t=a.currentTime+delay,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(1,end),t+duration);g.gain.setValueAtTime(Math.max(.0001,volume),t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(audio.master);o.start(t);o.stop(t+duration+.015)}
 function sfx(type,x,y,variant=0){let vol=1;if(x!==undefined&&players[localSlot])vol=clamp(1-dist({x,y},players[localSlot])/1100,0,1);if(vol<.03)return;switch(type){case'gun':if(variant===1){noiseSound(.24,.75*vol,1900);tone(105,27,.21,.75*vol);noiseSound(.13,.1*vol,4800,'highpass',1,.055)}else if(variant===0){noiseSound(.105,.40*vol,2300);tone(145,42,.09,.45*vol)}else{noiseSound(.105,.29*vol,3300);tone(190,52,.1,.28*vol)}tone(3800,2300,.08,.012*vol,'sine',.13);break;case'explode':noiseSound(.7,.9*vol,1000);tone(75,18,.5,1*vol);break;case'hit':noiseSound(.1,.13*vol,550);break;case'hurt':noiseSound(.22,.29*vol,290);tone(76,34,.16,.23*vol);break;case'shove':noiseSound(.16,.2*vol,900);break;case'click':tone(600,160,.026,.13*vol,'square');noiseSound(.04,.1*vol,5000,'highpass');break;case'reload':noiseSound(.07,.12*vol,4000,'bandpass');tone(900,420,.03,.05*vol,'square');break;case'pickup':tone(420,840,.1,.12*vol,'triangle');tone(840,1100,.13,.08*vol,'triangle',.08);break;case'beep':tone(980,980,.07,.07*vol,'square');break;case'gate':noiseSound(.8,.33*vol,500);tone(190,35,.7,.13*vol,'sawtooth');break;case'alert':tone(140,190,.55,.18*vol,'sawtooth');tone(190,95,.7,.14*vol,'sawtooth',.45);break;case'win':for(let i=0;i<4;i++)tone([130.8,164.8,196,261.6][i],[130.8,164.8,196,261.6][i],1.4,.085,'triangle',i*.11);break;case'foot':noiseSound(.07,.055*vol,450);break;case'death':noiseSound(.2,.13*vol,480,'lowpass',.6);break}}
 function setMute(){audio.muted=!audio.muted;if(audio.master)audio.master.gain.setTargetAtTime(audio.muted?0:Number($('volume').value)/100,audio.ctx.currentTime,.08);updateSoundButton();savePreferences();}
 
@@ -401,33 +387,14 @@ function switchWeapon(p,w){if(p.down||p.weapon===w||w<0||w>2)return;p.weapon=w;p
 function fire(p){if(p.dead||p.heal>0||p.cool>0)return;const wi=p.down?2:p.weapon,w=WEAPONS[wi];if(p.reload>0){if(wi===1&&p.ammo[wi]>0)p.reload=0;else return}if(p.ammo[wi]<=0){if(p.reserves[wi]>0)beginReload(p);else if(elapsed-p.lastAmmoNotice>2){if(p.id===localSlot)toast('EMPTY. SWITCH WEAPONS [1 / 2 / 3].');p.lastAmmoNotice=elapsed}sfx('click',p.x,p.y);p.cool=.25;return}p.ammo[wi]--;p.cool=w.rate*(p.bot?1.2:1);p.firing=.08;p.recoil=Math.min(.15,p.recoil+.025);p.heal=0;stats.shots++;const dx=Math.cos(p.a),dy=Math.sin(p.a),sx=p.x+dx*23,sy=p.y+dy*23;
  if(p.id===localSlot){camera.shake=Math.max(camera.shake,wi===1?6:2.5);camera.kx-=dx*(wi===1?7:2.5);camera.ky-=dy*(wi===1?7:2.5)}sfx('gun',p.x,p.y,wi);
  particle(p.x+dx*8-dy*9,p.y+dy*8+dx*9,-dy*rnd(60,100),dx*rnd(60,100),rnd(.6,1),2.5,'#d4b96c','shell');
- for(let n=0;n<w.pellets;n++){const a=p.a+(wi===1?(n-(w.pellets-1)*.5)*(w.spread/4)+rnd(-.018,.018):rnd(-w.spread,w.spread)+(p.moving?rnd(-.028,.028):0)),vx=Math.cos(a),vy=Math.sin(a);const wall=bulletRay19(p,sx,sy,vx,vy,w.range);let max=wall.d,hits=[];
+ for(let n=0;n<w.pellets;n++){const a=p.a+(wi===1?(n-(w.pellets-1)*.5)*(w.spread/4)+rnd(-.018,.018):rnd(-w.spread,w.spread)+(p.moving?rnd(-.028,.028):0)),vx=Math.cos(a),vy=Math.sin(a);const wall=rayWorld(sx,sy,vx,vy,w.range);let max=wall.d,hits=[];
  for(const z of queryEnemies11(Math.min(sx,sx+vx*max)-80,Math.min(sy,sy+vy*max)-80,Math.max(sx,sx+vx*max)+80,Math.max(sy,sy+vy*max)+80)){if(z.hp<=0)continue;let zx=z.x-sx,zy=z.y-sy,t=zx*vx+zy*vy;if(t<0||t>max+z.r)continue;const side=Math.abs(zx*vy-zy*vx);if(side<z.r+2){let d=t-Math.sqrt(Math.max(0,(z.r+2)**2-side**2));if(d<max)hits.push({z,d})}}
  hits.sort((a,b)=>a.d-b.d);let used=0;for(const h of hits){if(used>=w.penetrate)break;const damage=w.damage*(wi===1?lerp(1,.5,clamp(h.d/w.range,0,1)):1)*(used?.6:1)*(p.bot?.83:1);hurtZombie(h.z,damage,vx,vy,w.knock,p.id);used++;if(used>=w.penetrate)max=Math.min(max,h.d+h.z.r*.4)}
  if(wall.obj&&max>=wall.d-2)damageProp(wall.obj,w.damage,sx+vx*max,sy+vy*max);else if(max>=wall.d-2&&wall.d<w.range)spark(sx+vx*max,sy+vy*max,0,0,2);
  const tr={x:sx,y:sy,ex:sx+vx*max,ey:sy+vy*max,life:wi===1?.095:.075,max:wi===1?.095:.075,w:wi===1?1.7:2.2,color:wi===1?'#ffe0a0':'#f4f2be'};tracers.push(tr);if(netMode==='host')netEvents.push({type:'tracer',...tr,who:p.id,gun:wi})}
- emitNoise19('gunshot',p.x+Math.cos(p.a)*30,p.y+Math.sin(p.a)*30,wi===2?490:wi===1?790:650,p.id);
+ for(const z of zombies)if(!z.awake&&dist(z,p)<780)z.awake=true;
 }
-function shove(p){
- if(!p||p.dead||p.down||p.pinnedBy>=0||p.shove>0)return false;
- p.shove=.65;p.shoveFX=.2;p.heal=0;let hits=0;
- for(const z of queryEnemies11(p.x-146,p.y-146,p.x+146,p.y+146)){
-  if(z.hp<=0||dist(z,p)>100+z.r)continue;
-  const a=angle(p,z);if(Math.cos(wrap(a-p.a))<.05)continue;
-  if(!lineClear(p,z)){sim19.blockedMelee++;continue;}
-  const interrupt=(z.type==='brute'&&z.wind>0)||(z.type==='screamer'&&z.screaming>0);
-  hurtZombie(z,12,Math.cos(a),Math.sin(a),z.type==='brute'?120:450,p.id);
-  z.stun=Math.max(z.stun,z.type==='brute'?.08:.65);hits++;
-  if(interrupt&&z.hp>0){z.wind=0;z.charge=0;z.screaming=0;z.stun=Math.max(z.stun,1.05);
-   z.special=Math.max(z.special,z.type==='brute'?3.5:5);v14.specialInterrupts++;sim19.interrupts++;
-   cue19('interrupt',z.x,z.y);event13('special-interrupt',{type:z.type,slot:p.id});
-   if(p.id===localSlot)toast(z.type==='brute'?'Charge interrupted':'Scream interrupted',1.2);
-  }
- }
- if(hits&&p.id===localSlot)camera.shake=Math.max(camera.shake,3);
- sfx('shove',p.x,p.y);if(netMode==='host')netEvents.push({type:'shove',who:p.id});return true;
-}
-
+function shove(p){if(p.dead||p.down||p.shove>0)return;p.shove=.65;p.shoveFX=.2;p.heal=0;let hits=0;for(const z of zombies){if(z.hp<=0||dist(z,p)>100+z.r)continue;const a=angle(p,z);if(Math.cos(wrap(a-p.a))<.05)continue;hurtZombie(z,12,Math.cos(a),Math.sin(a),z.type==='brute'?120:450,p.id);z.stun=Math.max(z.stun,z.type==='brute'?.08:.65);hits++}if(hits&&p.id===localSlot)camera.shake=4;sfx('shove',p.x,p.y);if(netMode==='host')netEvents.push({type:'shove',who:p.id})}
 function throwBomb(p,tx,ty){if(p.bombs<=0||p.dead||p.down)return;p.bombs--;const d=clamp(Math.hypot(tx-p.x,ty-p.y),100,490),a=Math.atan2(ty-p.y,tx-p.x),hit=rayWorld(p.x,p.y,Math.cos(a),Math.sin(a),d);let reach=Math.max(25,Math.min(d,hit.d-20));grenades.push({id:nextID++,x:p.x,y:p.y,sx:p.x,sy:p.y,tx:p.x+Math.cos(a)*reach,ty:p.y+Math.sin(a)*reach,flight:.45,flightMax:.45,timer:3.15,beep:.05,who:p.id});sfx('shove',p.x,p.y);if(p.id===localSlot)say(p.name,'Pipe bomb out. That’s our opening!',3)}
 function explosion(x,y,r,damage,who){sfx('explode',x,y);if(players[localSlot]&&dist({x,y},players[localSlot])<1100)camera.shake=Math.max(camera.shake,16*(1-dist({x,y},players[localSlot])/1400));for(let i=0;i<100;i++){let a=rnd(0,TAU),d=rnd(20,300);particle(x,y,Math.cos(a)*d,Math.sin(a)*d,rnd(.25,.9),rnd(3,12),pick(['#ffdb84','#ed8c4a','#c55c34','#66594b']),'fire')}particles.push({x,y,vx:0,vy:0,life:.38,max:.38,size:r,color:'#f9bf71',kind:'ring'});splats.push({x,y,r:r*.63,a:0,c:'#162227'});for(const z of queryEnemies11(x-r,y-r,x+r,y+r)){const d=dist(z,{x,y});if(d<r){const a=Math.atan2(z.y-y,z.x-x);hurtZombie(z,damage*(1-d/r*.7),Math.cos(a),Math.sin(a),500,who)}}for(const p of players){const d=dist(p,{x,y});if(d<r*.65&&!p.dead&&who!==p.id&&!players[who]?.bot){hurtPlayer(p,20*(1-d/r),x,y)}}for(const p of props)if(!p.destroyed&&p.hp&&Math.hypot(p.x+p.w/2-x,p.y+p.h/2-y)<r)damageProp(p,damage,p.x+p.w/2,p.y+p.h/2);if(netMode==='host')netEvents.push({type:'boom',x,y,r})}
 function hurtBasePlayer(p,damage,x,y){if(p.dead||p.invuln>0||inSafe(p)||debugInvincible)return;const factor=[.6,1,1.35][difficulty];if(p.down){p.bleed-=damage*.2;return}p.hp-=damage*factor;p.invuln=.37;p.heal=0;const a=Math.atan2(p.y-y,p.x-x);p.kx+=Math.cos(a)*80;p.ky+=Math.sin(a)*80;blood(p.x,p.y,Math.cos(a)*45,Math.sin(a)*45,3);if(p.id===localSlot){damageFlash=.5;camera.shake=5;sfx('hurt',p.x,p.y)}if(p.hp<=0){p.hp=0;p.down=true;p.bleed=40;p.revive=0;p.weapon=2;p.reload=0;p.heal=0;p.ammo[2]=15;say(p.name,'I’m down! A little help here!',4);announce(p.name+' IS DOWN','GET CLOSE AND HOLD E TO REVIVE',3);if(netMode==='host')netEvents.push({type:'down',who:p.id})}else if(p.hp<30&&botTalkTimer<=0){say(p.name,'Running on fumes here. We have to move.',3);botTalkTimer=15}}
@@ -450,16 +417,16 @@ function updateBasePlayer(p,dt){if(p.dead)return;let input=p._frameInput||contro
 }
 const zHash=new Map();
 function hashZombies(){zHash.clear();for(const z of zombies){if(z.hp<=0)continue;let k=Math.floor(z.x/80)+Math.floor(z.y/80)*100;let a=zHash.get(k);if(!a)zHash.set(k,a=[]);a.push(z)}}
-function updateBaseZombie(z,dt){if(z.hp<=0)return;z.hit=Math.max(0,z.hit-dt);z.cool=Math.max(0,z.cool-dt);z.stun=Math.max(0,z.stun-dt);z.special-=dt;let target=infectedTarget19(z);if(!target)return;let d=dist(z,target),lure=null;for(const g of grenades)if(!g.acid&&!g.fire&&(z.type==='common'||z.type==='runner')&&g.flight<=0&&dist(z,g)<680){lure=g;break}if(lure){target=lure;d=dist(z,lure);z.awake=true}
- // Awareness is acquired by sight, sound, injury or a Director mob, not proximity through walls.
+function updateBaseZombie(z,dt){if(z.hp<=0)return;z.hit=Math.max(0,z.hit-dt);z.cool=Math.max(0,z.cool-dt);z.stun=Math.max(0,z.stun-dt);z.special-=dt;let target=players[z.target];if(!target||target.dead||tickNo%12===z.id%12){let best=Infinity;for(const p of players){if(p.dead||inSafe(p))continue;let d=dist(z,p)*(p.down?1.1:1);if(d<best){best=d;target=p}}if(target)z.target=target.id}if(!target)return;let d=dist(z,target),lure=null;for(const g of grenades)if(!g.acid&&!g.fire&&(z.type==='common'||z.type==='runner')&&g.flight<=0&&dist(z,g)<680){lure=g;break}if(lure){target=lure;d=dist(z,lure);z.awake=true}
+ if(!z.awake&&d<440)z.awake=true;
  let vx=0,vy=0;
  if(!z.awake){z.wander-=dt;if(z.wander<0){z.wander=rnd(1.5,5);z.wa=rnd(0,TAU)}vx=Math.cos(z.wa)*11;vy=Math.sin(z.wa)*11}
  else{
- if(tickNo%9===z.id%9||z.ndx===undefined){let dir=steerInfected19(z,target);z.ndx=dir.x;z.ndy=dir.y}
+ if(tickNo%9===z.id%9||z.ndx===undefined){let dir=pathToward(z,target,flow);z.ndx=dir.x;z.ndy=dir.y}
  vx=z.ndx*z.speed*[.9,1,1.08][difficulty];vy=z.ndy*z.speed*[.9,1,1.08][difficulty];
  if(lure&&d<28){vx*=.05;vy*=.05}
  if(z.type==='brute'){
- if(z.charge>0){z.charge-=dt;vx=Math.cos(z.chargeA)*370;vy=Math.sin(z.chargeA)*370;for(const p of players)if(!p.dead&&!inSafe(p)&&dist(z,p)<z.r+p.r+8&&lineClear(z,p)){hurtPlayer(p,30,z.x,z.y);p.kx+=Math.cos(z.chargeA)*570;p.ky+=Math.sin(z.chargeA)*570;p.pin=.8}if(z.charge<=0){z.stun=.45;z.special=5}}
+ if(z.charge>0){z.charge-=dt;vx=Math.cos(z.chargeA)*370;vy=Math.sin(z.chargeA)*370;for(const p of players)if(!p.dead&&!inSafe(p)&&dist(z,p)<z.r+p.r+8){hurtPlayer(p,30,z.x,z.y);p.kx+=Math.cos(z.chargeA)*570;p.ky+=Math.sin(z.chargeA)*570;p.pin=.8}if(z.charge<=0){z.stun=.45;z.special=5}}
  else if(z.wind>0){z.wind-=dt;vx=0;vy=0;if(z.wind<=0)z.charge=.8}
  else if(z.special<0&&d>135&&d<460&&lineClear(z,target)){z.wind=.75;z.chargeA=angle(z,target);z.special=6;sfx('hurt',z.x,z.y)}
  }else if(z.type==='spitter'&&d<510&&d>180){vx*=.15;vy*=.15;if(z.special<0&&lineClear(z,target)){z.special=4.8;const tx=target.x+rnd(-30,30),ty=target.y+rnd(-30,30);grenades.push({id:nextID++,x:z.x,y:z.y,sx:z.x,sy:z.y,tx,ty,flight:.85,flightMax:.85,timer:.85,acid:true,who:-1});sfx('shove',z.x,z.y)}}
@@ -469,8 +436,8 @@ function updateBaseZombie(z,dt){if(z.hp<=0)return;z.hit=Math.max(0,z.hit-dt);z.c
  let oldx=z.x,oldy=z.y;moveEntity(z,(vx+z.kx)*dt,(vy+z.ky)*dt);z.kx*=Math.exp(-dt*6);z.ky*=Math.exp(-dt*6);let moved=Math.hypot(z.x-oldx,z.y-oldy);z.walk+=moved*.11;if(moved>.2)z.a+=wrap(Math.atan2(vy,vx)-z.a)*Math.min(1,dt*9);
  if(z.charge>0&&moved<1){z.charge=0;z.stun=.9;spark(z.x,z.y,0,0,16)}
  // Closed side-room doors can be battered by the infected; solid buildings cannot.
- if(z.awake&&moved<.35&&d>35&&z.cool<=0)tryBatter19(z,target);
- if(!lure&&Number.isInteger(target.id)&&players[target.id]===target&&d<z.r+(target.r||16)+13&&z.cool<=0&&z.stun<=0&&!inSafe(target)&&lineClear(z,target)){z.cool=z.type==='brute'?1.25:.9;z.a=angle(z,target);hurtPlayer(target,z.damage,z.x,z.y)}
+ if(z.awake&&moved<.2&&d>60&&z.cool<=0){for(const p of props)if(p.type==='door'&&!p.destroyed&&circleRect(z.x,z.y,z.r+12,p)){damageProp(p,16,z.x,z.y);z.cool=.65;break}}
+ if(!lure&&d<z.r+(target.r||16)+13&&z.cool<=0&&z.stun<=0&&!inSafe(target)){z.cool=z.type==='brute'?1.25:.9;z.a=angle(z,target);hurtPlayer(target,z.damage,z.x,z.y)}
 }
 
 function updateBaseEffects(dt){for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.life-=dt;if(p.life<=0){if(p.kind==='shell')stampWorld(p.x,p.y,5,c=>{c.rotate(p.x*.71+p.y*.29);c.fillStyle='#9c844fa0';c.fillRect(-2.5,-1,5,2);});particles.splice(i,1);continue}p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=Math.exp(-dt*3);p.vy*=Math.exp(-dt*3)}for(let i=tracers.length-1;i>=0;i--){tracers[i].life-=dt;if(tracers[i].life<=0)tracers.splice(i,1)}for(let i=hitNumbers.length-1;i>=0;i--){hitNumbers[i].life-=dt;hitNumbers[i].y-=dt*28;if(hitNumbers[i].life<=0)hitNumbers.splice(i,1)}hitMarker=Math.max(0,hitMarker-dt);killMarker=Math.max(0,killMarker-dt);damageFlash=Math.max(0,damageFlash-dt);camera.shake*=Math.exp(-dt*15);camera.kx*=Math.exp(-dt*14);camera.ky*=Math.exp(-dt*14);if(noticeTimer>0){noticeTimer-=dt;if(noticeTimer<=0)$('status').classList.remove('show')}if(radioTimer>0){radioTimer-=dt;if(radioTimer<=0)$('radio').classList.remove('show')}if(toastTimer>0){toastTimer-=dt;if(toastTimer<=0)$('toast').style.opacity=0}}
@@ -529,8 +496,8 @@ function drawWorld(){const c=ctx;let mark8=performance.now();
  // Lamplight stays additive and subtle; it never hides the shot feedback.
  c.save();c.globalAlpha=.52;c.globalCompositeOperation='screen';for(const l of lights){if(!visible(l.x,l.y,l.r))continue;let g=c.createRadialGradient(l.x,l.y,0,l.x,l.y,l.r);let power=l.power*(l.fire?.8+Math.sin(clock*13)*.15:1);g.addColorStop(0,l.c+Math.round(power*255).toString(16).padStart(2,'0'));g.addColorStop(1,l.c+'00');c.fillStyle=g;c.fillRect(l.x-l.r,l.y-l.r,l.r*2,l.r*2)}for(const p of players)if(p.firing>0&&visible(p.x,p.y)){let x=p.x+Math.cos(p.a)*37,y=p.y+Math.sin(p.a)*37,g=c.createRadialGradient(x,y,0,x,y,140);g.addColorStop(0,'#ffc56b45');g.addColorStop(1,'#ffc56b00');c.fillStyle=g;c.fillRect(x-140,y-140,280,280)}c.restore();for(const l of lights){if(!l.post||!visible(l.x,l.y))continue;c.strokeStyle='#132127';c.lineWidth=5;c.beginPath();c.moveTo(l.x,l.y+15);c.lineTo(l.x+4,l.y-10);c.stroke();circle(c,l.x+4,l.y-11,4,'#ebdbb0')}mark8=scopeEnd8('lighting',mark8);
  for(const p of pickups)drawPickup(p);
- // Physical destination door is rendered by drawProp, with a wall-mounted exit lamp.
- drawSafeBeacon19();
+ // The shelter has one recognizable, physically narrow entrance.
+ c.save();c.translate(SAFE.doorX-5,SAFE.doorY);c.fillStyle='#101e24';c.fillRect(-10,-57,20,126);c.fillStyle=phase==='win'?'#c25440':'#923f36';if(phase==='win'){c.fillRect(-7,-53,14,118);c.fillStyle='#e6c88c';c.fillRect(-10,25,5,8)}else{c.save();c.translate(0,-51);c.rotate(-1.08);c.fillRect(-5,0,12,110);c.strokeStyle='#e18a65';c.lineWidth=2;c.strokeRect(-5,0,12,110);c.restore()}c.fillStyle='#d1ec9a';c.fillRect(-15,-82,30,12);c.font='bold 13px monospace';c.textAlign='center';c.fillText('SAFE',0,-99);c.restore();
  // Flashlight under actors: readable, not a visibility gimmick.
  for(const p of players){if(p.dead||!visible(p.x,p.y))continue;c.save();c.translate(p.x,p.y);c.rotate(p.a);let g=c.createRadialGradient(15,0,5,130,0,390);g.addColorStop(0,'#e6ebc308');g.addColorStop(1,'#e6ebc300');c.fillStyle=g;c.beginPath();c.moveTo(8,0);c.arc(8,0,420,-.38,.38);c.closePath();c.fill();c.restore()}
  }
@@ -577,7 +544,7 @@ function updateBaseUI(force=false){if(phase==='menu')return;if(!force&&clock-las
 function cleanName(n){return String(n||'SURVIVOR').replace(/[^a-zA-Z0-9 _-]/g,'').trim().slice(0,12).toUpperCase()||'SURVIVOR'}
 function netStatus(s){if(netMode==='host'){if(s.startsWith('Online room ready'))onlineState='online';else if(s.includes('Local tabs only'))onlineState='error';else if(s.startsWith('Connecting'))onlineState='connecting';}$('netstatus').textContent=s;const t=s.toLowerCase();$('netstatus').dataset.state=t.includes('connected via')||t.startsWith('copied')?'connected':t.includes('online room ready')?'online':t.includes('local tabs only')?'local':t.includes('failed')||t.includes('not found')||t.includes('no response')||t.includes('unavailable')||t.includes('rejected')?'error':t.includes('connecting')||t.includes('looking')?'connecting':'idle';updateLobby();}
 
-function setupBroadcast(){if(broadcast)return;try{broadcast=new BroadcastChannel('dead-ends-coop-v19');broadcast.onmessage=ev=>{const m=ev.data;if(!m||m.room!==roomCode||m.from===localToken)return;if(m.to&&m.to!==localToken)return;
+function setupBroadcast(){if(broadcast)return;try{broadcast=new BroadcastChannel('dead-ends-coop-v16');broadcast.onmessage=ev=>{const m=ev.data;if(!m||m.room!==roomCode||m.from===localToken)return;if(m.to&&m.to!==localToken)return;
  if(m.t==='bc-join'&&netMode==='host'){let found=[...slotOwners.entries()].find(([slot,o])=>o.token===m.from);if(found){sendTo(found[0],{t:'welcome',slot:found[0],room:roomCode,playing:phase==='play'});return}let slot=claimSlot({token:m.from,name:cleanName(m.name),transport:'bc'});if(slot===null){broadcast.postMessage({t:'reject',room:roomCode,from:localToken,to:m.from,reason:'Room is full.'});return}sendTo(slot,{t:'welcome',slot,room:roomCode,playing:phase==='play'});if(phase!=='menu'){sendTo(slot,{t:'world',seed:worldSeed,difficulty,map:selectedMap,campaign:campaignMode});sendTo(slot,makeSnapshot(false))}updateNetStatus();return}
  if(netMode==='client'&&m.t==='welcome'){handlePacket(m);show('hostStart',false);return}
  if(netMode==='host'&&m.t==='input'){let e=[...slotOwners.entries()].find(([s,o])=>o.token===m.from);if(e){remoteInputs.set(e[0],sanitizeInput(m.input));e[1].lastInput=clock}return}
@@ -593,10 +560,10 @@ function updateNetStatus(){if(netMode!=='host')return;netStatus(peer?.open?'Onli
 
 function loadPeer(){if(window.Peer)return Promise.resolve(window.Peer);if(peerLoading)return peerLoading;peerLoading=new Promise((resolve,reject)=>{const urls=['https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js','https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js'];function next(){if(window.Peer){resolve(window.Peer);return}const url=urls.shift();if(!url){reject(new Error('Could not load the optional online networking library.'));return}const s=document.createElement('script');let ended=false;const timer=setTimeout(fail,5000);function fail(){if(ended)return;ended=true;clearTimeout(timer);s.remove();next()}s.src=url;s.onload=()=>{if(ended)return;ended=true;clearTimeout(timer);if(window.Peer)resolve(window.Peer);else next()};s.onerror=fail;document.head.appendChild(s)}next()}).catch(e=>{peerLoading=null;throw e});return peerLoading}
 async function hostRoom(){disconnectNet(false);const attempt=netAttempt;netMode='host';localSlot=0;roomCode=Array.from({length:5},()=>{const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return alphabet[Math.floor(Math.random()*alphabet.length)]}).join('');setupBroadcast();show('roomDisplay');show('hostStart');$('roomCode').textContent=roomCode;netStatus('Connecting to online discovery…\nLocal tabs can already join.');$('hostBtn').disabled=true;$('joinBtn').disabled=true;
- try{const Peer=await loadPeer();if(netMode!=='host'||attempt!==netAttempt)return;const myPeer=peer=new Peer('deadends-v19-'+roomCode,{debug:0,secure:true});myPeer.on('open',()=>{if(peer!==myPeer)return;updateNetStatus()});myPeer.on('connection',c=>{let assigned=null;c.on('open',()=>{if(netMode!=='host'){c.close();return}assigned=claimSlot({name:cleanName(c.metadata?.name),transport:'peer',token:c.peer});if(assigned===null){c.send({t:'reject',reason:'Room is full.'});setTimeout(()=>c.close(),150);return}connections.set(assigned,c);c.send({t:'welcome',slot:assigned,room:roomCode,playing:phase==='play'});if(phase!=='menu'){sendTo(assigned,{t:'world',seed:worldSeed,difficulty,map:selectedMap,campaign:campaignMode});sendTo(assigned,makeSnapshot(false))}updateNetStatus()});c.on('data',m=>{if(assigned!==null&&m?.t==='input'){remoteInputs.set(assigned,sanitizeInput(m.input));const owner=slotOwners.get(assigned);if(owner)owner.lastInput=clock}});c.on('close',()=>{if(assigned!==null&&peer===myPeer)releaseSlot(assigned)});c.on('error',()=>{if(assigned!==null&&peer===myPeer)releaseSlot(assigned)})});myPeer.on('error',e=>{if(peer!==myPeer)return;$('disconnectBtn').classList.remove('hidden');netStatus('Online discovery failed ('+(e.type||'network error')+').\nLocal tabs only; remote friends cannot find this room.')});setTimeout(()=>{if(peer===myPeer&&!myPeer.open)netStatus('Online discovery timed out.\nLocal tabs only. You can still start with AI.')},11000)}catch(e){if(netMode==='host'&&attempt===netAttempt)netStatus('Online services unavailable.\nLocal tabs only. Start with AI, or retry hosting.')}
+ try{const Peer=await loadPeer();if(netMode!=='host'||attempt!==netAttempt)return;const myPeer=peer=new Peer('deadends-v16-'+roomCode,{debug:0,secure:true});myPeer.on('open',()=>{if(peer!==myPeer)return;updateNetStatus()});myPeer.on('connection',c=>{let assigned=null;c.on('open',()=>{if(netMode!=='host'){c.close();return}assigned=claimSlot({name:cleanName(c.metadata?.name),transport:'peer',token:c.peer});if(assigned===null){c.send({t:'reject',reason:'Room is full.'});setTimeout(()=>c.close(),150);return}connections.set(assigned,c);c.send({t:'welcome',slot:assigned,room:roomCode,playing:phase==='play'});if(phase!=='menu'){sendTo(assigned,{t:'world',seed:worldSeed,difficulty,map:selectedMap,campaign:campaignMode});sendTo(assigned,makeSnapshot(false))}updateNetStatus()});c.on('data',m=>{if(assigned!==null&&m?.t==='input'){remoteInputs.set(assigned,sanitizeInput(m.input));const owner=slotOwners.get(assigned);if(owner)owner.lastInput=clock}});c.on('close',()=>{if(assigned!==null&&peer===myPeer)releaseSlot(assigned)});c.on('error',()=>{if(assigned!==null&&peer===myPeer)releaseSlot(assigned)})});myPeer.on('error',e=>{if(peer!==myPeer)return;$('disconnectBtn').classList.remove('hidden');netStatus('Online discovery failed ('+(e.type||'network error')+').\nLocal tabs only; remote friends cannot find this room.')});setTimeout(()=>{if(peer===myPeer&&!myPeer.open)netStatus('Online discovery timed out.\nLocal tabs only. You can still start with AI.')},11000)}catch(e){if(netMode==='host'&&attempt===netAttempt)netStatus('Online services unavailable.\nLocal tabs only. Start with AI, or retry hosting.')}
 }
 async function joinRoom(){const code=$('joinCode').value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5);if(code.length!==5){netStatus('Enter the five-character code from your host.');return}disconnectNet(false);const attempt=netAttempt;netMode='client';roomCode=code;netConnected=false;setupBroadcast();$('hostBtn').disabled=true;$('joinBtn').disabled=true;show('roomDisplay',false);show('hostStart',false);netStatus('Looking for room '+code+'…');const bcJoin=()=>broadcast?.postMessage({t:'bc-join',room:code,from:localToken,name:cleanName($('callsign').value)});bcJoin();await new Promise(r=>setTimeout(r,350));if(netConnected||netMode!=='client'||attempt!==netAttempt)return;
- try{const Peer=await loadPeer();if(netConnected||netMode!=='client'||attempt!==netAttempt)return;const myPeer=peer=new Peer(undefined,{debug:0,secure:true});myPeer.on('open',()=>{if(peer!==myPeer||netConnected)return;const c=myPeer.connect('deadends-v19-'+code,{reliable:true,serialization:'json',metadata:{name:cleanName($('callsign').value)}});connections.set(0,c);c.on('data',handlePacket);c.on('close',()=>{if(peer===myPeer&&netMode==='client'){netConnected=false;toast('HOST DISCONNECTED. RETURN TO MENU TO REJOIN.',8);show('pause');paused=true;$('pauseText').textContent='The host disconnected. This prototype does not migrate hosts.'}});c.on('error',()=>netStatus('Connection failed. Check the room code and network.'))});myPeer.on('error',e=>{if(peer!==myPeer)return;netStatus(e.type==='peer-unavailable'?'Room not found. Ask your host to check their online status.':'Online connection failed ('+(e.type||'network error')+'). Check the host and network.');$('hostBtn').disabled=false;$('joinBtn').disabled=false});setTimeout(()=>{if(peer===myPeer&&!netConnected){netStatus('No response from the host. Verify the code and that both browsers can use WebRTC.');$('hostBtn').disabled=false;$('joinBtn').disabled=false}},14000)}catch(e){if(netMode==='client'&&!netConnected&&attempt===netAttempt){netStatus('Online library failed to load. Check your internet connection.\nLocal-tab testing works best from localhost.');$('hostBtn').disabled=false;$('joinBtn').disabled=false;bcJoin()}}
+ try{const Peer=await loadPeer();if(netConnected||netMode!=='client'||attempt!==netAttempt)return;const myPeer=peer=new Peer(undefined,{debug:0,secure:true});myPeer.on('open',()=>{if(peer!==myPeer||netConnected)return;const c=myPeer.connect('deadends-v16-'+code,{reliable:true,serialization:'json',metadata:{name:cleanName($('callsign').value)}});connections.set(0,c);c.on('data',handlePacket);c.on('close',()=>{if(peer===myPeer&&netMode==='client'){netConnected=false;toast('HOST DISCONNECTED. RETURN TO MENU TO REJOIN.',8);show('pause');paused=true;$('pauseText').textContent='The host disconnected. This prototype does not migrate hosts.'}});c.on('error',()=>netStatus('Connection failed. Check the room code and network.'))});myPeer.on('error',e=>{if(peer!==myPeer)return;netStatus(e.type==='peer-unavailable'?'Room not found. Ask your host to check their online status.':'Online connection failed ('+(e.type||'network error')+'). Check the host and network.');$('hostBtn').disabled=false;$('joinBtn').disabled=false});setTimeout(()=>{if(peer===myPeer&&!netConnected){netStatus('No response from the host. Verify the code and that both browsers can use WebRTC.');$('hostBtn').disabled=false;$('joinBtn').disabled=false}},14000)}catch(e){if(netMode==='client'&&!netConnected&&attempt===netAttempt){netStatus('Online library failed to load. Check your internet connection.\nLocal-tab testing works best from localhost.');$('hostBtn').disabled=false;$('joinBtn').disabled=false;bcJoin()}}
 }
 function disconnectNet(reset=true){netAttempt++;netTransport='';lobbyRemote=null;onlineState='idle';show('disconnectBtn',false);if(netMode==='host')sendAll({t:'host-left'});else if(netMode==='client')try{broadcast?.postMessage({t:'leave',room:roomCode,from:localToken})}catch(e){}const oldPeer=peer;peer=null;try{oldPeer?.destroy()}catch(e){}for(const c of connections.values())try{c.close()}catch(e){}connections.clear();slotOwners.clear();remoteInputs.clear();try{broadcast?.close()}catch(e){}broadcast=null;netConnected=false;netMode='solo';localSlot=0;roomCode='';$('hostBtn').disabled=false;$('joinBtn').disabled=false;if(reset){show('roomDisplay',false);show('hostStart',false);netStatus('Play online, host a private room, or enter a code.')}}
 const PF=['id','x','y','a','hp','stamina','weapon','ammo','reserves','meds','bombs','cool','reload','reloadMax','shove','shoveFX','heal','revive','down','dead','bleed','invuln','walk','moving','firing','recoil','bot','name','color','kills','interactHold','pin','pinnedBy','pinGrace','dragging','draggedBy','teamHeal','aidTarget','molotovs','fuel','intent','throwFX','throwA','equip10','equipAck10','lastGun10'];
@@ -612,7 +579,7 @@ function handleBasePacket(m){if(!m||netMode!=='client')return;if(m.t==='welcome'
 let nextPredictedShot=0;
 function updateClient(dt){const p=players[localSlot];if(!p||!netConnected)return;let input=controlsFor(p);p.a=input.a;let mx=input.mx,my=input.my,m=Math.hypot(mx,my);if(m>1){mx/=m;my/=m}if(!p.down&&!p.dead&&p.pinnedBy<0){let speed=205*(input.sprint&&p.stamina>4&&!input.shoot&&!p.reload?1.42:1)*(p.pin>0?.4:1)*(p.dragging>=0?.67:1)*(p.fuel?.9:1);moveEntity(p,mx*speed*dt,my*speed*dt);p.moving=m>.08;if(p.moving)p.walk+=dt*speed*.052}
  p.firing=Math.max(0,p.firing-dt);p.shoveFX=Math.max(0,p.shoveFX-dt);p.recoil=Math.max(0,p.recoil-dt*.09);
- if(input.shoot&&clock>=nextPredictedShot&&!p.dead&&(!p.reload||p.weapon===1)&&p.ammo[p.down?2:p.weapon]>0){let wi=p.down?2:p.weapon,w=weaponStats14(p,wi),dx=Math.cos(p.a),dy=Math.sin(p.a);nextPredictedShot=clock+w.rate;p.firing=.08;p.recoil=Math.min(.15,p.recoil+.025);sfx('gun',p.x,p.y,wi);camera.shake=wi===1?6:2.5;for(let n=0;n<w.pellets;n++){let a=p.a+rnd(-w.spread,w.spread),vx=Math.cos(a),vy=Math.sin(a),sx=p.x+vx*23,sy=p.y+vy*23,d=bulletRay19(p,sx,sy,vx,vy,w.range).d;for(const z of zombies){let zx=z.x-sx,zy=z.y-sy,t=zx*vx+zy*vy;if(t>0&&t<d&&Math.abs(zx*vy-zy*vx)<z.r){d=t;break}}tracers.push({x:sx,y:sy,ex:sx+vx*d,ey:sy+vy*d,life:.08,max:.08,w:wi===1?1.7:2,color:'#ffe3a3'})}}
+ if(input.shoot&&clock>=nextPredictedShot&&!p.dead&&(!p.reload||p.weapon===1)&&p.ammo[p.down?2:p.weapon]>0){let wi=p.down?2:p.weapon,w=WEAPONS[wi],dx=Math.cos(p.a),dy=Math.sin(p.a);nextPredictedShot=clock+w.rate;p.firing=.08;p.recoil=Math.min(.15,p.recoil+.025);sfx('gun',p.x,p.y,wi);camera.shake=wi===1?6:2.5;for(let n=0;n<w.pellets;n++){let a=p.a+rnd(-w.spread,w.spread),vx=Math.cos(a),vy=Math.sin(a),sx=p.x+vx*23,sy=p.y+vy*23,d=rayWorld(sx,sy,vx,vy,w.range).d;for(const z of zombies){let zx=z.x-sx,zy=z.y-sy,t=zx*vx+zy*vy;if(t>0&&t<d&&Math.abs(zx*vy-zy*vx)<z.r){d=t;break}}tracers.push({x:sx,y:sy,ex:sx+vx*d,ey:sy+vy*d,life:.08,max:.08,w:wi===1?1.7:2,color:'#ffe3a3'})}}
  for(const g of grenades){if(g.flight>0){g.flight=Math.max(0,g.flight-dt);const t=1-g.flight/g.flightMax;g.x=lerp(g.sx,g.tx,t);g.y=lerp(g.sy,g.ty,t);}g.timer=Math.max(0,g.timer-dt);}for(const f of firePools)f.life=Math.max(0,f.life-dt);
  const t=1-Math.exp(-dt*23);for(const q of players){if(q.id===localSlot)continue;if(q.nx!==undefined){q.x=lerp(q.x,q.nx,t);q.y=lerp(q.y,q.ny,t);q.a+=wrap(q.na-q.a)*t}}for(const z of zombies){if(Number.isFinite(z.nx)&&Number.isFinite(z.ny)){z.x=lerp(z.x,z.nx,t);z.y=lerp(z.y,z.ny,t);z.a+=wrap(z.na-z.a)*t}}
  netClock+=dt;if(netClock>=1/30){netClock=0;sendInput13(input)}
@@ -818,11 +785,11 @@ function aiRecord(p,event,details=''){aiLog.push({t:+elapsed.toFixed(2),bot:p.na
 function botSay(p,text){if(clock-(p.brain?.lastTalk||0)<6||radioTimer>1.2)return;if(p.brain)p.brain.lastTalk=clock;say(p.name,text,3.2);}
 function senseBot(p){
  const b=p.brain;b.visible=[];
- for(const z of zombies){if(z.hp<=0||dist(p,z)>760||!sightClear19(p,z))continue;b.visible.push(z);b.memory.set('z'+z.id,{id:z.id,x:z.x,y:z.y,time:clock});}
+ for(const z of zombies){if(z.hp<=0||dist(p,z)>760||!lineClear(p,z))continue;b.visible.push(z);b.memory.set('z'+z.id,{id:z.id,x:z.x,y:z.y,time:clock});}
  for(const q of pickups){if((q.used&(1<<p.id))||q.type==='fuel')continue;if(dist(p,q)<690&&lineClear(p,q,true))b.memory.set('p'+q.id,{id:q.id,kind:'pickup',type:q.type,x:q.x,y:q.y,time:clock});}
  for(const [k,v]of b.memory)if(v.kind!=='pickup'&&clock-v.time>4)b.memory.delete(k);
  let best=null,score=-Infinity;
- for(const z of b.visible){if(!z.awake&&!autoPilot&&!preview8.stepping&&dist(p,z)>220&&squadPing?.targetId!==z.id)continue;const d=dist(p,z),q=players[z.target],risk=z.type==='leaper'&&z.victim>=0?1800:z.type==='screamer'&&z.screaming>0?900:z.type==='spitter'?180:z.type==='brute'?140:0;const ally=q&&!q.dead?(q.down?450:q.hp<40?200:0):0;const s=900-d+risk+ally+(d<120?500:0);
+ for(const z of b.visible){const d=dist(p,z),q=players[z.target],risk=z.type==='leaper'&&z.victim>=0?1800:z.type==='screamer'&&z.screaming>0?900:z.type==='spitter'?180:z.type==='brute'?140:0;const ally=q&&!q.dead?(q.down?450:q.hp<40?200:0):0;const s=900-d+risk+ally+(d<120?500:0);
   if(s>score){best=z;score=s;}}
  if(best?.id!==b.target?.id)b.reactAt=clock+.12+p.id*.025;b.target=best;
 }
@@ -966,7 +933,7 @@ function botControls(p){
  const busy=['heal','healAlly','revive','takeKit','restock','operate'].includes(act);
  if(enemy&&enemy.hp>0&&clock>=b.reactAt&&!busy){
   if(!input.shoot)input.a=angle(p,enemy)+Math.sin(elapsed*6+p.id)*.022;
-  input.shoot=input.shoot||sightClear19(p,enemy)&&dist(p,enemy)<weaponStats14(p,p.weapon).range;
+  input.shoot=input.shoot||lineClear(p,enemy)&&dist(p,enemy)<WEAPONS[p.weapon].range;
   if(dist(p,enemy)<99)input.shove=true;
   if(p.weapon===2&&p.ammo[0]>0)input.w=0;
   else if(p.id===2&&p.weapon!==1&&(p.ammo[1]||p.reserves[1])&&dist(p,enemy)<400)input.w=1;
@@ -1001,7 +968,7 @@ function hiddenSpawnPoint(behind=true,type='common'){
  const active=players.filter(p=>!p.dead&&!inSafe(p));if(!active.length)return null;const anchor=squadAnchor(),radius=type==='brute'?29:18;
  for(let tries=0;tries<80;tries++){
   const a=rnd(0,TAU),d=rnd(620,1450),x=anchor.x+Math.cos(a)*d,y=anchor.y+Math.sin(a)*d,point={x,y};
-  const cellId=idx(Math.floor(x/T),Math.floor(y/T));if(!navCell(Math.floor(x/T),Math.floor(y/T))||(staging10()?stagingFlow19():flow)[cellId]<0||inSafe(point))continue;
+  const cellId=idx(Math.floor(x/T),Math.floor(y/T));if(!navCell(Math.floor(x/T),Math.floor(y/T))||flow[cellId]<0||inSafe(point))continue;
   if(behind&&routeProgress(point)>progress+.025)continue;if(!behind&&routeProgress(point)<progress-.1)continue;
   // Top-down cutaway view reveals even occluded rooms: reject the entire view rectangle,
   // not merely enemy LOS. Remote clients send bounded view extents in their inputs.
@@ -1012,7 +979,6 @@ function hiddenSpawnPoint(behind=true,type='common'){
 }
 function updateDirector(dt){
  if(!director)resetDirector();const leader=getLeader();if(!leader)return;
- if(staging10()){updateStagingPressure19(dt);if(players.every(p=>p.dead||p.down))finishRun(false);return;}
  progress=Math.max(progress,routeProgress(leader));chapter=progress<.26?0:progress<.53?1:progress<.79?2:3;
  director.stateTime+=dt;director.sampleClock-=dt;
  if(director.sampleClock<=0){director.sampleClock=.25;
@@ -1067,7 +1033,7 @@ function updateZombie(z,dt){
   if(z.victim>=0){const p=players[z.victim];if(!p||p.dead||p.down||p.pinnedBy!==z.id){releasePin(z);return;}z.x=p.x+Math.cos(z.a)*13;z.y=p.y+Math.sin(z.a)*13;z.cool-=dt;z.hit=Math.max(0,z.hit-dt);if(z.cool<=0){z.cool=.8;hurtPlayer(p,7,z.x,z.y);}return;}
   if(z.wind>0){z.wind-=dt;z.stun=Math.max(0,z.stun-dt);if(z.stun>0){z.wind=0;z.special=2;return;}if(z.wind<=0){z.lunge=.48;sfx('shove',z.x,z.y);}return;}
   if(z.lunge>0){z.lunge-=dt;let ox=z.x,oy=z.y;moveEntity(z,Math.cos(z.chargeA)*650*dt,Math.sin(z.chargeA)*650*dt);z.a=z.chargeA;
-   for(const p of players)if(!p.dead&&!p.down&&!inSafe(p)&&p.pinnedBy<0&&clock>(p.pinGrace||0)&&dist(z,p)<z.r+p.r+12&&lineClear(z,p)){z.victim=p.id;p.pinnedBy=z.id;if(p.dragging>=0&&players[p.dragging])players[p.dragging].draggedBy=-1;p.dragging=-1;p.heal=0;z.lunge=0;addStress(p.id,.6);say(p.name,'GET IT OFF ME!',3);return;}
+   for(const p of players)if(!p.dead&&!p.down&&!inSafe(p)&&p.pinnedBy<0&&clock>(p.pinGrace||0)&&dist(z,p)<z.r+p.r+12){z.victim=p.id;p.pinnedBy=z.id;if(p.dragging>=0&&players[p.dragging])players[p.dragging].draggedBy=-1;p.dragging=-1;p.heal=0;z.lunge=0;addStress(p.id,.6);say(p.name,'GET IT OFF ME!',3);return;}
    if(Math.hypot(z.x-ox,z.y-oy)<1||z.lunge<=0){z.lunge=0;z.special=4;z.stun=.4;}return;
   }
  }
@@ -1079,8 +1045,8 @@ function updateZombie(z,dt){
   choices.sort((a,b)=>{const isolation=q=>players.filter(p=>p.id!==q.id&&!p.dead).reduce((v,p)=>Math.min(v,dist(p,q)),9999);return isolation(b)-isolation(a);});
   const p=choices[0];if(p&&players.filter(p=>p.pinnedBy>=0).length<(difficulty===2?2:1)){z.wind=.8;z.chargeA=angle(z,p);z.special=5;}
  }
- if(z.type==='screamer'&&z.awake&&z.stun<=0){const p=players[z.target];if(z.screaming>0){z.screaming-=dt;z.kx=0;z.ky=0;if(z.screaming<=0){directorEvent('SCREAM',25+difficulty*5);sfx('alert',z.x,z.y);z.special=19;announce('SCREAMER','KILL IT BEFORE IT CALLS ANOTHER HORDE.',2.7);}}else if(p&&dist(z,p)<470&&sightClear19(z,p)&&z.special<0){z.screaming=1.8;z.special=20;sfx('hurt',z.x,z.y);}}
- if(z.type==='spitter'&&z.awake){const p=players[z.target];if(p&&z.ai19?.seen&&dist(z,p)<165){const a=angle(p,z);moveEntity(z,Math.cos(a)*75*dt,Math.sin(a)*75*dt);}}
+ if(z.type==='screamer'&&z.awake&&z.stun<=0){const p=players[z.target];if(z.screaming>0){z.screaming-=dt;z.kx=0;z.ky=0;if(z.screaming<=0){directorEvent('SCREAM',25+difficulty*5);sfx('alert',z.x,z.y);z.special=19;announce('SCREAMER','KILL IT BEFORE IT CALLS ANOTHER HORDE.',2.7);}}else if(p&&dist(z,p)<470&&lineClear(z,p)&&z.special<0){z.screaming=1.8;z.special=20;sfx('hurt',z.x,z.y);}}
+ if(z.type==='spitter'&&z.awake){const p=players[z.target];if(p&&dist(z,p)<165){const a=angle(p,z);moveEntity(z,Math.cos(a)*75*dt,Math.sin(a)*75*dt);}}
  // Fire is dangerous for infected as well; burn effects use ordinary damage / kills.
  for(const f of firePools)if(fireTouches(f,z.x,z.y,z.r*.5)){z.burning=.16;if((tickNo+z.id)%12===0)hurtZombie(z,19,0,0,0,f.who);}
  if(z.burning>0)z.burning-=dt;
@@ -1096,14 +1062,14 @@ function startRun(s,fromNet=false){
  players=[0,1,2,3].map(makePlayer);if(netMode==='client'&&players[localSlot])players[localSlot].bot=false;
  for(const [slot,owner]of slotOwners){players[slot].bot=false;players[slot].name=owner.name;}
  if(netMode==='host')players[0].name=cleanName($('callsign').value||'HOST');
- if(carry)players.forEach((p,i)=>{const old=carry[i];if(!old)return;p.hp=old.dead?75:Math.max(65,old.hp);p.meds=Math.max(1,old.meds);p.bombs=Math.max(1,old.bombs);p.molotovs=Math.max(1,old.molotovs||0);p.weapon=old.weapon===2?0:old.weapon;p.upgrade14=cleanUpgrades19(old.upgrade14);p.ammo=[weaponStats14(p,0).clip,weaponStats14(p,1).clip,15];p.reserves[0]=p.upgrade14.rifle?98:180;});
+ if(carry)players.forEach((p,i)=>{const old=carry[i];if(!old)return;p.hp=old.dead?75:Math.max(65,old.hp);p.meds=Math.max(1,old.meds);p.bombs=Math.max(1,old.bombs);p.molotovs=Math.max(1,old.molotovs||0);p.weapon=old.weapon===2?0:old.weapon;});
  elapsed=0;progress=0;chapter=0;gateTriggered=false;finale=false;gateProgress=0;spawnTimer=20;flowTimer=0;tickNo=0;
  stats={kills:0,shots:0,rescues:0};scoreShown=false;nearAction=null;promptProgress=0;resetDirector();resetPerformance7();
  for(const k of Object.keys(metrics))metrics[k]=Array.isArray(metrics[k])?[]:0;
  camera.x=players[localSlot]?.x||players[0].x;camera.y=players[localSlot]?.y||players[0].y;camera.shake=0;camera.kx=0;camera.ky=0;hitMarker=0;damageFlash=0;keys={};tapKeys={};tapSequence={g:0,q:0,v:0,c:0,x:0};remoteInputs.clear();mouse.down=false;phase='play';paused=false;receivedWorld=true;
  for(const id of['menu','pause','end','guide','coop','options','credits'])show(id,false);show('ui');show('mapoverlay',false);
  if(matchMedia('(pointer:coarse)').matches)$('touch').style.display='block';
- populate();prepareAmbient19();buildFlow(flow,players);buildFlow(botFlow,[players[0]]);rebuildSquad();updateUI(true);startAudio();
+ populate();buildFlow(flow,players);buildFlow(botFlow,[players[0]]);rebuildSquad();updateUI(true);startAudio();
  say('MARA',mapInfo().hook,4);announce(mapInfo().name,'CHAPTER '+(selectedMap+1)+' / 05 · REACH THE SAFEHOUSE',3);
  $('pauseRoom').classList.toggle('hidden',netMode==='solo');
  if(netMode==='host'&&!fromNet)sendAll({t:'world',seed:worldSeed,difficulty,map:selectedMap,campaign:campaignMode,slots:[...slotOwners].map(([slot,o])=>({slot,name:o.name}))});
@@ -1144,7 +1110,7 @@ function interact(p,held,dt){
  else if(a.kind==='door'){damageProp(a.obj,10000,a.obj.x+a.obj.w/2,a.obj.y+a.obj.h/2);p.interactHold=0;}
  else if(a.kind==='pickup'&&(!p.lastInteract||p.bot)){
   const q=a.obj;
-  if(q.type==='ammo'){const cap=p.upgrade14?.rifle?140:240;if(p.reserves[0]>=cap&&p.reserves[1]>=56&&p.ammo[0]>=weaponStats14(p,0).clip&&p.ammo[1]>=weaponStats14(p,1).clip)return;p.reserves[0]=cap;p.reserves[1]=56;p.ammo=[weaponStats14(p,0).clip,weaponStats14(p,1).clip,15];p.reload=0;}
+  if(q.type==='ammo'){if(p.reserves[0]>=240&&p.reserves[1]>=56)return;p.reserves[0]=240;p.reserves[1]=56;p.ammo=[30,8,15];p.reload=0;}
   else if(q.type==='med'){if(p.meds>=2)return;p.meds++;}
   else if(q.type==='bomb'){if(p.bombs>=4)return;p.bombs=Math.min(4,p.bombs+2);}
   else if(q.type==='fire'){if(p.molotovs>=3)return;p.molotovs++;}
@@ -1193,7 +1159,7 @@ function hurtZombie(z,damage,dx,dy,knock,who){
 }
 function damageProp(p,damage,x,y){const intact=!p.destroyed,alarm=p.alarm;damageBaseProp(p,damage,x,y);if(intact&&p.destroyed&&p.type==='pump'){explosion(p.x+p.w*.5,p.y+p.h*.5,230,430,-1);ignite(p.x+p.w*.5,p.y+p.h*.5,-1,135,11);}if(alarm)directorEvent('CAR ALARM',24);}
 function update(dt){
- const begin=performance.now();let mark8=begin;if(!staging10())elapsed+=dt;tickNo++;botTalkTimer-=dt;flowTimer-=dt;
+ const begin=performance.now();let mark8=begin;elapsed+=dt;tickNo++;botTalkTimer-=dt;flowTimer-=dt;
  if(flowTimer<=0){buildFlow(flow,players.filter(p=>!p.dead&&!inSafe(p)));buildFlow(botFlow,[getLeader()]);flowTimer=.3;}
  mark8=scopeEnd8("flow",mark8);if(tickNo%15===0)updateCoordinator();if(squadPing&&clock>squadPing.until)squadPing=null;
  mark8=scopeEnd8("coordinator",mark8);for(const p of players)updatePlayer(p,dt);if(phase!=='play')return;
@@ -1627,7 +1593,7 @@ function artInfected(c,z){
  if(k===2&&!brute){artLine(c,[-6,-5,1,-3,4,-4],lit,.7);artBox(c,-6,2,4,3,shade);}
  if(brute){artPoly(c,[-9,-6,-5,-10,0,-9,3,-5,0,-1,-6,-1],skin);artPoly(c,[-4,0,0,-1,4,3,4,8,-1,9,-5,7],skin);artLine(c,[-4,-7,-1,-6,0,-4],'#d1b28a',.7);artLine(c,[-3,3,1,4,2,6],'#786b50',.9);artLine(c,[-8,-4,-5,-1,-3,3],'#80352f',1.5);}
  if(scream){artPoly(c,[-5,-9,-2,-8,0,0,0,9,-3,8],'#c7b577');artLine(c,[-4,-6,-2,6],'#dfd7b2',1.5);artLine(c,[2,-7,4,5],'#dad2aa',1.3);}
- for(const side of[-1,1]){const asym=side===1?1.8:0;const ex=leap?6+shift*.2:5+shift*.2,ey=side*(brute&&side===1?16:12)+lurch;const hx=!z.awake?-5+st:leap?15:brute?12:14+asym,hy=side*(!z.awake?14:leap?16:brute?13:9)+st*side*2;
+ for(const side of[-1,1]){const asym=side===1?1.8:0;const ex=leap?6+shift*.2:5+shift*.2,ey=side*(brute&&side===1?16:12)+lurch;const hx=leap?15:brute?12:14+asym,hy=side*(leap?16:brute?13:9)+st*side*2;
  artLimb(c,0,side*8,ex,ey,brute&&side===1?10:5.7,shirt,'#202d27',lit);artPoly(c,[ex-1,ey-3,ex+2,ey-2,ex+1,ey+1,ex-1,ey+2],shade);artLimb(c,ex,ey,hx,hy,brute&&side===1?7:3.9,skin,'#3b4837','#c0c0a1');
  artLine(c,[ex+1,ey-1,hx-1,hy-1],'#7e8e70',.7);artHand(c,hx+1,hy,-side*.1,skin,brute?1.2:.83,true);}
  if(spit){artPoly(c,[-10,-5,-12,-1,-11,3,-8,6,-4,5,-2,2,-3,-3,-6,-6],'#6d7854','#394532',.7);artPoly(c,[-10,0,-9,-3,-7,-4,-5,-1,-6,3,-8,4],'#adb66c');artLine(c,[-9,-1,-7,0,-6,2],'#d1cf8d',.8);}
@@ -1636,7 +1602,7 @@ function artInfected(c,z){
  c.restore();c.restore();
 }
 function drawCachedZombie(z){
- if(!visible(z.x,z.y,100))return;const steps=16,pose=((Math.floor(z.walk/TAU*steps)%steps)+steps)%steps,key=z.type+':'+z.id%3+':'+z.r+':'+pose+':'+(z.hit>0?1:0)+':'+(z.awake?1:0);let spr=art5.actors.get(key);
+ if(!visible(z.x,z.y,100))return;const steps=16,pose=((Math.floor(z.walk/TAU*steps)%steps)+steps)%steps,key=z.type+':'+z.id%3+':'+z.r+':'+pose+':'+(z.hit>0?1:0);let spr=art5.actors.get(key);
  if(!spr){const side=Math.ceil(z.r*4.8+12),can=document.createElement('canvas');can.width=can.height=side*3;const c=can.getContext('2d');c.setTransform(3,0,0,3,can.width/2,can.height/2);artInfected(c,{...z,walk:pose/steps*TAU});spr={can,size:side};art5.actors.set(key,spr);}
  ctx.save();ctx.translate(z.x,z.y);ctx.fillStyle='#08131775';ctx.beginPath();ctx.ellipse(4,6,z.r+3,z.r*.8,0,0,TAU);ctx.fill();ctx.rotate(z.charge>0?z.chargeA:z.a);ctx.drawImage(spr.can,-spr.size/2,-spr.size/2,spr.size,spr.size);ctx.restore();
 }
@@ -1863,7 +1829,7 @@ function rayWorld(x,y,dx,dy,max,ignoreDoors=false){
  let nx=Math.abs(dx)>1e-10?((sx>0?(cx+1)*T:cx*T)-x)/dx:Infinity,ny=Math.abs(dy)>1e-10?((sy>0?(cy+1)*T:cy*T)-y)/dy:Infinity;const serial=++spatial6.serial;
  for(let limit=0;limit<COLS+ROWS+4&&t<=stop;limit++){
   if(cx<0||cy<0||cx>=COLS||cy>=ROWS||!grid[cy*COLS+cx]){stop=Math.min(stop,Math.max(0,t));break;}
-  const list=spatial6.buckets[cy*COLS+cx];for(let j=0;j<list.length;j++){const p=list[j];if(p._query6===serial)continue;p._query6=serial;if(p.destroyed||!p.solid||(ignoreDoors&&p.type==='door'))continue;if(sim19.rayKind&&portPass19(p,x,y,dx,dy,stop))continue;perf6.propTests++;const d=rayRect(x,y,dx,dy,p,stop);if(d<stop){stop=d;obj=p;}}
+  const list=spatial6.buckets[cy*COLS+cx];for(let j=0;j<list.length;j++){const p=list[j];if(p._query6===serial)continue;p._query6=serial;if(p.destroyed||!p.solid||(ignoreDoors&&p.type==='door'))continue;perf6.propTests++;const d=rayRect(x,y,dx,dy,p,stop);if(d<stop){stop=d;obj=p;}}
   if(nx<ny){t=nx;nx+=ix;cx+=sx;}else{t=ny;ny+=iy;cy+=sy;}
  }return{d:stop,obj};
 }
@@ -1923,7 +1889,7 @@ function makeZombieSprite6(type,variant,r,pose,hit){
  const sprite={can:can.transferToImageBitmap?can.transferToImageBitmap():can,size:side};art5.actors.set(type+':'+variant+':'+r+':'+pose+':'+hit,sprite);return sprite;
 }
 function drawCachedZombie(z){
- if(!visible(z.x,z.y,100))return;const pose=((Math.floor(z.walk/TAU*16)%16)+16)%16,key=z.type+':'+z.id%3+':'+z.r+':'+pose+':'+(z.hit>0?1:0)+':'+(z.awake?1:0);let spr=art5.actors.get(key);if(!spr){perf6.spriteMisses++;spr=makeZombieSprite6(z.type,z.id%3,z.r,pose,z.hit>0?1:0);}
+ if(!visible(z.x,z.y,100))return;const pose=((Math.floor(z.walk/TAU*16)%16)+16)%16,key=z.type+':'+z.id%3+':'+z.r+':'+pose+':'+(z.hit>0?1:0);let spr=art5.actors.get(key);if(!spr){perf6.spriteMisses++;spr=makeZombieSprite6(z.type,z.id%3,z.r,pose,z.hit>0?1:0);}
  ctx.save();ctx.translate(z.x,z.y);ctx.fillStyle='#08131775';ctx.beginPath();ctx.ellipse(4,6,z.r+3,z.r*.8,0,0,TAU);ctx.fill();ctx.rotate(z.charge>0?z.chargeA:z.a);ctx.drawImage(spr.can,-spr.size/2,-spr.size/2,spr.size,spr.size);ctx.restore();
 }
 async function warmSprites6(){
@@ -2072,7 +2038,7 @@ function writeSafehouse7(){
  clears7.add(selectedMap);try{localStorage.setItem(CLEARS7,JSON.stringify([...clears7]));}catch(e){}
  if(netMode!=='solo'||!campaignMode)return;
  if(selectedMap===4){try{localStorage.removeItem(CHECKPOINT7);}catch(e){}checkpoint7=null;checkpointStatus7='CAMPAIGN COMPLETE';return;}
- const v={schema:1,map:selectedMap+1,difficulty,leg:campaignLeg+1,kills:campaignKills+stats.kills,time:campaignTime+elapsed,savedAt:Date.now(),carry:players.map(p=>({hp:p.hp,dead:p.dead,meds:p.meds,bombs:p.bombs,molotovs:p.molotovs,weapon:p.weapon,upgrade14:cleanUpgrades19(p.upgrade14)}))};
+ const v={schema:1,map:selectedMap+1,difficulty,leg:campaignLeg+1,kills:campaignKills+stats.kills,time:campaignTime+elapsed,savedAt:Date.now(),carry:players.map(p=>({hp:p.hp,dead:p.dead,meds:p.meds,bombs:p.bombs,molotovs:p.molotovs,weapon:p.weapon}))};
  try{localStorage.setItem(CHECKPOINT7,JSON.stringify(v));checkpoint7=v;checkpointStatus7='CHECKPOINT SAVED · CONTINUE FROM '+MAPS[v.map].name;}
  catch(e){checkpointStatus7='STORAGE UNAVAILABLE · KEEP THIS TAB OPEN TO CONTINUE';}
 }
@@ -2340,7 +2306,7 @@ function inRect10(q,r){return q.x>r.x&&q.x<r.x+r.w&&q.y>r.y&&q.y<r.y+r.h;}
 function doorPoint10(){const d=shelter10.door;return{x:d.x+d.w/2,y:d.y+d.h/2};}
 function setDoor10(open,quiet=false){
  if(!shelter10)return false;const d=shelter10.door;
- if(!open&&[...players,...zombies].some(p=>!p.dead&&(p.hp>0||p.down)&&p.x>d.x-p.r-6&&p.x<d.x+d.w+p.r+6&&p.y>d.y-p.r-6&&p.y<d.y+d.h+p.r+6)){if(!quiet)toast('Doorway blocked.');return false;}
+ if(!open&&[...players,...zombies].some(p=>!p.dead&&p.hp>0&&p.x>d.x-p.r-6&&p.x<d.x+d.w+p.r+6&&p.y>d.y-p.r-6&&p.y<d.y+d.h+p.r+6)){if(!quiet)toast('Doorway blocked.');return false;}
  if(d.open===open)return true;d.open=open;shelter10.cooldown=.45;
  if(!open){d.solid=true;buildNav();flowTimer=0;}
  if(open)shelter10.opens++;
@@ -2358,7 +2324,6 @@ const rawControls10=controlsFor;
 controlsFor=function(p){
  if(p._input10)return p._input10;
  const bot=p.bot||autoPilot&&p.id===localSlot;
-  if(bot&&staging10()&&!(autoPilot&&p.id===localSlot))return stagingBot19(p);
  if(bot&&staging10()){
   p.intent=p.hp<95&&p.meds?'Healing':'Ready';const input={mx:0,my:0,a:shelter10.north?-Math.PI/2:0,w:-1,reload:p.ammo[p.weapon]<WEAPONS[p.weapon].clip,f:p.hp<95&&p.meds>0};
   if(autoPilot&&p.id===localSlot){const d=doorPoint10(),target=shelter10.door.solid?{x:d.x+(shelter10.north?0:-85),y:d.y+(shelter10.north?85:0)}:{x:d.x+(shelter10.north?0:140),y:d.y+(shelter10.north?-140:0)};const n=dist(p,target);if(n>17){input.mx=(target.x-p.x)/n;input.my=(target.y-p.y)/n;}if(dist(p,d)<125&&shelter10.door.solid&&!shelter10.door.open)input.e=true;}
@@ -2375,7 +2340,7 @@ controlsFor=function(p){
  if(primary&&!gear10.touchFire){gear10.attack++;}gear10.touchFire=primary;
  if(!primary&&!secondary)gear10.blocked=false;
  const eq=gear10.selected;
- return{...input,w:-1,q:false,g:false,c:false,f:false,h:false,seq:{v:tapSequence.v,x:tapSequence.x},equip10:eq,equipSeq10:gear10.seq,attack10:gear10.attack,use10:gear10.use,reload10:gear10.reload,primary10:primary,secondary10:secondary,shoot:primary&&eq<3&&!gear10.blocked,shove:(!obstructed&&!!keys[' '])||(secondary&&eq!==5),blocked10:gear10.blocked};
+ return{...input,w:-1,q:false,g:false,c:false,f:false,h:false,seq:{v:tapSequence.v,x:tapSequence.x},equip10:eq,equipSeq10:gear10.seq,attack10:gear10.attack,use10:gear10.use,reload10:gear10.reload,primary10:primary,secondary10:secondary,shoot:primary&&eq<3&&!gear10.blocked&&!staging10(),shove:(!obstructed&&!!keys[' '])||(secondary&&eq!==5),blocked10:gear10.blocked};
 };
 function haveGear10(p,n){return n<3||n===3&&p.bombs>0||n===4&&p.molotovs>0||n===5&&p.meds>0;}
 function selectGear10(n){const p=players[localSlot];if(!p||p.dead||p.down)return;n=clamp(n|0,0,5);if(p.fuel&&n!==2)return;if(!haveGear10(p,n)){toast(n===5?'No medkits.':'No '+(n===3?'pipe bombs.':'Molotovs.'));return;}if(n!==gear10.selected){gear10.previous=gear10.selected;gear10.selected=n;gear10.seq++;if(n<3)gear10.lastGun=n;if(n===3||n===4)gear10.throwable=n;gear10.blocked=!!(mouse.down||mouse.right||touchAim.fire);gear10.uiKey='';}updateUI(true);}
@@ -2397,7 +2362,7 @@ function equipHuman10(p,raw){
  if(p.equip10===3&&fresh&&!p.holdBlock10){i.g=true;p.lastG=false;}
  if(p.equip10===4&&fresh&&!p.holdBlock10){i.c=true;p.lastC=false;}
  if(p.equip10===5){i.f=primary;i.h=secondary;i.shove=false;const near=players.filter(q=>q.id!==p.id&&!q.down&&!q.dead&&q.hp<100&&dist(q,p)<92&&lineClear(p,q)).sort((a,b)=>Math.hypot(a.x-raw.tx,a.y-raw.ty)-Math.hypot(b.x-raw.tx,b.y-raw.ty));if(near.length)i.aid=near[0].id;}
- 
+ if(staging10()){i.shoot=i.g=i.c=i.shove=false;}
  if(p.down){i.shoot=!!raw.primary10;i.f=i.h=i.g=i.c=false;p.equip10=2;}
  return i;
 }
@@ -2410,11 +2375,16 @@ const playerBefore10=updatePlayer;updatePlayer=function(p,dt){
  if(p.fuel){p.equip10=2;if(p.id===localSlot)gear10.selected=2;}
 };
 const updateBefore10=update;update=function(dt){
- updateDoor10(dt); if(staging10())shelter10.waitTime+=dt;
- return updateBefore10(dt);
+ updateDoor10(dt);
+ if(!staging10())return updateBefore10(dt);
+ rememberMotion9();tickNo++;shelter10.waitTime+=dt;botTalkTimer-=dt;
+ // No director time, no advancing bots, no combat or threat spawns while staging.
+ for(const p of players)updatePlayer(p,dt);
+ updateDoor10(0);
+ if(netMode==='host'&&tickNo%3===0)broadcastSnapshot();
 };
 const spawnBefore10=spawnZombie;spawnZombie=function(x,y,...args){if(shelter10&&inStart10({x,y},T*.5))return null;return spawnBefore10(x,y,...args);};
-const hurtBefore10=hurtPlayer;hurtPlayer=function(p,...args){return hurtBefore10(p,...args);};
+const hurtBefore10=hurtPlayer;hurtPlayer=function(p,...args){if(staging10()&&inStart10(p,T*.5))return;return hurtBefore10(p,...args);};
 const nearestBefore10=nearestAction;nearestAction=function(p){const old=nearestBefore10(p);if(p.dead||p.down||p.pinnedBy>=0||old?.kind==='revive')return old;if(shelter10&&dist(p,doorPoint10())<125)return{kind:'startDoor',obj:shelter10.door,text:shelter10.door.open?'CLOSE SAFEHOUSE DOOR':'OPEN SAFEHOUSE DOOR'};return old;};
 const interactBefore10=interact;interact=function(p,held,dt){const a=nearestAction(p);if(a?.kind!=='startDoor')return interactBefore10(p,held,dt);p.interactHold=0;if(held&&!p.lastInteract&&shelter10.cooldown===0&&!p.down&&!p.dead&&(!p.bot||shelter10.departed||autoPilot&&p.id===localSlot))setDoor10(!shelter10.door.open);};
 const missionGoalBefore10=missionGoal;missionGoal=function(p){if(staging10()){const d=doorPoint10();return{x:d.x+(shelter10.north?0:90),y:d.y+(shelter10.north?-90:0)};}return missionGoalBefore10(p);};
@@ -2577,8 +2547,8 @@ const navBefore11=buildNav;buildNav=function(){if(v11.blastDepth){v11.navPending
 const sfxBefore11=sfx;let blastHit11=0,blastDeath11=0;
 sfx=function(type,...a){const t=performance.now();if(v11.blastDepth&&(type==='hit'||type==='death')){let n=type==='hit'?blastHit11++:blastDeath11++;if(n>=4){v11.soundMerged++;return;}}try{v11.soundAccepted++;return sfxBefore11(type,...a);}finally{perf8.work[P8I.sound]+=performance.now()-t;}};
 // Disconnect ended one-shot graphs instead of leaving references to the master.
-noiseSound=function(duration,volume,frequency=1700,type='lowpass',rate=1,delay=0){if(!audio.ctx||audio.muted)return;const a=audio.ctx,t=a.currentTime+delay,s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=audio.noise;s.playbackRate.value=rate;f.type=type;f.frequency.value=frequency;g.gain.setValueAtTime(Math.max(.0001,volume),t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);s.connect(f);f.connect(g);g.connect(soundBus19||audio.master);telemetry13.audioActive=(telemetry13.audioActive||0)+1;telemetry13.audioPeak=Math.max(telemetry13.audioPeak||0,telemetry13.audioActive);s.onended=()=>{telemetry13.audioActive--;s.disconnect();f.disconnect();g.disconnect();s.onended=null;};s.start(t);s.stop(t+duration+.01);};
-tone=function(freq,end,duration,volume=.1,type='sine',delay=0){if(!audio.ctx||audio.muted)return;const a=audio.ctx,t=a.currentTime+delay,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(1,end),t+duration);g.gain.setValueAtTime(Math.max(.0001,volume),t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(soundBus19||audio.master);telemetry13.audioActive=(telemetry13.audioActive||0)+1;telemetry13.audioPeak=Math.max(telemetry13.audioPeak||0,telemetry13.audioActive);o.onended=()=>{telemetry13.audioActive--;o.disconnect();g.disconnect();o.onended=null;};o.start(t);o.stop(t+duration+.015);};
+noiseSound=function(duration,volume,frequency=1700,type='lowpass',rate=1,delay=0){if(!audio.ctx||audio.muted)return;const a=audio.ctx,t=a.currentTime+delay,s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=audio.noise;s.playbackRate.value=rate;f.type=type;f.frequency.value=frequency;g.gain.setValueAtTime(Math.max(.0001,volume),t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);s.connect(f);f.connect(g);g.connect(audio.master);telemetry13.audioActive=(telemetry13.audioActive||0)+1;telemetry13.audioPeak=Math.max(telemetry13.audioPeak||0,telemetry13.audioActive);s.onended=()=>{telemetry13.audioActive--;s.disconnect();f.disconnect();g.disconnect();s.onended=null;};s.start(t);s.stop(t+duration+.01);};
+tone=function(freq,end,duration,volume=.1,type='sine',delay=0){if(!audio.ctx||audio.muted)return;const a=audio.ctx,t=a.currentTime+delay,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(1,end),t+duration);g.gain.setValueAtTime(Math.max(.0001,volume),t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(audio.master);telemetry13.audioActive=(telemetry13.audioActive||0)+1;telemetry13.audioPeak=Math.max(telemetry13.audioPeak||0,telemetry13.audioActive);o.onended=()=>{telemetry13.audioActive--;o.disconnect();g.disconnect();o.onended=null;};o.start(t);o.stop(t+duration+.015);};
 const bloodBefore11=blood;blood=function(...a){const t=performance.now();try{return bloodBefore11(...a);}finally{perf8.work[P8I.bloodFX]+=performance.now()-t;}};
 const deathBefore11=addDeath;addDeath=function(...a){const t=performance.now();try{return deathBefore11(...a);}finally{perf8.work[P8I.deathFX]+=performance.now()-t;}};
 const settleBefore11=settleBody;settleBody=function(...a){const t=performance.now();try{return settleBefore11(...a);}finally{perf8.work[P8I.bodyBake]+=performance.now()-t;}};
@@ -3030,16 +3000,16 @@ const SAVE13='dead-ends-save-v2',BACKUP13='dead-ends-save-v2-backup',RECORDS13='
 let sessionSave13=null,storageOK13=true,importBusy13=false;
 function readJSON13(key,fallback=null){try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback;}catch(_){return fallback;}}
 function checkpointValid13(v){if(v===null)return null;if(!v||v.schema!==1||!Number.isInteger(v.map)||v.map<1||v.map>4||![0,1,2].includes(v.difficulty)||!Array.isArray(v.carry)||v.carry.length!==4||!Number.isInteger(v.leg)||v.leg<0||v.leg>4||![v.kills,v.time].every(n=>Number.isFinite(n)&&n>=0&&n<1e8))throw Error('Invalid campaign checkpoint.');
- const carry=v.carry.map(p=>{if(!p||!Number.isFinite(p.hp)||p.hp<0||p.hp>100)throw Error('Invalid survivor health.');for(const key of ['meds','bombs','molotovs','weapon'])if(!Number.isInteger(p[key]??0)||(p[key]??0)<0||(p[key]??0)>(key==='weapon'?2:9))throw Error('Invalid equipment.');return{hp:p.hp,meds:p.meds,bombs:p.bombs,molotovs:p.molotovs||0,weapon:p.weapon,dead:!!p.dead,upgrade14:cleanUpgrades19(p.upgrade14,true)};});
+ const carry=v.carry.map(p=>{if(!p||!Number.isFinite(p.hp)||p.hp<0||p.hp>100)throw Error('Invalid survivor health.');for(const key of ['meds','bombs','molotovs','weapon'])if(!Number.isInteger(p[key]??0)||(p[key]??0)<0||(p[key]??0)>(key==='weapon'?2:9))throw Error('Invalid equipment.');return{hp:p.hp,meds:p.meds,bombs:p.bombs,molotovs:p.molotovs||0,weapon:p.weapon,dead:!!p.dead};});
  const config=v.replay12||{mode:'classic',seed:1};if(!['classic','remix'].includes(config.mode)||!Number.isSafeInteger(+config.seed)||+config.seed<1||+config.seed>999999999)throw Error('Invalid run seed.');return{schema:1,map:v.map,difficulty:v.difficulty,leg:v.leg,kills:v.kills,time:v.time,savedAt:Number.isFinite(v.savedAt)?v.savedAt:Date.now(),carry,replay12:{mode:config.mode,seed:+config.seed,challenge:CHALLENGES13.includes(config.challenge)?config.challenge:'seeded'},incaps13:Math.max(0,Math.min(10000,Number(v.incaps13)||0))};
 }
 function validRecord13(v){return v&&typeof v.key==='string'&&v.key.length<150&&typeof v.label==='string'&&v.label.length<160&&Number.isFinite(v.time)&&v.time>=0&&v.time<1e7&&Number.isInteger(v.saved)&&v.saved>=0&&v.saved<=4&&Number.isInteger(v.incaps)&&v.incaps>=0&&v.incaps<10000;}
-function saveEnvelope13(){const data={checkpoint:checkpoint7?checkpointValid13(checkpoint7):null,clears:[...clears7].filter(n=>Number.isInteger(n)&&n>=0&&n<5),records:run13.records.filter(validRecord13).slice(-100)};return{format:'dead-ends-save',schema:2,build:19,data,checksum:textHash13(JSON.stringify(data))};}
+function saveEnvelope13(){const data={checkpoint:checkpoint7?checkpointValid13(checkpoint7):null,clears:[...clears7].filter(n=>Number.isInteger(n)&&n>=0&&n<5),records:run13.records.filter(validRecord13).slice(-100)};return{format:'dead-ends-save',schema:2,build:13,data,checksum:textHash13(JSON.stringify(data))};}
 function validateSave13(v){if(v?.schema===1&&v?.carry)return{checkpoint:checkpointValid13(v),clears:[],records:[]};if(!v||v.format!=='dead-ends-save'||v.schema!==2||!v.data||v.checksum!==textHash13(JSON.stringify(v.data)))throw Error('Save is damaged or uses an unsupported format.');const d=v.data;if(!Array.isArray(d.clears)||d.clears.length>5||d.clears.some(n=>!Number.isInteger(n)||n<0||n>4)||!Array.isArray(d.records)||d.records.length>100||d.records.some(r=>!validRecord13(r)))throw Error('Invalid save data.');return{checkpoint:checkpointValid13(d.checkpoint),clears:[...new Set(d.clears)],records:d.records.map(r=>({key:r.key,label:r.label,time:r.time,saved:r.saved,incaps:r.incaps,kills:Math.max(0,Math.min(1e7,r.kills||0)),at:Number.isFinite(r.at)?r.at:0}))};}
 function persist13(){const envelope=saveEnvelope13();sessionSave13=envelope;try{const old=localStorage.getItem(SAVE13);if(old){try{validateSave13(JSON.parse(old));localStorage.setItem(BACKUP13,old);}catch(_){}}localStorage.setItem(SAVE13,JSON.stringify(envelope));if(checkpoint7)localStorage.setItem(CHECKPOINT7,JSON.stringify(checkpoint7));else localStorage.removeItem(CHECKPOINT7);localStorage.setItem(CLEARS7,JSON.stringify([...clears7]));storageOK13=true;}catch(_){storageOK13=false;}syncSaveUI13();return storageOK13;}
 const loadCheckpointBefore13=loadCheckpoint7;loadCheckpoint7=function(){const current=readJSON13(SAVE13),backup=readJSON13(BACKUP13);for(const saved of [sessionSave13,current,backup])if(saved){try{const d=validateSave13(saved);checkpoint7=d.checkpoint;clears7=new Set(d.clears);run13.records=d.records;return;}catch(_){}}loadCheckpointBefore13();if(checkpoint7)try{checkpoint7=checkpointValid13(checkpoint7);}catch(_){checkpoint7=null;}};
 writeSafehouse7=function(){checkpointStatus7='';if(v11.sandbox||preview8.stepping||netMode==='client')return;clears7.add(selectedMap);if(netMode!=='solo'||!campaignMode){persist13();return;}if(selectedMap===4){checkpoint7=null;checkpointStatus7='CAMPAIGN COMPLETE';persist13();return;}
- checkpoint7={schema:1,map:selectedMap+1,difficulty,leg:campaignLeg+1,kills:campaignKills+stats.kills,time:campaignTime+elapsed,savedAt:Date.now(),carry:players.map(p=>({hp:p.hp,dead:p.dead,meds:p.meds,bombs:p.bombs,molotovs:p.molotovs,weapon:p.weapon,upgrade14:cleanUpgrades19(p.upgrade14)})),replay12:runConfig12(),incaps13:run13.runIncaps+run13.incaps};const ok=persist13();checkpointStatus7=ok?'CHECKPOINT SAVED':'CHECKPOINT IN THIS TAB · EXPORT SAVE TO KEEP IT';};
+ checkpoint7={schema:1,map:selectedMap+1,difficulty,leg:campaignLeg+1,kills:campaignKills+stats.kills,time:campaignTime+elapsed,savedAt:Date.now(),carry:players.map(p=>({hp:p.hp,dead:p.dead,meds:p.meds,bombs:p.bombs,molotovs:p.molotovs,weapon:p.weapon})),replay12:runConfig12(),incaps13:run13.runIncaps+run13.incaps};const ok=persist13();checkpointStatus7=ok?'CHECKPOINT SAVED':'CHECKPOINT IN THIS TAB · EXPORT SAVE TO KEEP IT';};
 const continueBefore13=continueCampaign7;continueCampaign7=function(){loadCheckpoint7();run13.challenge=checkpoint7?.replay12?.challenge||'seeded';const incaps=checkpoint7?.incaps13||0;const r=continueBefore13();run13.runIncaps=incaps;return r;};$('continueBtn7').onclick=continueCampaign7;DEAD_ENDS.continueCampaign=continueCampaign7;
 function downloadJSON13(name,data){const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);}
 function exportSave13(){const v=saveEnvelope13();downloadJSON13('dead-ends-save.json',v);return v;}
@@ -3220,19 +3190,20 @@ const drawPickupBefore14=drawPickup;drawPickup=function(p){if(!['rifle14','auto1
 
 const drawPropBefore14=drawProp;drawProp=function(p){if(p.type!=='door'||p.open14===undefined||p.destroyed)return drawPropBefore14(p);if(!visible(p.x+p.w/2,p.y+p.h/2,100))return;const c=ctx,vertical=p.h>p.w,len=Math.max(p.w,p.h),th=Math.max(12,Math.min(p.w,p.h));c.save();c.translate(p.x+p.w/2,p.y+p.h/2);if(vertical)c.rotate(Math.PI/2);if(p.open14)c.rotate(-1.05);c.fillStyle='#12191a88';c.fillRect(-len/2+5,-th/2+6,len,th);c.fillStyle='#786746';c.fillRect(-len/2,-th/2,len,th);c.strokeStyle='#d1bb86';c.lineWidth=2;c.strokeRect(-len/2,-th/2,len,th);for(let x=-len/2+13;x<len/2;x+=19){c.strokeStyle='#4a3d2d';c.beginPath();c.moveTo(x,-th/2+2);c.lineTo(x,th/2-2);c.stroke();}c.fillStyle='#d8bd79';c.beginPath();c.arc(len/2-12,0,3,0,TAU);c.fill();c.restore();};
 
-const drawWorldBefore14=drawWorld;
+const drawWorldBefore14=drawWorld;drawWorld=function(){drawWorldBefore14();if(v14.safe.amount<=0||phase!=='play')return;const c=ctx,a=v14.safe.amount;c.save();c.translate(SAFE.doorX-5,SAFE.doorY);c.rotate(-1.08*(1-a));c.fillStyle='#170d0b99';c.fillRect(-4,-52,15,112);c.fillStyle='#a34a39';c.fillRect(-7,-55,14,110);c.strokeStyle='#e18a65';c.lineWidth=2;c.strokeRect(-7,-55,14,110);c.fillStyle='#e1c58b';c.fillRect(-9,24,5,8);c.restore();};
+
 const nearestActionBefore14=nearestAction;nearestAction=function(p){const a=nearestActionBefore14(p);if(!a)return a;if(a.kind==='safe')return{kind:'safe14',text:players.some(q=>!q.dead&&q.id!==p.id&&!inSafeGeom14(q))?'TEAMMATES OUTSIDE · HOLD TO SEAL ANYWAY':'SEAL THE SAFEHOUSE DOOR'};if(a.kind==='door'&&a.obj?.open14!==undefined)return{...a,text:a.obj.open14?'CLOSE DOOR':'OPEN DOOR'};if(a.kind==='pickup'&&a.obj?.type==='rifle14')return{...a,text:'TAKE HEAVY RIFLE'};if(a.kind==='pickup'&&a.obj?.type==='auto14')return{...a,text:'TAKE AUTO SHOTGUN'};return a;};
 const interactBefore14=interact;interact=function(p,held,dt){const a=nearestAction(p);if(a?.kind==='safe14'){if(!held){p.interactHold=0;return;}p.interactHold+=dt;const out=players.filter(q=>!q.dead&&!inSafeGeom14(q));if((!out.length&&p.interactHold>=.18)||(out.length&&p.interactHold>=1.6&&!p.bot))beginSeal14(p,!!out.length);return;}if(a?.kind==='door'&&a.obj?.open14!==undefined){p.interactHold=0;if(held&&!p.lastInteract&&(!p.bot||!a.obj.open14))toggleDoor14(a.obj,p);return;}if(a?.kind==='pickup'&&['rifle14','auto14'].includes(a.obj?.type)){p.interactHold=0;if(held&&(!p.lastInteract||p.bot)){const q=a.obj;if(q.used&(1<<p.id))return;p.upgrade14=p.upgrade14||{};if(q.type==='rifle14'){p.upgrade14.rifle=true;p.weapon=0;p.ammo[0]=14;p.reserves[0]=Math.max(p.reserves[0],98);toast(p.id===localSlot?'HEAVY RIFLE · FOUR-TARGET PENETRATION':'');}else{p.upgrade14.auto=true;p.weapon=1;p.ammo[1]=8;p.reserves[1]=Math.max(p.reserves[1],56);toast(p.id===localSlot?'AUTO SHOTGUN · FAST FOLLOW-UP SHOTS':'');}q.used|=1<<p.id;sfx('pickup',p.x,p.y);event13('weapon-find',{slot:p.id,type:q.type});}return;}return interactBefore14(p,held,dt);};
 
 // Counterplay: shove cancels committed specials when you catch the tell.
-const shoveBefore14=shove; // v19: interrupts are part of a valid shove, not a post-cooldown wrapper.
+const shoveBefore14=shove;shove=function(p){const candidates=zombies.filter(z=>z.hp>0&&dist(z,p)<112+z.r&&Math.cos(wrap(angle(p,z)-p.a))>.02);const r=shoveBefore14(p);for(const z of candidates){if(z.type==='brute'&&z.wind>0){z.wind=0;z.charge=0;z.stun=Math.max(z.stun,1.05);z.special=Math.max(z.special,3.5);v14.specialInterrupts++;if(p.id===localSlot)toast('CHARGE INTERRUPTED');event13('special-interrupt',{type:'brute',slot:p.id});}if(z.type==='screamer'&&z.screaming>0){z.screaming=0;z.stun=Math.max(z.stun,1.1);z.special=Math.max(z.special,5);v14.specialInterrupts++;if(p.id===localSlot)toast('SCREAM INTERRUPTED');event13('special-interrupt',{type:'screamer',slot:p.id});}}return r;};
 const drawZombieBefore14=drawZombie;drawZombie=function(z){const c=ctx;if(visible(z.x,z.y,100)){if(z.type==='brute'&&z.wind>0){const t=clamp(1-z.wind/.75,0,1);c.save();c.strokeStyle='#ffbc78cc';c.lineWidth=3;c.beginPath();c.arc(z.x,z.y,z.r+15+t*12,0,TAU);c.stroke();c.restore();}if(z.type==='leaper'&&z.wind>0){const t=clamp(1-z.wind/.8,0,1);c.save();c.strokeStyle='#ff8f7acc';c.lineWidth=3;c.beginPath();c.arc(z.x,z.y,z.r+12+t*10,0,TAU);c.stroke();c.restore();}if(z.type==='screamer'&&z.screaming>0){const t=clamp(1-z.screaming/1.8,0,1);c.save();c.strokeStyle='#f2d58bcc';c.setLineDash([4,5]);c.lineWidth=2;c.beginPath();c.arc(z.x,z.y,32+t*50,0,TAU);c.stroke();c.restore();}}return drawZombieBefore14(z);};
 
 // Bots cover active heals / safehouse sealing instead of all following the leader.
 const goalForBefore14=goalFor;goalFor=function(p){const base=goalForBefore14(p);if(!p.bot||p.dead||p.down||p.pinnedBy>=0)return base;const emergency=players.some(q=>q.down||q.pinnedBy>=0);if(emergency)return base;let subject=players.find(q=>q.id!==p.id&&!q.dead&&(q.heal>0||q.teamHeal>0));if(!subject&&v14.safe.closing)subject=players[v14.safe.closer];if(subject&&dist(p,subject)<650){const enemy=p.brain?.target,pos=nearestWalkPoint(subject.x+Math.cos(p.id*2.1)*145,subject.y+Math.sin(p.id*2.1)*145)||subject;return{type:'cover',target:combatPosition(p,enemy,pos),score:610,key:'cover14:'+subject.id,subject};}return base;};
 
 const updateBefore14=update;update=function(dt){const r=updateBefore14(dt);if(phase==='play'){updateFinalSafe14(dt);if(!v14.safe.closed&&!v14.safe.closing&&players.some(p=>!p.dead&&inSafeGeom14(p))&&tickNo%18===0)buildFlow(flow,players.filter(p=>!p.dead));}return r;};
-const startRunBefore14=startRun;startRun=function(...a){resetFinalSafe14();const r=startRunBefore14(...a);for(const p of players)p.upgrade14=cleanUpgrades19(p.upgrade14);return r;};
+const startRunBefore14=startRun;startRun=function(...a){resetFinalSafe14();const r=startRunBefore14(...a);for(const p of players)p.upgrade14={};return r;};
 const updateUIBefore14=updateUI;updateUI=function(force=false){const r=updateUIBefore14(force),p=players[localSlot];if(!p||phase==='menu')return r;if(inSafeGeom14(p)&&phase==='play')$('objective').textContent=v14.safe.closing?'Seal the door. Keep them back.':'Get everyone inside. Seal the red door.';for(const q of players){const el=$('survivor'+q.id);if(el&&!q.dead&&!q.down&&inSafeGeom14(q))el.querySelector('.sub').textContent=v14.safe.closing?'SEALING':'INSIDE';}if(!p.down){const u=upgrade14(p,p.weapon);if(u&&p.reload<=0)$('weaponname').textContent=u.name;}return r;};
 
 // Preserve upgrade state in ordinary snapshots / local diagnostics.
@@ -3410,7 +3381,7 @@ artInfected=function(c,z){
  if(k===2&&!brute){artLine(c,[-6,-5,1,-3,4,-4],lit,.7);artBox(c,-6,2,4,3,shade);}
  if(brute){artPoly(c,[-9,-6,-5,-10,0,-9,3,-5,0,-1,-6,-1],skin);artPoly(c,[-4,0,0,-1,4,3,4,8,-1,9,-5,7],skin);artLine(c,[-4,-7,-1,-6,0,-4],'#d1b28a',.7);artLine(c,[-3,3,1,4,2,6],'#786b50',.9);artLine(c,[-8,-4,-5,-1,-3,3],'#80352f',1.5);}
  if(scream){artPoly(c,[-5,-9,-2,-8,0,0,0,9,-3,8],'#c7b577');artLine(c,[-4,-6,-2,6],'#dfd7b2',1.5);artLine(c,[2,-7,4,5],'#dad2aa',1.3);}
- for(const side of[-1,1]){const asym=side===1?1.8:0;const ex=leap?6+shift*.2:5+shift*.2,ey=side*(brute&&side===1?16:12)+lurch;const hx=!z.awake?-5+st:leap?15:brute?12:14+asym,hy=side*(!z.awake?14:leap?16:brute?13:9)+st*side*2;
+ for(const side of[-1,1]){const asym=side===1?1.8:0;const ex=leap?6+shift*.2:5+shift*.2,ey=side*(brute&&side===1?16:12)+lurch;const hx=leap?15:brute?12:14+asym,hy=side*(leap?16:brute?13:9)+st*side*2;
  artLimb(c,0,side*8,ex,ey,brute&&side===1?10:5.7,shirt,'#202d27',lit);artPoly(c,[ex-1,ey-3,ex+2,ey-2,ex+1,ey+1,ex-1,ey+2],shade);artLimb(c,ex,ey,hx,hy,brute&&side===1?7:3.9,skin,'#3b4837','#b4b49a');
  artLine(c,[ex+1,ey-1,hx-1,hy-1],'#7e8e70',.7);artHand(c,hx+1,hy,-side*.1,skin,brute?1.2:.83,true);}
  if(run){artPoly(c,[-8,-8,-4,-10,0,-8,-2,-5,-6,-4],'#aa715b');}
@@ -3552,824 +3523,44 @@ const handlePacketBefore15=handlePacket;handlePacket=function(m){if(m&&m.t==='ch
 Object.assign(DEAD_ENDS,{build:'15',getNet15:()=>({rx:{...v15.rx},errors:v15.rxErrors.slice(),chunked:v15.chunked,reassembled:v15.reassembled,seq:net13.rxSequence,keySeq:net13.rxKey?.seq??null,stream:net13.rxKey?.stream??null,needKey:net13.needKey,resyncs:net13.resyncs,deltas:net13.deltas,keyframes:net13.keyframes,inMessages:net13.inMessages,outMessages:net13.messages,epoch:net13.epoch,peers:[...net13.peers.keys()]}),joinFromHash:joinFromHash15,assignCallsign:assignCallsign15,getV15:()=>({...v15,callsign:$('callsign')?.value,seal:{...v14.safe}})});
 DEAD_ENDS.ready.then(()=>{assignCallsign15();joinFromHash15();});
 
+/* ========================================================================
+   DEAD ENDS v16 — public room.
+   PLAY ONLINE joins the always-on public room, or hosts it when nobody is
+   there, and starts the run at once so later arrivals drop in mid-chapter.
+   Codes and invite links still make private rooms. If the public host
+   vanishes, guests find or re-host the room on their own.
+   ======================================================================== */
+const PUBLIC16='LOBBY';
+const lobby16={active:false,attempt:0,timer:0,rehosting:false,joins:0,hosts:0,rehosts:0};
+function publicStop16(){lobby16.active=false;lobby16.rehosting=false;clearTimeout(lobby16.timer);}
+function publicHostReady16(){if(!lobby16.active||netMode!=='host'||phase!=='menu')return;lobby16.hosts++;netStatus('Public room open. Anyone can drop in, friends can use code '+PUBLIC16+'.\nStarting.');startRun();}
+function tryPublic16(mode){if(!lobby16.active)return;clearTimeout(lobby16.timer);lobby16.attempt++;if(lobby16.attempt>8){publicStop16();netStatus('Could not reach the public room. Try again, or host a private game.');$('hostBtn').disabled=false;$('joinBtn').disabled=false;return;}
+ if(mode==='join'){$('joinCode').value=PUBLIC16;joinRoom();netStatus('Looking for the public room…');lobby16.timer=setTimeout(()=>{if(lobby16.active&&netMode==='client'&&!netConnected)tryPublic16('host');},7000);}
+ else{hostRoom();netStatus('Nobody is hosting. Opening the public room…');}}
+function quickPlay16(){if(phase!=='menu'){toast('LEAVE THIS RUN TO CHANGE ROOMS');return;}publicStop16();lobby16.active=true;lobby16.attempt=0;openCoop();tryPublic16('join');}
+function rehost16(){if(!lobby16.active||lobby16.rehosting)return;lobby16.rehosting=true;lobby16.rehosts++;$('pauseTitle').textContent='HOST LEFT';$('pauseText').textContent='Finding the next public game…';lobby16.timer=setTimeout(()=>{if(!lobby16.active)return;goMenu();lobby16.active=true;lobby16.rehosting=false;lobby16.attempt=0;openCoop();tryPublic16('join');},700+Math.random()*1100);}
+
+// The public room uses the fixed code. hostRoom picks a random one synchronously, before its first await.
+const hostRoomBefore16=hostRoom;hostRoom=function(){const r=hostRoomBefore16();if(lobby16.active){roomCode=PUBLIC16;$('roomCode').textContent=roomCode;}return r;};
+// Status strings are the only signal the host/join flows emit. Read them to drive the public room state machine.
+const netStatusBefore16=netStatus;netStatus=function(s){const r=netStatusBefore16(s);if(!lobby16.active||lobby16.rehosting)return r;
+ if(netMode==='client'&&/^(Room not found|No response from the host|Connection failed|Online connection failed|Online library failed)/.test(s)){lobby16.timer=setTimeout(()=>tryPublic16('host'),250+Math.random()*500);}
+ else if(netMode==='host'&&/unavailable-id/.test(s)){lobby16.timer=setTimeout(()=>tryPublic16('join'),900+Math.random()*1200);}
+ else if(netMode==='host'&&phase==='menu'&&(/^Online room ready/.test(s)||/timed out|unavailable\.|Online discovery failed/.test(s))){lobby16.timer=setTimeout(publicHostReady16,50);}
+ return r;};
+const handlePacketBefore16=handlePacket;handlePacket=function(m){const r=handlePacketBefore16(m);if(m?.t==='welcome'&&lobby16.active&&netMode==='client')lobby16.joins++;return r;};
+// Public guests never sit on the "host disconnected" screen: they go find the room again.
+setInterval(()=>{if(lobby16.active&&!lobby16.rehosting&&netMode==='client'&&phase==='play'&&!netConnected)rehost16();},1000);
+// Any manual room action, or leaving to the menu by hand, ends public mode.
+for(const id of['hostBtn','joinBtn','disconnectBtn','coopClose','quitBtn','endMenu'])$(id)?.addEventListener('click',()=>{if(!lobby16.rehosting)publicStop16();},true);
+const goMenuBefore16=goMenu;goMenu=function(...a){if(!lobby16.rehosting)publicStop16();return goMenuBefore16(...a);};
+for(const id of['publicBtn','publicBtn2'])$(id)?.addEventListener('click',quickPlay16);
+
+Object.assign(DEAD_ENDS,{build:'16',quickPlay:quickPlay16,getLobby16:()=>({...lobby16,code:roomCode,netMode,netConnected,phase})});
 
 Object.assign(DEAD_ENDS,{build:'18'});buildCredit111.textContent='Build 18 · Readable by design';$('menu').dataset.build='18';
 
-/* ---------------- V19: a living street, not a frozen shooting gallery ---------------- */
-function cleanUpgrades19(v,strict=false){
- if(v==null)return {rifle:false,auto:false};
- if(typeof v!=='object'||Array.isArray(v))throw Error('Invalid weapon carryover.');
- if(strict)for(const k of ['rifle','auto'])if(v[k]!==undefined&&typeof v[k]!=='boolean')throw Error('Invalid weapon upgrade flag.');
- return {rifle:v.rifle===true,auto:v.auto===true};
-}
-function portPass19(p,x,y,dx,dy,max){
- if(p.type!=='shelterDoor'||!p.solid||p.destroyed||(p.amount||0)>.025)return false;
- const v=p.h>p.w,origin=v?x:y,dir=v?dx:dy,lo=v?p.x:p.y,hi=lo+(v?p.w:p.h);
- if(Math.abs(dir)<1e-7)return false;
- let t0=(lo-origin)/dir,t1=(hi-origin)/dir;if(t0>t1)[t0,t1]=[t1,t0];
- if(t1<0||t0>max)return false;t0=Math.max(0,t0);t1=Math.min(max,t1);
- const side=v?y:x,ds=v?dy:dx,start=v?p.y:p.x,len=v?p.h:p.w;
- const a=side+ds*t0,b=side+ds*t1;
- return Math.min(a,b)>start+len*.23&&Math.max(a,b)<start+len*.77;
-}
-function purposeRay19(kind,x,y,dx,dy,max){const old=sim19.rayKind;sim19.rayKind=kind;try{return rayWorld(x,y,dx,dy,max);}finally{sim19.rayKind=old;}}
-function sightClear19(a,b){const d=dist(a,b);if(d<2)return true;sim19.sightTests++;return purposeRay19('sight',a.x,a.y,(b.x-a.x)/d,(b.y-a.y)/d,d).d>=d-3;}
-function bulletRay19(p,sx,sy,dx,dy,max){
- const lead=Math.hypot(sx-p.x,sy-p.y),m=lead?purposeRay19('bullet',p.x,p.y,(sx-p.x)/lead,(sy-p.y)/lead,lead):null;
- if(m&&m.d<lead-.1)return{d:0,obj:m.obj};
- return purposeRay19('bullet',sx,sy,dx,dy,max);
-}
-function aiRand19(z){const b=z.ai19;b.rng=(Math.imul(b.rng,1664525)+1013904223)>>>0;return b.rng/4294967296;}
-function initInfected19(z,mob=!!z.awake){
- if(z.ai19)return z.ai19;
- const b=z.ai19={state:mob?'mob':'idle',reason:mob?'Director pressure':'ambient',seen:false,
-  target:-1,goal:null,until:sim19.time+(mob?24:0),nextSense:sim19.time+(z.id%13)*.019,
-  nextIdle:sim19.time+.3+((z.id*17)%33)*.1,homeX:z.x,homeY:z.y,goalX:z.x,goalY:z.y,
-  lastNoise:0,mob,stuck:0,rng:(worldSeed^Math.imul(z.id,2654435761))>>>0,lastCue:-99};
- z.target=-1;return b;
-}
-function prepareAmbient19(){
- sim19.fields.clear();sim19.noises.length=0;sim19.time=0;sim19.lastShot=-99;sim19.prepShots=0;
- if(!shelter10)return;
- const d=doorPoint10();
- for(const z of zombies){
-  // Keep the initial threshold clear. Move ambient actors farther down the existing
-  // road instead of reducing the authored population or teleporting during play.
-  if(dist(z,d)<185){
-   for(let j=0;j<40;j++){
-    const h=fxHash(z.id*97+j*113+worldSeed),r=230+fxHash(z.id+j*239)*300,
-     a=(shelter10.north?-Math.PI/2:0)+(h-.5)*2.2,q={x:d.x+Math.cos(a)*r,y:d.y+Math.sin(a)*r};
-    if(positionFree(q.x,q.y,z.r+3)&&!inStart10(q,T*.5)){z.x=q.x;z.y=q.y;break;}
-   }
-  }
-  delete z.ai19;initInfected19(z);z.ndx=z.ndy=undefined;
- }
-}
-function emitNoise19(kind,x,y,r,who=-1){
- if(netMode==='client'||!Number.isFinite(x+y+r)||r<=0)return;
- const now=sim19.time,last=sim19.noises.at(-1);
- if(kind==='gunshot'){sim19.lastShot=now;if(staging10())sim19.prepShots++;}
- // Sustained fire updates one stimulus, rather than making every round another AI query.
- if(last&&last.kind===kind&&last.who===who&&now-last.at<.14&&Math.hypot(last.x-x,last.y-y)<65){last.id=++sim19.noiseId;last.at=now;last.expires=now+2.2;last.x=x;last.y=y;last.r=Math.max(last.r,r);return;}
- const n={id:++sim19.noiseId,kind,x,y,r,who,at:now,expires:now+(kind==='explosion'?4:2.2)};
- sim19.noises.push(n);if(sim19.noises.length>40)sim19.noises.shift();
- if(kind!=='gunshot')event13('world-noise',{kind,x:Math.round(x),y:Math.round(y),radius:r});
-}
-function observeInfected19(z){
- const b=initInfected19(z),now=sim19.time;b.nextSense=now+(z.awake?.17:.27)+(z.id%5)*.011;
- let best=null,score=Infinity;
- for(const p of players){
-  if(p.dead)continue;const d=dist(p,z),range=b.state==='hunt'||b.mob?780:480;
-  if(d>range)continue;
-  if(!z.awake&&d>105&&Math.cos(wrap(angle(z,p)-z.a))<.12)continue;
-  if(!sightClear19(z,p))continue;
-  const s=d*(p.down?1.15:1)-(b.target===p.id?60:0);if(s<score){best=p;score=s;}
- }
- if(best){
-  if(b.state!=='hunt')sim19.seen++;
-  b.state='hunt';b.reason='saw '+best.name;b.seen=true;b.target=z.target=best.id;
-  b.goal={x:best.x,y:best.y};b.until=now+6.5;z.awake=true;z.ndx=undefined;return;
- }
- b.seen=false;
- let heard=null,strength=0;
- for(const n of sim19.noises){
-  if(n.id<=b.lastNoise||n.expires<now)continue;const d=dist(z,n);if(d>n.r)continue;
-  const clear=sightClear19(z,n),reach=n.r*(clear?1:.52);if(d>reach)continue;
-  const s=(1-d/reach)+(n.kind==='explosion'?.5:0);if(s>strength){strength=s;heard=n;}
- }
- if(heard){
-  b.lastNoise=heard.id;sim19.heard++;b.goal={x:heard.x,y:heard.y};b.reason='heard '+heard.kind;
-  b.state='investigate';b.until=now+7;b.target=z.target=-1;z.awake=true;z.ndx=undefined;
- }
- if(b.mob&&now<b.until&&!b.goal){const p=getLeader();if(p)b.goal={x:p.x,y:p.y};}
- if(b.mob&&b.state==='mob'&&now<b.until){const p=getLeader();if(p)b.goal={x:p.x,y:p.y};}
- if(!b.seen&&(b.state==='hunt'||b.state==='investigate'||b.state==='mob')&&now>=b.until){
-  b.state='search';b.reason='lost contact';b.until=now+2.5;b.target=z.target=-1;b.mob=false;
-  b.nextIdle=now;z.awake=false;z.ndx=z.ndy=undefined;
- }
- if(b.state==='search'&&now>=b.until){b.state='idle';b.reason='quiet again';b.goal=null;b.homeX=z.x;b.homeY=z.y;}
-}
-function infectedTarget19(z){
- const b=initInfected19(z);
- if(b.seen&&players[b.target]&&!players[b.target].dead)return players[b.target];
- return b.goal;
-}
-function outsideGoal19(z,target){
- if(shelter10?.door.solid&&!inStart10(z)&&inStart10(target,T*.35)){
-  const d=doorPoint10();return{x:d.x+(shelter10.north?0:52),y:d.y+(shelter10.north?-52:0)};
- }
- return target;
-}
-function steerInfected19(z,target){
- if(target.flight!==undefined)return pathToward(z,target,flow);
- const q=outsideGoal19(z,target),d=dist(z,q);
- if(d<10)return{x:0,y:0};
- if(lineClear(z,q,true))return{x:(q.x-z.x)/d,y:(q.y-z.y)/d};
- const key=Math.floor(q.x/T)+','+Math.floor(q.y/T)+':'+navRevision+':'+sim19.doorRevision;
- let entry=sim19.fields.get(key);
- if(!entry&&sim19.fieldBudget>0){
-  sim19.fieldBudget--;const out=new Int16Array(COLS*ROWS);buildFlow(out,[q]);
-  entry={out,at:sim19.time};sim19.fields.set(key,entry);sim19.fieldBuilds++;
-  if(sim19.fields.size>16)sim19.fields.delete(sim19.fields.keys().next().value);
- }
- if(entry){entry.at=sim19.time;return flowDirection(z,entry.out);}
- return{x:z.ndx||0,y:z.ndy||0};
-}
-function idleStep19(z,dt){
- const b=z.ai19,now=sim19.time;sim19.ambientSteps++;
- for(const key of ['cool','stun','hit','special'])z[key]=Math.max(key==='special'?-1:0,(z[key]||0)-dt);
- if(now>=b.nextIdle){
-  const wander=aiRand19(z)>.35;b.state=b.state==='search'?'search':wander?'wander':'idle';
-  const a=aiRand19(z)*TAU,r=38+aiRand19(z)*85;
-  const x=z.x+Math.cos(a)*r,y=z.y+Math.sin(a)*r;
-  if(wander&&positionFree(x,y,z.r+3)&&lineClear(z,{x,y})&&(!inStart10({x,y},T*.25)||!shelter10?.door.solid)){
-   b.goalX=x;b.goalY=y;b.nextIdle=now+3+aiRand19(z)*3;
-  }else{b.goalX=z.x;b.goalY=z.y;b.nextIdle=now+1.2+aiRand19(z)*3.4;z.wa=a;}
- }
- let vx=0,vy=0,d=Math.hypot(b.goalX-z.x,b.goalY-z.y);
- if(d>7&&z.stun<=0){const speed=13+(z.id%9);vx=(b.goalX-z.x)/d*speed;vy=(b.goalY-z.y)/d*speed;}
- const hx=Math.floor(z.x/80),hy=Math.floor(z.y/80);
- for(let yy=-1;yy<=1;yy++)for(let xx=-1;xx<=1;xx++)for(const q of zHash.get(hx+xx+(hy+yy)*100)||[]){
-  if(q===z||q.hp<=0)continue;const dx=z.x-q.x,dy=z.y-q.y,ds=dx*dx+dy*dy,rr=z.r+q.r+1;
-  if(ds>.1&&ds<rr*rr){const dd=Math.sqrt(ds),f=(rr-dd)/rr*22;vx+=dx/dd*f;vy+=dy/dd*f;}
- }
- const ox=z.x,oy=z.y;moveEntity(z,(vx+(z.kx||0))*dt,(vy+(z.ky||0))*dt);
- z.kx*=Math.exp(-dt*6);z.ky*=Math.exp(-dt*6);
- const moved=Math.hypot(z.x-ox,z.y-oy);z.walk+=moved*.11;
- if(moved>.02)z.a+=wrap(Math.atan2(vy,vx)-z.a)*Math.min(1,dt*3);
- else z.a+=wrap((z.wa||z.a)-z.a)*Math.min(1,dt*.2);
- if(d>7&&moved<.01){b.stuck+=dt;if(b.stuck>.6){b.nextIdle=now;b.stuck=0;}}else b.stuck=0;
- for(const f of firePools)if(fireTouches(f,z.x,z.y,z.r*.5)){z.burning=.16;if((tickNo+z.id)%12===0)hurtZombie(z,19,0,0,0,f.who);}
- z.burning=Math.max(0,(z.burning||0)-dt);
-}
-function tryBatter19(z,target){
- const d=dist(z,target);if(d<1)return;
- const hit=rayWorld(z.x,z.y,(target.x-z.x)/d,(target.y-z.y)/d,Math.min(d,z.r+35));
- const p=hit.obj;if(!p||!p.solid||p.destroyed)return;
- if(p.type==='door'){damageProp(p,16,z.x,z.y);z.cool=.7;sim19.doorHits++;cue19('wood',z.x,z.y);}
- else if(p.type==='shelterDoor'||p.type==='finalDoor19'){p.hit19=.12;z.cool=1.25;sim19.doorHits++;cue19('metal',z.x,z.y);}
-}
-function stagingBot19(p){
- // Preparation is live gameplay: rescue/pin response must still work.
- if(players.some(q=>!q.dead&&(q.down||q.pinnedBy>=0)))return botControls(p);
- if(!p.brain)p.brain=makeBrain(p);
- const b=p.brain;
- if(clock>=b.nextThink){senseBot(p);b.nextThink=clock+.27;}
- const enemy=b.visible.filter(z=>z.hp>0&&z.awake).sort((a,b)=>dist(p,a)-dist(p,b))[0];
- const input={mx:0,my:0,a:p.a,w:-1,reload:p.ammo[p.weapon]<weaponStats14(p,p.weapon).clip&&!p.reload};
- if(p.down)return{...input,w:2,shoot:!!enemy,a:enemy?angle(p,enemy):p.a};
- if(enemy&&dist(p,enemy)<weaponStats14(p,p.weapon).range&&sightClear19(p,enemy)){
-  input.a=angle(p,enemy);input.shoot=true;input.shove=dist(p,enemy)<95&&lineClear(p,enemy);
-  p.intent='Covering';
- }else{input.f=p.hp<95&&p.meds>0;p.intent=input.f?'Healing':'Ready';}
- return input;
-}
-const spawnBefore19=spawnZombie;spawnZombie=function(...args){const z=spawnBefore19(...args);if(z)initInfected19(z,!!args[3]);return z;};
-const hurtZBefore19=hurtZombie;hurtZombie=function(z,...args){
- const alive=z.hp>0,r=hurtZBefore19(z,...args);
- if(alive&&z.hp>0){const b=initInfected19(z),p=players[args[4]];
-  b.state='investigate';b.reason='injured';b.seen=false;b.mob=false;b.until=sim19.time+8;
-  b.goal=p&&!p.dead?{x:p.x,y:p.y}:{x:z.x+(args[1]||0)*-90,y:z.y+(args[2]||0)*-90};
-  b.nextSense=0;z.awake=true;z.ndx=undefined;
- }return r;
-};
-const stepInfectedBefore19=updateZombie;updateZombie=function(z,dt){
- if(z.hp<=0)return stepInfectedBefore19(z,dt);
- const b=initInfected19(z);
- // A landed lure is a physical world event; it also wakes ambient listeners.
- const bomb=grenades.find(g=>!g.acid&&!g.fire&&g.flight<=0&&dist(z,g)<680&&(z.type==='common'||z.type==='runner'));
- if(bomb){b.state='investigate';b.reason='pipe bomb';b.goal={x:bomb.x,y:bomb.y};b.until=sim19.time+3;z.awake=true;}
- else if(sim19.time>=b.nextSense)observeInfected19(z);
- const wind=z.wind,scream=z.screaming;
- if(['idle','wander','search'].includes(b.state)&&z.victim<0&&!z.lunge&&!z.charge)idleStep19(z,dt);
- else stepInfectedBefore19(z,dt);
- if(z.wind>0&&!wind)cue19(z.type==='brute'?'brute':'leaper',z.x,z.y);
- if(z.screaming>0&&!scream)cue19('screamer',z.x,z.y);
-};
-const explosionBefore19=explosion;explosion=function(x,y,...args){emitNoise19('explosion',x,y,1150,args[2]);return explosionBefore19(x,y,...args);};
-const damagePropBefore19=damageProp;damageProp=function(p,...args){
- if(p.type==='shelterDoor'||p.type==='finalDoor19'){p.hit19=.12;cue19('metal',p.x+p.w/2,p.y+p.h/2);return;}
- const alarm=p.alarm,r=damagePropBefore19(p,...args);if(alarm)emitNoise19('alarm',p.x,p.y,1250);return r;
-};
-const navBefore19=buildNav;buildNav=function(){sim19.fields.clear();return navBefore19();};
-const doorBefore19=toggleDoor14;toggleDoor14=function(d,by){const old=d.open14,r=doorBefore19(d,by);if(old!==d.open14){sim19.doorRevision++;emitNoise19('door',d.x+d.w/2,d.y+d.h/2,180,by?.id);cue19('door',d.x,d.y);}return r;};
-const updateBefore19=update;update=function(dt){
- sim19.time+=dt;sim19.fieldBudget=2;
- if(staging10())sim19.stagingSteps++;
- for(let i=sim19.noises.length-1;i>=0;i--)if(sim19.noises[i].expires<sim19.time)sim19.noises.splice(i,1);
- const r=updateBefore19(dt);
- for(const p of props)if(p.hit19>0)p.hit19=Math.max(0,p.hit19-dt);
- if(tickNo%60===0)for(const p of props)if(p.alarming>0)emitNoise19('alarm',p.x,p.y,1250);
- return r;
-};
-
-// Preparation suppresses automatic pacing, not consequences. Shooting an alarm
-// can still call a forced mob; ordinary gunfire only alerts existing listeners.
-function stagingFlow19(){
- const key=worldSeed+':'+selectedMap+':'+navRevision+':'+sim19.doorRevision;
- if(sim19.prepField?.key===key)return sim19.prepField.out;
- const d=doorPoint10(),q=nearestWalkPoint(d.x+(shelter10.north?0:80),d.y+(shelter10.north?-80:0));
- const out=new Int16Array(COLS*ROWS);out.fill(-1);if(q)buildFlow(out,[q]);sim19.prepField={key,out};return out;
-}
-function updateStagingPressure19(dt){
- if(!director)return;director.spawnClock-=dt;
- if(director.spawnClock>0)return;
- const index=director.pending.findIndex(w=>w.forced);if(index<0)return;
- director.spawnClock=.1;const wave=director.pending[index];wave.age+=.1;
- const type=directorCommon12(wave.left),point=hiddenSpawnPoint(wave.behind,type)||hiddenSpawnPoint(!wave.behind,type);
- if(point){const z=spawnZombie(point.x,point.y,type,true);if(z){wave.left--;metrics.spawned++;}}
- if(wave.left<=0||wave.age>12)director.pending.splice(index,1);
-}
-
-const departBefore19=depart10;depart10=function(){
- if(!shelter10||shelter10.departed)return;
- const forced=director?.pending.filter(w=>w.forced)||[];departBefore19();
- if(forced.length){director.pending=forced;director.eventUntil=elapsed+7;}
-};
-
-/* ---------------- V19: doors, chapter carry, bounded packet recovery ---------------- */
-function buildFinalDoor19(){
- const y=Math.floor(SAFE.doorY/T)*T;
- sim19.finalDoor=addProp('finalDoor19',SAFE.x-44,y,25,T*2,{solid:false,open:true,amount:1,hp:0,vertical:true});
- ensureSpatial6();
-}
-const worldBefore19=makeWorld;makeWorld=function(...args){
- sim19.fields.clear();sim19.noises.length=0;sim19.finalDoor=null;sim19.doorRevision++;
- const r=worldBefore19(...args);buildFinalDoor19();return r;
-};
-function safeDoorCenter19(){const d=sim19.finalDoor;return d?{x:d.x+d.w/2,y:d.y+d.h/2}:{x:SAFE.doorX,y:SAFE.doorY};}
-function cancelSeal19(reason){
- if(!v14.safe.closing)return;v14.safe.closing=false;v14.safe.amount=0;v14.safe.closed=false;
- if(sim19.finalDoor){sim19.finalDoor.open=true;sim19.finalDoor.amount=1;sim19.finalDoor.solid=false;}
- sim19.sealsCancelled++;event13('seal-cancelled',{reason});toast(reason,2);
- if(netMode==='host')netEvents.push({type:'notice',title:'DOOR BLOCKED',sub:reason});
-}
-beginSeal14=function(p,abandon=false){
- if(netMode==='client'||phase!=='play'||!p||p.dead||p.down||p.pinnedBy>=0||v14.safe.closing||v14.safe.closed)return false;
- const d=sim19.finalDoor;if(!d||dist(p,safeDoorCenter19())>135||!inSafeGeom14(p))return false;
- if(zombies.some(z=>z.hp>0&&inSafeGeom14(z))){toast('Clear the infected out of the safehouse.');return false;}
- if(!canCloseDoor14(d)){toast('Clear the doorway first.');return false;}
- v14.safe.closing=true;v14.safe.amount=0;v14.safe.closer=p.id;p.interactHold=0;
- d.open=false;cue19('seal-start',d.x,d.y);event13('safehouse-seal',{slot:p.id,abandon});
- return true;
-};
-updateFinalSafe14=function(dt){
- if(netMode==='client'||!v14.safe.closing||v14.safe.closed)return;
- const p=players[v14.safe.closer],d=sim19.finalDoor;
- if(!p||p.dead||p.down||p.pinnedBy>=0||!inSafeGeom14(p)||dist(p,safeDoorCenter19())>150){cancelSeal19('The survivor sealing the door was interrupted.');return;}
- if(!d||!canCloseDoor14(d)||zombies.some(z=>z.hp>0&&inSafeGeom14(z))){cancelSeal19('Get the doorway and room clear.');return;}
- v14.safe.amount=clamp(v14.safe.amount+dt/0.6,0,1);d.amount=1-v14.safe.amount;
- if(v14.safe.amount>=1){
-  v14.safe.closed=true;d.solid=true;d.open=false;d.amount=0;sim19.doorRevision++;
-  cue19('seal-close',d.x,d.y);event13('safehouse-closed',{inside:players.filter(p=>!p.dead&&inSafeGeom14(p)).length});finishRun(true);
- }
-};
-const nearestBefore19=nearestAction;nearestAction=function(p){
- const a=nearestBefore19(p);
- if(a?.kind==='safe14'){
-  if(dist(p,safeDoorCenter19())>135)return null;
-  if(zombies.some(z=>z.hp>0&&inSafeGeom14(z)))return{kind:'safeBlocked19',text:'CLEAR THE INFECTED INSIDE'};
-  return a;
- }return a;
-};
-const botBefore19=botControls;botControls=function(p){
- const input=botBefore19(p);
- if((autoPilot||players.every(q=>q.bot||q.dead))&&inSafeGeom14(p)&&players.every(q=>q.dead||inSafeGeom14(q))){
-  if(p.id===getLeader()?.id){
-   const d=safeDoorCenter19(),goal={x:SAFE.x+70,y:d.y};
-   if(dist(p,d)>121&&!v14.safe.closing){const n=navTo(p,goal,12);input.mx=n.x;input.my=n.y;input.e=false;}
-   else {input.mx=input.my=0;input.e=!v14.safe.closed;}
-  }else if(nearestAction(p)?.kind==='safe14')input.e=false;
- }
- return input;
-};
-const applySealBefore19=applySeal15;applySeal15=function(s){
- applySealBefore19(s);const d=sim19.finalDoor;if(!d)return;
- d.open=!v14.safe.closing&&!v14.safe.closed;d.amount=v14.safe.closed?0:1-v14.safe.amount;d.solid=v14.safe.closed;
-};
-const startBefore19=startRun;startRun=function(s,fromNet=false){
- sim19.time=0;sim19.noises.length=0;sim19.fields.clear();
- if(netMode==='host')for(const o of slotOwners.values())o.ready19=false;
- if(netMode==='client'){net19.ready=false;receivedWorld=false;}
- const r=startBefore19(s,fromNet);
- for(const p of players){p.upgrade14=cleanUpgrades19(p.upgrade14);if(netMode==='host'&&slotOwners.has(p.id))p.bot=!slotOwners.get(p.id).ready19;}
- if(netMode==='client'){net19.ready=false;show('coop');show('roomSetup',false);netStatus('Synchronizing the squad…');}
- if(netMode==='host'){net19.ready=true;sendAll(makeSnapshot(false));}
- return r;
-};
-// The visible weapon find replaces a slot, so local equipment selection must follow it.
-const interactBefore19=interact;interact=function(p,...args){
- const old=p.weapon,u0=!!p.upgrade14?.rifle,u1=!!p.upgrade14?.auto,r=interactBefore19(p,...args);
- if((!u0&&p.upgrade14?.rifle)||(!u1&&p.upgrade14?.auto)){
-  p.equip10=p.lastGun10=p.weapon;p.reload=0;
-  if(p.id===localSlot&&netMode!=='client'){gear10.selected=gear10.lastGun=p.weapon;gear10.seq++;p.equipAck10=gear10.seq;gear10.uiKey='';}
- }return r;
-};
-// Chunking is Claude's JSON-safe transport, now with size/time bounds and no
-// allocation from an untrusted advertised n until the header is validated.
-reassemble15=function(m){
- const fail=()=>{net19.malformed++;return null;};
- if(!Number.isSafeInteger(m.id)||m.id<0||!Number.isInteger(m.n)||m.n<1||m.n>192||!Number.isInteger(m.i)||m.i<0||m.i>=m.n||typeof m.d!=='string'||m.d.length>CHUNK15)return fail();
- const now=performance.now();for(const [id,e]of chunks15)if(now-e.at>7000)chunks15.delete(id);
- let e=chunks15.get(m.id);
- if(!e){if(chunks15.size>=4)chunks15.delete(chunks15.keys().next().value);e={parts:new Array(m.n),got:0,bytes:0,at:now};chunks15.set(m.id,e);}
- if(e.parts.length!==m.n)return fail();
- if(e.parts[m.i]===undefined){e.parts[m.i]=m.d;e.got++;e.bytes+=m.d.length;}
- if(e.bytes>1048576){chunks15.delete(m.id);return fail();}
- if(e.got<m.n)return null;chunks15.delete(m.id);v15.reassembled++;net19.chunkBytes+=e.bytes;
- try{return JSON.parse(e.parts.join(''));}catch(_){return fail();}
-};
-// Compact-state metadata carries the world epoch too. A delayed previous-run
-// keyframe is not a new world, and cannot overwrite a client's current chapter.
-const sendBefore19=sendTo;sendTo=function(slot,m){
- if(['world','lobby','finish'].includes(m?.t))m={...m,protocol19:19,epoch19:net13.epoch,run19:worldSeed,public19:net19.public};
- if(m?.t==='world'){const o=slotOwners.get(slot);if(o)o.ready19=false;}
- return sendBefore19(slot,m);
-};
-const snapshotBefore19=makeSnapshot;makeSnapshot=function(...a){const m=snapshotBefore19(...a);m.protocol19=19;m.run19=worldSeed;return m;};
-
-/* ---------------- V19: one-click public rounds; private codes remain optional ----------------
-   Discovery uses a bounded set of well-known PeerJS IDs, not a hidden game server.
-   Local tabs discover/elect over BroadcastChannel. PeerJS is the global arbiter
-   for each public room ID; a full room spills into the next public room.
-   Claude's base64 + 8k JSON fragments remain the wire representation. */
-const PUBLIC_ROOMS19=['LOBBY',...Array.from({length:15},(_,i)=>'PUB'+String(i+2).padStart(2,'0'))];
-function logNet19(event,detail=''){net19.log.push({at:+performance.now().toFixed(1),event,detail});if(net19.log.length>80)net19.log.shift();}
-function codeOK19(code){return typeof code==='string'&&/^[A-Z0-9]{5}$/.test(code);}
-function pause19(ms){return new Promise(resolve=>setTimeout(resolve,ms));}
-function isCurrent19(op){return net19.operation===op;}
-function cancelSearch19(){net19.operation++;net19.seeking=false;net19.public=false;net19.manual=false;net19.cancel?.({ok:false,why:'cancelled'});net19.cancel=null;clearTimeout(net19.reconnectTimer);clearTimeout(net19.publicTimer);net19.reconnectTimer=net19.publicTimer=null;}
-const disconnectBefore19=disconnectNet;disconnectNet=function(...a){
- if(!net19.internal)cancelSearch19();
- net19.ready=false;net19.awaiting=null;net19.stream=null;net19.run=null;net19.registering=false;
- net19.joinResolve?.({ok:false,why:'cancelled'});net19.joinResolve=null;chunks15.clear();net13.rxKey=null;
- return disconnectBefore19(...a);
-};
-function transitionNet19(){net19.internal++;try{disconnectNet(false);}finally{net19.internal--;}}
-function announcePublic19(to){
- if(netMode!=='host'||!net19.public)return;
- broadcast?.postMessage({t:'offer19',protocol19:19,from:localToken,to,code:roomCode,
-  free:3-slotOwners.size,playing:phase==='play',map:selectedMap,cloud:net19.cloud,at:Date.now()});
-}
-setupBroadcast=function(){
- if(broadcast)return;
- try{broadcast=new BroadcastChannel('dead-ends-coop-v19');broadcast.onmessage=({data:m})=>{
-  if(!m||m.from===localToken||m.to&&m.to!==localToken)return;
-  if(m.t==='discover19'){announcePublic19(m.from);return;}
-  if(m.t==='candidate19'){if(PUBLIC_ROOMS19.includes(m.code)&&typeof m.from==='string')net19.candidates.set(m.from,{code:m.code,at:performance.now()});return;}
-  if(m.t==='offer19'){if(PUBLIC_ROOMS19.includes(m.code)&&Number.isInteger(m.free))net19.offers.set(m.code,{...m,seen:performance.now()});return;}
-  if(m.room!==roomCode)return;
-  if(netMode==='host'){
-   if(m.t==='bc-join'){
-    if(m.protocol19!==19){broadcast.postMessage({t:'reject',room:roomCode,from:localToken,to:m.from,reason:'This room needs DEAD ENDS v19.',why19:'version'});return;}
-    let slot=[...slotOwners].find(([,o])=>o.token===m.from)?.[0];
-    if(slot===undefined)slot=claimSlot({token:m.from,name:cleanName(m.name),transport:'bc',ready19:false,lastReal19:performance.now()});
-    if(slot===null){broadcast.postMessage({t:'reject',room:roomCode,from:localToken,to:m.from,reason:'This squad is full.',why19:'full'});return;}
-    welcome19(slot);return;
-   }
-   const slot=[...slotOwners].find(([,o])=>o.token===m.from)?.[0];
-   if(slot!==undefined)hostMessage19(slot,m);return;
-  }
-  if(netMode==='client')handlePacket(m);
- };}catch(e){logNet19('local discovery unavailable',e.message);}
-};
-const claimSlotBefore19=claimSlot;claimSlot=function(owner){
- // Prefer a living AI. Do not invent a fresh full-health survivor for a late join.
- const available=[1,2,3].filter(s=>!slotOwners.has(s)).sort((a,b)=>(players[a]?.dead?2:players[a]?.down?1:0)-(players[b]?.dead?2:players[b]?.down?1:0));
- if(!available.length)return null;
- const slot=available[0];owner.ready19=false;owner.lastSeq19=-1;owner.lastReal19=performance.now();slotOwners.set(slot,owner);
- const p=players[slot];if(p){p.bot=true;p.name=owner.name;p.equipAck10=0;p.attackSeen10=p.useSeen10=p.reloadSeen10=0;p.equip10=p.weapon;p.lastGun10=p.weapon;p.holdBlock10=false;}
- updateLobby();return slot;
-};
-function welcome19(slot){
- sendTo(slot,{t:'welcome',slot,room:roomCode,playing:phase!=='menu',protocol19:19,public19:net19.public,cloud19:net19.cloud});
- if(phase!=='menu'){
-  sendTo(slot,{t:'world',seed:worldSeed,difficulty,map:selectedMap,campaign:campaignMode});sendTo(slot,makeSnapshot(false));
-  if(phase==='win'||phase==='loss')sendTo(slot,{t:'finish',win:phase==='win',elapsed,stats,saved:players.filter(p=>!p.dead&&inSafeGeom14(p)).length,survivors:players.map(p=>({id:p.id,x:p.x,y:p.y,hp:p.hp,dead:p.dead,down:p.down,name:p.name,bot:p.bot}))});
- }
- updateNetStatus();announcePublic19();
-}
-function hostMessage19(slot,m){
- const owner=slotOwners.get(slot);if(!owner||!m||typeof m!=='object')return;
- owner.lastReal19=performance.now();
- if(m.t==='ready19'){
-  if(m.run!==worldSeed||m.stream!==net13.epoch){net19.stale++;return;}
-  const p=players[slot];if(!p)return;
-  if(!owner.ready19){owner.ready19=true;p.bot=false;p.name=owner.name;p.brain=null;
-   p.equipAck10=0;p.attackSeen10=p.useSeen10=p.reloadSeen10=0;p.holdBlock10=false;
-   owner.lastInput=clock;logNet19('player ready',String(slot));toast(owner.name+' joined the squad',2);
-  }
-  sendTo(slot,{t:'ready-ack19',run:worldSeed,stream:net13.epoch,slot});sendTo(slot,makeSnapshot(false));updateNetStatus();return;
- }
- if(m.t==='input'){
-  if(!owner.ready19){if(m.input?.resync13&&performance.now()-(owner.lastResync19||0)>1200){owner.lastResync19=performance.now();sendTo(slot,makeSnapshot(false));}return;}
-  if(!Number.isSafeInteger(m.seq)||m.seq<=owner.lastSeq19){net19.stale++;return;}
-  owner.lastSeq19=m.seq;remoteInputs.set(slot,sanitizeInput(m.input));owner.lastInput=clock;return;
- }
- if(m.t==='leave')releaseSlot(slot);
-}
-function acceptPeer19(c,myPeer){
- let assigned=null;
- c.on('open',()=>{
-  if(peer!==myPeer||netMode!=='host'){c.close();return;}
-  if(c.metadata?.protocol19!==19){sendPeer15(c,{t:'reject',reason:'This room needs DEAD ENDS v19.',why19:'version'});setTimeout(()=>c.close(),200);return;}
-  assigned=claimSlot({name:cleanName(c.metadata?.name),transport:'peer',token:c.peer,ready19:false});
-  if(assigned===null){sendPeer15(c,{t:'reject',reason:'This squad is full.',why19:'full'});setTimeout(()=>c.close(),200);return;}
-  connections.set(assigned,c);welcome19(assigned);
- });
- c.on('data',m=>{if(peer===myPeer&&assigned!==null)hostMessage19(assigned,m);});
- const close=()=>{if(peer===myPeer&&assigned!==null&&connections.get(assigned)===c){releaseSlot(assigned);announcePublic19();}};
- c.on('close',close);c.on('error',close);
-}
-async function createPeer19(id,op){
- const Peer=await loadPeer();if(!isCurrent19(op))throw{type:'cancelled'};
- return new Promise((resolve,reject)=>{
-  let done=false;const p=peer=new Peer(id,{debug:0,secure:true});
-  const finish=(err)=>{if(done)return;done=true;clearTimeout(timer);if(err)reject(err);else resolve(p);};
-  const timer=setTimeout(()=>finish({type:'network-timeout'}),6500);
-  p.on('open',()=>{if(peer!==p||!isCurrent19(op))return finish({type:'cancelled'});net19.cloud='online';finish();});
-  p.on('connection',c=>acceptPeer19(c,p));
-  p.on('error',e=>{if(peer!==p)return;if(!done)return finish(e);logNet19('peer error',e.type||e.message);
-   net19.peerError?.(e);
-   if(e.type==='network'||e.type==='server-error'||e.type==='socket-error'){net19.cloud='offline';if(netMode==='host')updateNetStatus();}
-  });
-  p.on('disconnected',()=>{if(peer!==p)return;net19.cloud='reconnecting';logNet19('signalling disconnected');
-   setTimeout(()=>{if(peer===p&&!p.destroyed&&p.disconnected)try{p.reconnect();}catch(_){}},1600);
-  });
- });
-}
-function waitJoin19(ms=8000){
- return new Promise(resolve=>{
-  const timer=setTimeout(()=>{if(net19.joinResolve===done)net19.joinResolve=null;resolve({ok:false,why:'timeout'});},ms);
-  function done(value){clearTimeout(timer);if(net19.joinResolve===done)net19.joinResolve=null;resolve(value);}
-  net19.joinResolve=done;
- });
-}
-async function connectRoom19(code,op,forcePeer=false){
- transitionNet19();if(!isCurrent19(op))return{ok:false,why:'cancelled'};
- netMode='client';roomCode=code;net19.ready=false;netConnected=false;receivedWorld=false;setupBroadcast();
- netStatus(net19.public?'Joining a public squad…':'Joining private room…');
- show('roomDisplay',!net19.public);show('hostStart',false);$('hostBtn').disabled=$('joinBtn').disabled=true;
- if(!forcePeer&&broadcast){
-  const joined=waitJoin19(550);
-  broadcast.postMessage({t:'bc-join',protocol19:19,room:code,from:localToken,name:cleanName($('callsign').value)});
-  const result=await joined;if(result.ok||result.why==='full'||result.why==='version')return result;
- }
- if(!isCurrent19(op))return{ok:false,why:'cancelled'};
- try{
-  const p=await createPeer19(undefined,op);if(!isCurrent19(op))return{ok:false,why:'cancelled'};
-  const joined=waitJoin19(6500);
-  net19.peerError=e=>{if(e.type==='peer-unavailable')net19.joinResolve?.({ok:false,why:'missing'});else if(['network','webrtc','server-error'].includes(e.type))net19.joinResolve?.({ok:false,why:e.type});};
-  const c=p.connect('deadends-v19-'+code,{reliable:true,serialization:'json',metadata:{name:cleanName($('callsign').value),protocol19:19}});
-  connections.set(0,c);
-  c.on('data',m=>{if(peer===p&&netMode==='client')handlePacket(m);});
-  c.on('close',()=>{if(peer===p&&netMode==='client'){netConnected=false;net19.ready=false;net19.joinResolve?.({ok:false,why:'closed'});lostHost19();}});
-  c.on('error',()=>{if(peer===p)net19.joinResolve?.({ok:false,why:'connection'});});
-  return await joined;
- }catch(e){logNet19('join failed',e.type||e.message);return{ok:false,why:e.type==='cancelled'?'cancelled':'service'};}
-}
-async function createRoom19(code,op,auto=false,localOnly=false){
- transitionNet19();if(!isCurrent19(op))return{ok:false,why:'cancelled'};
- netMode='host';localSlot=0;roomCode=code;net19.registering=true;net19.ready=true;net19.cloud=localOnly?'local':'connecting';setupBroadcast();
- show('roomDisplay',!net19.public);$('roomCode').textContent=code;$('hostBtn').disabled=$('joinBtn').disabled=true;
- netStatus(net19.public?'Opening a public squad…':'Opening private room…');
- if(!localOnly){try{await createPeer19('deadends-v19-'+code,op);}catch(e){
-   if(!isCurrent19(op))return{ok:false,why:'cancelled'};
-   if(e.type==='unavailable-id'){sendAll({t:'redirect19',code,public19:net19.public,forcePeer:true});return{ok:false,why:'taken'};}
-   net19.cloud='local';net19.localOnly=true;logNet19('local fallback',e.type||e.message);
-  }}
- if(!isCurrent19(op))return{ok:false,why:'cancelled'};
- net19.registering=false;net19.seeking=false;net19.ready=true;updateNetStatus();announcePublic19();
- if(auto&&phase==='menu')startRun();else show('hostStart',true);
- syncOnlineUI19();return{ok:true,host:true,local:net19.cloud!=='online'};
-}
-function randomCode19(){const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<5;i++)s+=alphabet[Math.floor(Math.random()*alphabet.length)];return s;}
-hostRoom=async function(){cancelSearch19();const op=net19.operation;net19.manual=true;openCoop();const r=await createRoom19(randomCode19(),op,false);if(r.why==='taken'&&isCurrent19(op))await createRoom19(randomCode19(),op,false);};
-joinRoom=async function(){
- const code=$('joinCode').value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5);
- if(!codeOK19(code)){netStatus('Enter the five-character private room code.');return false;}
- cancelSearch19();net19.manual=true;const op=net19.operation;openCoop();const r=await connectRoom19(code,op);
- if(!r.ok&&isCurrent19(op)){netStatus(r.why==='full'?'This private squad is full.':'Could not join. Check that the host is online and both copies are v19.');$('hostBtn').disabled=$('joinBtn').disabled=false;}
- return r.ok;
-};
-async function quickPlay19(){
- if(phase!=='menu'){toast('Return to the menu to change squads.');return;}
- cancelSearch19();const op=net19.operation;net19.public=true;net19.seeking=true;net19.localOnly=false;net19.offers.clear();net19.candidates.clear();
- openCoop();syncOnlineUI19();setupBroadcast();netStatus('Finding a squad…');
- broadcast?.postMessage({t:'discover19',protocol19:19,from:localToken});await pause19(240);
- if(!isCurrent19(op))return;
- const offers=[...net19.offers.values()].filter(o=>o.free>0).sort((a,b)=>PUBLIC_ROOMS19.indexOf(a.code)-PUBLIC_ROOMS19.indexOf(b.code));
- if(offers.length){const r=await connectRoom19(offers[0].code,op);if(r.ok||!isCurrent19(op))return;}
- for(let i=0;i<PUBLIC_ROOMS19.length&&isCurrent19(op);i++){
-  const code=PUBLIC_ROOMS19[i];net19.publicIndex=i;
-  if(net19.offers.get(code)?.free===0)continue;
-  // Same-origin contenders pick one candidate before contacting global discovery.
-  setupBroadcast();net19.candidates.set(localToken,{code,at:performance.now()});
-  broadcast?.postMessage({t:'candidate19',protocol19:19,from:localToken,code});await pause19(220);
-  if(!isCurrent19(op))return;
-  const older=[...net19.candidates].filter(([token,c])=>token<localToken&&c.code===code&&performance.now()-c.at<10000);
-  if(older.length){
-   netStatus('Another tab is opening the squad…');
-   const r=await connectRoom19(code,op);if(r.ok)return;
-   if(!isCurrent19(op))return;
-  }
-  // Claiming a well-known ID is an atomic global election. An existing owner
-  // sends unavailable-id; then we join it instead of starting a competing match.
-  const made=await createRoom19(code,op,true);
-  if(made.ok||!isCurrent19(op))return;
-  if(made.why==='taken'){
-   const r=await connectRoom19(code,op,true);if(r.ok)return;
-   if(r.why!=='full'&&r.why!=='missing'){net19.retries++;await pause19(350);}
-  }
- }
- if(isCurrent19(op)){net19.seeking=false;netStatus('Public squads are busy or unreachable. Retry online, or start a private room.');syncOnlineUI19();}
-}
-function sendHost19(m){
- try{const c=connections.get(0);if(c?.open)c.send(m);else broadcast?.postMessage({...m,room:roomCode,from:localToken});}catch(e){logNet19('control send failed',e.message);}
-}
-function sendReady19(){if(netMode!=='client'||!receivedWorld||!net13.rxKey||performance.now()-net19.lastReady<150)return;net19.lastReady=performance.now();sendHost19({t:'ready19',run:worldSeed,stream:net13.rxKey.stream});}
-function lostHost19(){
- if(netMode!=='client')return;net19.ready=false;netConnected=false;paused=true;keys={};mouse.down=mouse.right=false;
- show('pause');$('pauseTitle').textContent='HOST DISCONNECTED';
- $('pauseText').textContent=net19.public?'Finding another public round…':'The host left. Return to the menu to join or host a room.';
- if(net19.public&&!net19.reconnectTimer){net19.rejoins++;net19.reconnectTimer=setTimeout(()=>{
-   net19.reconnectTimer=null;goMenu();quickPlay19();
-  },900+Math.random()*500);}
-}
-const packetBefore19=handlePacket;handlePacket=function(packet){
- let m=packet;if(!m||typeof m!=='object')return;
- if(m.t==='chunk15'){m=reassemble15(m);if(!m)return;}
- if(netMode==='client'){
-  net19.hostSeen=performance.now();
-  if(m.t==='reject'){net19.joinResolve?.({ok:false,why:m.why19||'rejected'});return packetBefore19(m);}
-  if(m.t==='redirect19'&&codeOK19(m.code)){
-   const op=net19.operation;net19.public=!!m.public19;connectRoom19(m.code,op,!!m.forcePeer);return;
-  }
-  if(m.t==='welcome'){
-   if(m.protocol19!==19){net19.joinResolve?.({ok:false,why:'version'});netStatus('This room is running another build. Use v19 on every machine.');return;}
-   const r=packetBefore19(m);net19.public=!!m.public19;net19.cloud=m.cloud19||net19.cloud;net19.joinResolve?.({ok:true});syncOnlineUI19();return r;
-  }
-  if(m.t==='world'){
-   if(m.protocol19!==19||!Number.isInteger(m.epoch19)||!Number.isFinite(m.seed)){net19.malformed++;return;}
-   if(net19.stream===m.epoch19&&net19.run===m.seed&&receivedWorld){sendReady19();return;}
-   net19.stream=m.epoch19;net19.run=m.seed;net19.ready=false;net19.awaiting={at:performance.now()};chunks15.clear();
-  }
-  if(m.t==='state13'&&(m.stream!==net19.stream||m.run19!==net19.run)){net19.stale++;return;}
-  if(m.t==='finish'&&(m.epoch19!==net19.stream||m.run19!==net19.run)){net19.stale++;return;}
-  if(m.t==='ready-ack19'){
-   if(m.run!==worldSeed||m.stream!==net19.stream){net19.stale++;return;}
-   net19.ready=true;net19.awaiting=null;net19.seeking=false;paused=false;netConnected=true;
-   if(players[localSlot]){players[localSlot].bot=false;gear10.selected=players[localSlot].equip10??players[localSlot].weapon;gear10.lastGun=players[localSlot].weapon;gear10.uiKey='';}
-   for(const id of ['coop','menu','pause'])show(id,false);if(phase==='play')show('ui');canvas.focus({preventScroll:true});syncOnlineUI19();return;
-  }
-  if(m.t==='host-left'){packetBefore19(m);lostHost19();return;}
- }
- try{
-  const r=packetBefore19(m);
-  if(netMode==='client'&&(m.t==='state13'||m.t==='state')&&net19.awaiting&&net13.rxKey&&receivedWorld)sendReady19();
-  return r;
- }catch(e){net19.malformed++;net13.needKey=true;logNet19('packet rejected',e.message);if(netMode==='client')sendHost19({t:'input',seq:netSequence++,input:{run:worldSeed,resync13:true}});}
-};
-const clientBefore19=updateClient;updateClient=function(dt){if(!net19.ready)return;return clientBefore19(dt);};
-updateNetStatus=function(){
- if(netMode!=='host')return;
- const online=peer?.open&&net19.cloud==='online';
- netStatus(net19.public?(online?'Public squad · anyone can join':net19.registering?'Opening public squad…':'Local tabs only · online discovery unavailable'):(online?'Private room ready. Share its invite link.':'Private room · local tabs only'));
- $('roomCode').textContent=roomCode;
- sendAll({t:'lobby',map:selectedMap,campaign:campaignMode,players:[{id:0,name:cleanName($('callsign').value),bot:false},...[1,2,3].map(id=>({id,name:slotOwners.get(id)?.name||NAMES[id],bot:!slotOwners.has(id),loading:slotOwners.has(id)&&!slotOwners.get(id).ready19}))]});
- syncOnlineUI19();
-};
-function syncOnlineUI19(){
- if(!$('coop'))return;
- $('coop').dataset.public19=net19.public?'true':'false';
- $('coop').querySelector('.screen-heading').textContent=net19.public?'PUBLIC CO-OP':'PRIVATE CO-OP';
- $('publicBtn').textContent='Play online';$('coopBtn').querySelector('span').textContent='Private room';
- if(net19.public){show('roomDisplay',false);show('roomSetup',false);show('hostStart',false);show('disconnectBtn',net19.seeking||netMode!=='solo');$('disconnectBtn').textContent='Cancel / leave';}
- if($('onlineStatus19')){
-  const count=netMode==='host'?1+slotOwners.size:players.filter(p=>!p.bot).length;
-  $('onlineStatus19').textContent=netMode==='solo'?'':net19.public?(net19.cloud==='local'?'Local co-op': 'Public co-op')+' · '+Math.max(1,count)+'/4': 'Private co-op';
- }
-}
-const lobbyBefore19=updateLobby;updateLobby=function(){const r=lobbyBefore19();syncOnlineUI19();return r;};
-const closeCoopBefore19=closeCoop;closeCoop=function(){if(net19.seeking||!net19.ready&&netMode==='client'){disconnectNet();}return closeCoopBefore19();};
-const menuBefore19=goMenu;goMenu=function(...a){cancelSearch19();return menuBefore19(...a);};
-joinFromHash15=function(){
- const m=/(?:#|&)join=([a-z0-9]{5})(?:&|$)/i.exec(location.hash),pub=/(?:#|&)public(?:=1)?(?:&|$)/i.test(location.hash);
- if(!m&&!pub)return false;if(phase!=='menu'){toast('Return to the menu to change squads.');return false;}
- try{history.replaceState(null,'',location.pathname+location.search);}catch(_){}
- if(m){$('joinCode').value=m[1].toUpperCase();openCoop();joinRoom();}else quickPlay19();return true;
-};
-const copyBefore19=copyInvite;copyInvite=async function(link){if(net19.public&&link&&/^https?:$/.test(location.protocol)){
- const url=new URL(location.href);url.hash='join='+roomCode;try{await navigator.clipboard.writeText(url.href);netStatus('Squad link copied.');return;}catch(_){}
- }return copyBefore19(link);};
-$('hostBtn').onclick=hostRoom;$('joinBtn').onclick=joinRoom;$('coopBtn').onclick=openCoop;$('coopClose').onclick=closeCoop;
-for(const id of ['publicBtn','publicBtn2'])$(id).onclick=quickPlay19;
-$('disconnectBtn').onclick=()=>{disconnectNet();updateLobby();};
-for(const id of ['quitBtn','endMenu'])$(id).onclick=goMenu;
-setInterval(()=>{
- const now=performance.now();
- if(netMode==='host'){
-  if(now-net19.heartbeat>2000){net19.heartbeat=now;announcePublic19();}
-  for(const [s,o]of slotOwners)if(o.ready19&&now-(o.lastReal19||now)>20000){connections.get(s)?.close();releaseSlot(s);}
- }else if(netMode==='client'){
-  if(net19.awaiting&&receivedWorld&&now-net19.lastReady>1500)sendReady19();
-  if(netConnected&&phase==='play'&&now-net19.hostSeen>16000)lostHost19();
- }
-},600);
-Object.assign(DEAD_ENDS,{quickPlay:quickPlay19,goMenu,joinFromHash:joinFromHash15});
-
-/* ---------------- V19: safehouse feedback and opt-in senses inspector ---------------- */
-function audioPan19(x,y){
- if(!audio.ctx||!audio.master)return null;
- if(!sound19.buses){sound19.buses=Array.from({length:5},(_,i)=>{const g=audio.ctx.createGain(),p=audio.ctx.createStereoPanner();p.pan.value=(i-2)*.4;g.connect(p);p.connect(audio.master);return g;});}
- const p=players[localSlot];if(!p||!Number.isFinite(x+y))return sound19.buses[2];
- const side=clamp((x-p.x)/620,-1,1),index=clamp(Math.round(side*2)+2,0,4);return sound19.buses[index];
-}
-function cue19(kind,x,y){
- if(!audio.ctx||audio.muted)return;
- const now=audio.ctx.currentTime,last=sound19.cues.get(kind)||-99;
- if(now-last<(['metal','wood'].includes(kind)?.13:.08))return;sound19.cues.set(kind,now);
- const p=players[localSlot],gain=p?clamp(1-dist(p,{x,y})/1100,0,1):.3;if(gain<.02)return;
- const old=soundBus19;soundBus19=audioPan19(x,y);
- try{
-  if(kind==='seal-start'||kind==='door'){noiseSound(.24,.24*gain,750);tone(165,67,.18,.17*gain,'sawtooth');}
-  else if(kind==='seal-close'){noiseSound(.16,.48*gain,530);tone(70,25,.26,.37*gain,'sine');noiseSound(.09,.21*gain,3300,'bandpass',1,.18);tone(880,170,.06,.08*gain,'square',.18);}
-  else if(kind==='brute'){noiseSound(.36,.26*gain,390,'lowpass',.7);tone(95,58,.33,.18*gain,'sawtooth');}
-  else if(kind==='leaper'){noiseSound(.21,.15*gain,2700,'bandpass',1.1);tone(610,1130,.21,.1*gain,'triangle');}
-  else if(kind==='screamer'){tone(470,1230,.37,.13*gain,'sawtooth');noiseSound(.4,.16*gain,1500,'bandpass');}
-  else if(kind==='interrupt'){noiseSound(.07,.21*gain,1300);tone(420,110,.11,.12*gain,'triangle');}
-  else if(kind==='metal'){noiseSound(.095,.16*gain,1850,'bandpass');tone(410,220,.085,.07*gain,'triangle');}
-  else if(kind==='wood'){noiseSound(.085,.20*gain,850);tone(120,70,.075,.07*gain);}
- }finally{soundBus19=old;}
-}
-const sfxBefore19=sfx;sfx=function(type,x,y,variant){
- const previous=soundBus19;soundBus19=audioPan19(x,y);
- try{
-  if(type==='gun'&&audio.ctx&&!audio.muted){
-   const shooter=players.find(p=>Math.hypot(p.x-x,p.y-y)<5),up=shooter&&upgrade14(shooter,variant);
-   if(up){const local=players[localSlot],v=local?clamp(1-Math.hypot(local.x-x,local.y-y)/1100,0,1):1;
-    if(variant===0){noiseSound(.17,.46*v,1650);tone(94,29,.19,.54*v);noiseSound(.035,.12*v,4400,'highpass',1,.12);}
-    else{noiseSound(.17,.62*v,2050);tone(92,25,.17,.56*v);noiseSound(.045,.11*v,4200,'bandpass',1,.11);}
-    return;
-   }
-  }
-  return sfxBefore19(type,x,y,variant);
- }finally{soundBus19=previous;}
-
-};
-function drawSafeBeacon19(){
- if(art18.view==='actors'||art18.view==='silhouette')return;
- const d=sim19.finalDoor;if(!d||!visible(d.x,d.y,180))return;
- const c=ctx,cy=d.y+d.h/2;c.save();
- box18(c,d.x-12,d.y-36,49,21,'#1b3e33','#658a70',1,2);c.fillStyle='#c1e4ae';c.font='bold 11px Arial';c.textAlign='center';c.fillText('SAFE',d.x+12,d.y-21);c.restore();
-}
-function drawSteelDoor19(p){
- const c=ctx;if(!visible(p.x+p.w/2,p.y+p.h/2,200))return;
- c.save();c.translate(p.x,p.y);if(p.h>p.w){c.translate(p.w,0);c.rotate(Math.PI/2);}
- const len=Math.max(p.w,p.h),thick=Math.min(p.w,p.h),a=p.amount||0;
- box18(c,-7,-7,len+14,thick+14,'#101d25','#657173',2,2);
- c.save();c.beginPath();c.rect(0,-2,len,thick+4);c.clip();c.translate(-len*a+(p.hit19?Math.sin(p.hit19*135)*1.2:0),0);
- box18(c,0,0,len,thick,p.type==='finalDoor19'?'#924b3a':'#98543b','#281c1b',1.5,2);
- box18(c,3,2,len-6,3,'#cf9270');box18(c,3,thick-5,len-6,3,'#5c3028');
- if(p.type==='shelterDoor'){
-  const x=len*.23,w=len*.54;box18(c,x,6,w,thick-12,'#08161d','#d0b996',1.4,1);
-  for(let xx=x+5;xx<x+w-2;xx+=11){box18(c,xx,6,2.5,thick-12,'#91a9a5');box18(c,xx+2.5,6,1,thick-12,'#344b51');}
- }else{for(let x=15;x<len;x+=20)artLine(c,[x,6,x,thick-6],'#b77654',1);}
- for(const x of [8,len-8])for(const y of [6,thick-6])circle(c,x,y,1.7,'#d0b994');
- box18(c,len-18,thick*.55,10,4,'#d5c4a0','#352b25',.8,1);c.restore();
- box18(c,len+3,5,4,7,p.open?'#a5cf85':'#db9e6b');c.restore();
-}
-const propBefore19=drawProp;drawProp=function(p){
- if((p.type==='shelterDoor'||p.type==='finalDoor19')&&art18.view!=='actors'&&art18.view!=='silhouette')return drawSteelDoor19(p);
- return propBefore19(p);
-};
-const setDoorBefore19=setDoor10;setDoor10=function(open,quiet=false){const d=shelter10?.door,was=d?.open,r=setDoorBefore19(open,quiet);if(r&&was!==open){sim19.doorRevision++;if(!quiet){cue19('door',d.x,d.y);emitNoise19('door',d.x,d.y,165);}}return r;};
-const uiBefore19=updateUI;updateUI=function(force=false){const r=uiBefore19(force);
- if(phase==='play'&&staging10()){
-  const p=players[localSlot];$('objective').textContent=shelter10.door.open?'Leave when ready':'Prepare, or clear the street through the bars';
-  for(const q of players){const el=$('survivor'+q.id);if(el&&q.bot&&!q.down&&!q.dead)el.querySelector('.sub').textContent=q.intent==='Covering'?'COVERING':q.intent==='Healing'?'HEALING':'';}
- }
- if(force||performance.now()-net19.lastLobbyUI>700){net19.lastLobbyUI=performance.now();syncOnlineUI19();}
- return r;
-};
-function sensesSummary19(){const states={};for(const z of zombies){const key=z.ai19?.state||(z.awake?'alert':'ambient');states[key]=(states[key]||0)+1;}return{states,noises:sim19.noises.map(n=>({...n})),heard:sim19.heard,seen:sim19.seen,sightTests:sim19.sightTests,sharedFields:sim19.fields.size,fieldBuilds:sim19.fieldBuilds,prepShots:sim19.prepShots,staging:staging10(),time:sim19.time};}
-function installV19UI(){
- const style=document.createElement('style');style.textContent=`
- #coop[data-public19="true"] .room-label,#coop[data-public19="true"] .roomrow,#coop[data-public19="true"] #roomDisplay,#coop[data-public19="true"] #roomSetup,#coop[data-public19="true"] .connection-help{display:none!important}
- #coop[data-public19="true"] .lobby-mission{display:none}#coop[data-public19="true"] .coop-connect{align-self:center}
- #onlineStatus19{position:fixed;top:59px;right:27px;color:#adbdb4;font:12px Arial;pointer-events:none;z-index:2}
- body:has(.overlay:not(.hidden)) #onlineStatus19{display:none}
- #senseReadout19{font:12px/1.7 monospace;white-space:pre-wrap;color:#d6ded0}
- #senseHelp19{font:12px/1.5 Arial;color:#a6b7ad}.sense-toggle19{display:flex;gap:9px;align-items:center;padding:12px 0}
- @media(max-width:650px){#onlineStatus19{top:49px;right:14px;font-size:10px}}
- `;document.head.append(style);
- const badge=document.createElement('span');badge.id='onlineStatus19';document.body.append(badge);
- const tab=document.createElement('button');tab.dataset.tab='senses';tab.textContent='Senses';tab.onclick=()=>devTab11('senses');$('devTabs11').append(tab);
- const page=document.createElement('section');page.dataset.page='senses';page.className='hidden';page.innerHTML='<label class="sense-toggle19"><input type="checkbox" id="senseToggle19">Sight, hearing and remembered targets</label><pre id="senseReadout19"></pre><p id="senseHelp19">Blue: ambient. Amber: investigating a sound. Red: pursuing. Lines show the actual remembered goal. Alt-click an infected to inspect it. Host-side information only.</p>';
- $('devPanel11').append(page);$('senseToggle19').onchange=()=>{sim19.sensesVisible=$('senseToggle19').checked;frozenFrameKey7='';preview8.rendered=false;};
- const help=$('coop').querySelector('.connection-help');help.innerHTML='<summary>Connection help</summary><p>Play online joins or opens a public squad. Full squads spill into another public room. Private rooms use a code or invite link. All players must use v19.</p><p>PeerJS provides global discovery; the host browser runs the game. If discovery is unavailable, the status explicitly says Local tabs only. Public host loss finds a new round, not a migrated copy of the old fight.</p><p>For sharing, serve index.html on HTTPS. Public services and restrictive networks can still prevent a connection; no always-on game server is bundled.</p>';
- $('coop').querySelector('.coop-roster .note').textContent='Four survivors. AI holds your slot until your world is synchronized.';
- $('guide').querySelector('.guide-notes').innerHTML='<p><b>Safehouse freedom.</b> Shoot through the barred center of the closed exit, heal, reload, or open it with E. The world keeps moving. Gunfire alerts nearby infected; timed hordes wait until you leave.</p><p><b>The last door.</b> Get everyone inside, clear any infected, then seal the red door from nearby. An open room is not invulnerable. Found weapons carry to the next chapter.</p><details><summary>More controls</summary><p>Space / RMB: shove · V: drag · X: squad order · Tab: map · Ctrl + wheel: zoom · F2: developer tools · F4: profiler · F8: record · F9: export</p></details>';
- buildCredit111.textContent='Build 19.5 · Living streets / one-click co-op';$('menu').dataset.build='19.5';
-}
-const updateDevBefore19=updateDev11;updateDev11=function(force=false){const r=updateDevBefore19(force);
- if(!dev11.enabled||performance.now()-sim19.lastSenseUI<220&&!force)return r;sim19.lastSenseUI=performance.now();
- const s=sensesSummary19(),z=devEntity11(),b=z?.ai19;
- if($('senseReadout19'))$('senseReadout19').textContent=netMode==='client'?'Infected planning runs on the host.\nUse F2 on the host to inspect intent.':
-  Object.entries(s.states).map(([k,v])=>k.padEnd(14)+v).join('\n')+'\n\n'+s.noises.length+' live sound stimuli\n'+s.sightTests+' sight tests\n'+s.sharedFields+' shared goal fields\n'+s.prepShots+' preparation shots\n\n'+(b?z.type+' #'+z.id+'\n'+b.state+' · '+b.reason+'\nTarget '+b.target+' · visible '+b.seen+'\nMemory '+Math.max(0,b.until-sim19.time).toFixed(1)+'s':'Alt-click an infected to inspect it.');
- if(b){$('devPlan11').textContent=z.type+' #'+z.id+'\n'+b.state.toUpperCase();$('devFacts11').textContent=b.reason+'\nTarget '+b.target+' · seen '+b.seen+'\n'+(b.goal?'Last known '+Math.round(b.goal.x)+', '+Math.round(b.goal.y):'No target')+'\nNo per-agent A*: local steering + shared fields.';}
- return r;
-};
-const drawDevBefore19=drawDev11;drawDev11=function(){drawDevBefore19();if(!dev11.enabled||!sim19.sensesVisible||netMode==='client')return;
- const at=performance.now(),c=ctx;c.save();
- for(const n of sim19.noises)if(visible(n.x,n.y,n.r)){c.strokeStyle='#e8ba7260';c.lineWidth=1/viewScale;c.setLineDash([5,8]);c.beginPath();c.arc(n.x,n.y,n.r,0,TAU);c.stroke();c.setLineDash([]);}
- for(const z of zombies){if(!visible(z.x,z.y,90)||!z.ai19)continue;const b=z.ai19,col=b.state==='hunt'?'#ed947f':b.state==='investigate'||b.state==='mob'?'#deb86a':'#76aab3';
-  c.strokeStyle=col;c.lineWidth=1/viewScale;c.beginPath();c.arc(z.x,z.y,z.r+4,0,TAU);c.stroke();
-  if(b.goal&&z===devEntity11())devLine11(c,z,b.goal,col,1.7);
- }
- c.restore();perf8.work[P8I.devDraw]+=performance.now()-at;
-};
-// No rendering in the hidden host. Only the authoritative fixed-step simulation
-// and snapshots continue. rAF remains the sole driver when the tab is visible.
-function hiddenHostTick19(){
- const now=performance.now(),old=net19.hiddenAt||now;net19.hiddenAt=now;
- if(!document.hidden||netMode!=='host'||phase!=='play'){net19.hiddenAccum=0;return;}
- const dt=Math.min(.12,Math.max(0,(now-old)/1000));clock+=dt;last=now;updateEffects(dt);
- net19.hiddenAccum=(net19.hiddenAccum||0)+dt;let n=0;
- while(net19.hiddenAccum>=1/60&&n++<8&&phase==='play'){update(1/60);net19.hiddenAccum-=1/60;}
- flushCritical13();perf8.pending=null;
-}
-function startHostClock19(){
- try{const url=URL.createObjectURL(new Blob(['setInterval(()=>postMessage(0),33);'],{type:'text/javascript'}));
-  const worker=new Worker(url);URL.revokeObjectURL(url);worker.onmessage=hiddenHostTick19;net19.worker=worker;
- }catch(_){net19.worker=null;setInterval(hiddenHostTick19,50);}
- document.addEventListener('visibilitychange',()=>{net19.hiddenAt=performance.now();net19.hiddenAccum=0;accum=0;last=performance.now();});
-}
-// Hidden hosts are driven by the timer above, never twice by a background rAF.
-const frameBefore19=frame;frame=function(now){
- if(document.hidden&&netMode==='host'){last=now;perf8.pending=null;requestAnimationFrame(frame);return;}
- return frameBefore19(now);
-};
-installV19UI();startHostClock19();
-
-/* Read-only diagnostics and explicit sandbox hooks for repeatable regression tests. */
-const reportBefore19=report8;report8=function(...a){const r=reportBefore19(...a);r.build='DEAD ENDS v19';
- r.v19={basis:'Tront / Claude edited v18.5',senses:sensesSummary19(),network:getNetwork19(),
-  safehouse:{preparationShots:sim19.prepShots,worldRunsDuringPreparation:true,closedDoorGunPort:true,sealsCancelled:sim19.sealsCancelled},
-  fixes:{validShoveInterrupts:sim19.interrupts,blockedMelee:sim19.blockedMelee,upgrades:players.map(p=>({id:p.id,...cleanUpgrades19(p.upgrade14)}))}};
- return r;
-};
-function getNetwork19(){return {...netReport13(),protocol:19,transport:netTransport,public:net19.public,publicRoom:net19.publicIndex+1,
- ready:net19.ready,cloud:net19.cloud,registering:net19.registering,seeking:net19.seeking,localOnly:net19.cloud==='local',
- expectedEpoch:net19.stream,epoch:net13.epoch,malformedPackets:net19.malformed,stalePackets:net19.stale,
- chunksReassembled:v15.reassembled,chunkedMessages:v15.chunked,readyPeers:[...slotOwners].map(([slot,o])=>({slot,ready:!!o.ready19,transport:o.transport})),
- hostMigration:false,publicHostLoss:'Find another public round; no in-flight world migration',log:net19.log.slice()};}
-Object.assign(DEAD_ENDS,{build:'19.5',makeSnapshot,getPerformance:report8,getNetwork:getNetwork19,
- getPerception:()=>sensesSummary19(),getInfectedMind:id=>{const z=zombies.find(z=>z.id===id);return z?.ai19?JSON.parse(JSON.stringify(z.ai19)):null;},
- getV19:()=>({basis:'uploaded edited v18.5',network:getNetwork19(),senses:sensesSummary19(),seal:{...v14.safe},finalDoor:sim19.finalDoor?{...sim19.finalDoor}:null,staging:staging10()}),
- spawn:(...a)=>spawnZombie(...a),shove:()=>shove(players[localSlot]),canSee:sightClear19,
- startMap:(map,s=31987)=>{disconnectNet();setRun12('classic');campaignLeg=campaignKills=campaignTime=0;chapterCarry=null;selectMap(map,false);startRun(s);},
- startRemix:(map=0,s=123456)=>{disconnectNet();setRun12('remix',s);campaignLeg=campaignKills=campaignTime=0;chapterCarry=null;selectMap(map,false);startRun();},
- quickPlay:quickPlay19,hostPrivate:hostRoom,joinPrivate:code=>{$('joinCode').value=code;return joinRoom();},
- goMenu,next:()=>nextChapter(),continueCampaign:()=>continueCampaign7(),exportSave:exportSave13,
- qa19:{
-  render:()=>{motion9.alpha=1;resetMotion9();drawScreen(0);updateUI(true);},
-  setAudio:v=>{audio.muted=!v;if(audio.master)audio.master.gain.value=v?.4:0;},
-  pauseAnimation:()=>{paused=true;},
-  noise:(kind,x,y,r=500)=>{v11.sandbox=true;emitNoise19(kind,x,y,r);},
-  ray:(kind,x,y,dx,dy,max)=>{const v=purposeRay19(kind,x,y,dx,dy,max);return{d:v.d,obj:v.obj?.type||null};},
-  observe:id=>{const z=zombies.find(z=>z.id===id);if(z)observeInfected19(z);},
-  setSandbox:v=>v11.sandbox=!!v,
-  use:slot=>{v11.sandbox=true;const p=players[slot??localSlot];p.lastInteract=false;return interact(p,true,.2);},
-  refill:slot=>{v11.sandbox=true;const p=players[slot??localSlot];addPickup('ammo',p.x,p.y);return interact(p,true,.2);},
-  setDoor:(open)=>{v11.sandbox=true;return setDoor10(open);},
-  seal:(slot=localSlot,abandon=false)=>{v11.sandbox=true;return beginSeal14(players[slot],abandon);},
-  stepSeal:n=>{v11.sandbox=true;for(let i=0;i<n;i++)updateFinalSafe14(1/60);},
-  injectPacket:m=>handlePacket(m),reassemble:m=>reassemble15(m),
-  doors:()=>props.filter(p=>['door','shelterDoor','finalDoor19'].includes(p.type)).map(p=>({...p})),
-  rawSave:()=>({checkpoint:checkpoint7,clears:[...clears7]}),
-  forceCheckpoint:()=>{v11.sandbox=false;writeSafehouse7();return saveEnvelope13();},
-  wireRoundTrip:()=>{
-   const rx=net13.rxKey,seq=net13.rxSequence,need=net13.needKey;try{
-    const state=makeSnapshot(false),s={seq:0,base:null},key=JSON.parse(JSON.stringify(encodeState13(state,s,true))),wireBytes=payloadBytes13(key),decoded=decodeState13(key);
-    return{encoded:wireBytes,decoded:decoded.zs.length,source:state.zs.length,propFields:decoded.pr[0]?.length,keys:s.seq};
-   }finally{net13.rxKey=rx;net13.rxSequence=seq;net13.needKey=need;}
-  }
- }
-});
-DEAD_ENDS.ready.then(()=>{assignCallsign15();syncOnlineUI19();});
-// Keep downloadable reports on the same build/schema as the live inspector.
-export8=function(){
- const now=report8(),r=perf8.lastCapture?{...now,...perf8.lastCapture,build:'DEAD ENDS v19',
-  raster:now.raster,network:now.network,v19:now.v19,events13:now.events13,
-  trace13:now.trace13,stateHashes13:now.stateHashes13,blastEvents:burstReport11()}:now;
- downloadJSON13('dead-ends-v19-'+(perf8.lastCapture?'capture':'rolling')+'.json',r);toast('Report saved.');
-};
-DEAD_ENDS.exportPerformance=export8;exportPerf6=export8;
-$('perfExport').onclick=export8;$('devExport11').onclick=export8;
-
-
-goMenu();requestAnimationFrame(frame);
+goMenu();const joinHash=location.hash.match(/^#join=([A-Z0-9]{5})$/i);if(joinHash){$('joinCode').value=joinHash[1].toUpperCase();openCoop();}requestAnimationFrame(frame);
 })();
 </script>
 </body>

@@ -1,0 +1,9 @@
+{
+  "status": "unavailable",
+  "attempt": "Native RTCPeerConnection with test signalling exchanged offer and answer but obtained zero ICE candidates.",
+  "evidence": "Managed Chromium policy WebRtcIPHandling=disable_non_proxied_udp; UDP loopback could not be established. No policies changed.",
+  "not_verified": [
+    "PeerJS public service",
+    "separate-network WebRTC/NAT traversal"
+  ]
+}

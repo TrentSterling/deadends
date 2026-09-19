@@ -1,0 +1,256 @@
+{
+  "checks": [
+    {
+      "name": "actual Play Solo",
+      "pass": true,
+      "detail": {
+        "build": "19",
+        "phase": "play"
+      }
+    },
+    {
+      "name": "30 seconds live ambient prep; timer held; bots stay",
+      "pass": true,
+      "detail": {
+        "elapsed": 0,
+        "states": {
+          "wander": 137,
+          "idle": 66
+        },
+        "moves": 203,
+        "health": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "door": false
+      }
+    },
+    {
+      "name": "closed port fires; steel and physical door still block",
+      "pass": true,
+      "detail": {
+        "before": {
+          "hp": 730,
+          "ammo": 30
+        },
+        "hp": 477.0091000997171,
+        "ammo": 24,
+        "door": false,
+        "elapsed": 0,
+        "port": {
+          "d": 158.29999999999995,
+          "obj": "car"
+        },
+        "metal": {
+          "d": 37.5,
+          "obj": "shelterDoor"
+        },
+        "physical": {
+          "d": 37.5,
+          "obj": "shelterDoor"
+        }
+      }
+    },
+    {
+      "name": "throwable allowed but cannot pass barred port; fuse runs in prep",
+      "pass": true,
+      "detail": {
+        "target": 704,
+        "doorX": 724,
+        "grenades": 0,
+        "elapsed": 0
+      }
+    },
+    {
+      "name": "distant infected ignore safehouse and out-of-range gunshot",
+      "pass": true,
+      "detail": {
+        "distance": 1482.8644841092732,
+        "mind": {
+          "state": "wander",
+          "reason": "ambient",
+          "seen": false,
+          "target": -1,
+          "goal": null,
+          "until": 0,
+          "nextSense": 8.252999999999977,
+          "nextIdle": 9.16212899621264,
+          "homeX": 1396,
+          "homeY": 1620,
+          "goalX": 1368.7684850957157,
+          "goalY": 1660.6888349150881,
+          "lastNoise": 0,
+          "mob": false,
+          "stuck": 0,
+          "rng": 279834771,
+          "lastCue": -99
+        },
+        "awake": false
+      }
+    },
+    {
+      "name": "hearing investigates a point then loses interest",
+      "pass": true,
+      "detail": {
+        "before": {
+          "state": "investigate",
+          "reason": "heard impact",
+          "seen": false,
+          "target": -1,
+          "goal": {
+            "x": 1500,
+            "y": 1824
+          },
+          "until": 7,
+          "nextSense": 0.30300000000000005,
+          "nextIdle": 2.8,
+          "homeX": 1400,
+          "homeY": 1824,
+          "goalX": 1400,
+          "goalY": 1824,
+          "lastNoise": 10,
+          "mob": false,
+          "stuck": 0,
+          "rng": 1170055051,
+          "lastCue": -99
+        },
+        "after": {
+          "state": "wander",
+          "reason": "quiet again",
+          "seen": false,
+          "target": -1,
+          "goal": null,
+          "until": 9.533333333333314,
+          "nextSense": 15.153000000000317,
+          "nextIdle": 19.219922335616868,
+          "homeX": 1501.6288204775924,
+          "homeY": 1824,
+          "goalX": 1428.930982572072,
+          "goalY": 1805.1268484320212,
+          "lastNoise": 10,
+          "mob": false,
+          "stuck": 0,
+          "rng": 4061018999,
+          "lastCue": -99
+        }
+      }
+    },
+    {
+      "name": "open starting room can be invaded and hurt before departure",
+      "pass": true,
+      "detail": {
+        "hp": 86,
+        "staging": true,
+        "entered": true,
+        "elapsed": 0
+      }
+    },
+    {
+      "name": "shove cooldown prevents interrupt; valid shove interrupts",
+      "pass": true,
+      "detail": {
+        "denied": false,
+        "before": 0.7,
+        "valid": true,
+        "after": 0,
+        "stun": 1.05
+      }
+    },
+    {
+      "name": "export/import/Continue preserves found weapons and correct clip",
+      "pass": true,
+      "detail": {
+        "save": {
+          "hp": 100,
+          "meds": 1,
+          "bombs": 2,
+          "molotovs": 1,
+          "weapon": 0,
+          "dead": false,
+          "upgrade14": {
+            "rifle": true,
+            "auto": true
+          }
+        },
+        "upgrade": {
+          "rifle": true,
+          "auto": true
+        },
+        "ammo": [
+          14,
+          8,
+          15
+        ],
+        "phase": "play",
+        "map": 1
+      }
+    },
+    {
+      "name": "physical final door seals and wins only when clear",
+      "pass": true,
+      "detail": {
+        "began": true,
+        "phase": "win",
+        "seal": {
+          "closing": true,
+          "closed": true,
+          "amount": 1,
+          "closer": 0
+        },
+        "door": {
+          "id": 96,
+          "type": "finalDoor19",
+          "x": 4628,
+          "y": 576,
+          "w": 25,
+          "h": 128,
+          "hp": 0,
+          "maxhp": 0,
+          "solid": true,
+          "destroyed": false,
+          "open": false,
+          "amount": 0,
+          "vertical": true,
+          "_query6": 390457
+        }
+      }
+    },
+    {
+      "name": "actor blocking final door cancels seal without winning",
+      "pass": true,
+      "detail": {
+        "begun": true,
+        "phase": "play",
+        "seal": {
+          "closing": false,
+          "closed": false,
+          "amount": 0,
+          "closer": 0
+        }
+      }
+    },
+    {
+      "name": "bounded chunk rejection and Claude-compatible JSON wire roundtrip",
+      "pass": true,
+      "detail": {
+        "rejected": 3,
+        "wire": {
+          "encoded": 4746,
+          "decoded": 0,
+          "source": 0,
+          "propFields": 6,
+          "keys": 1
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Deterministic tests use native game simulation with requestAnimationFrame held by harness.",
+    "Complete HTML executed with set_content because URL navigation is blocked."
+  ],
+  "runtimeErrors": 0,
+  "pass": true
+}

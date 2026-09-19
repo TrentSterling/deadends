@@ -15,7 +15,10 @@ const [pa, pc] = opt('ports', '9391,9392').split(',').map(Number);
 const results = [];
 const check = (name, ok, detail = '') => { results.push({name, ok: !!ok, detail}); console.log((ok ? 'PASS ' : 'FAIL ') + name + (detail ? '  ' + detail : '')); };
 const boot = p => until(() => p.eval('!!window.DEAD_ENDS && !document.getElementById("playBtn").disabled'), {timeout: 90000, label: 'boot'});
-const lobby = p => p.eval('DEAD_ENDS.getLobby16()');
+// v16 exposed getLobby16(); v19 replaced the public room with 16 well-known rooms (LOBBY, PUB02..PUB16)
+// and reports through getNetwork(). Same shape either way: netMode, code, phase, netConnected.
+const lobby = p => p.eval('(()=>{if(DEAD_ENDS.getLobby16)return DEAD_ENDS.getLobby16();const s=DEAD_ENDS.state,n=DEAD_ENDS.getNetwork?DEAD_ENDS.getNetwork():{};return {netMode:s.netMode,code:s.roomCode,phase:s.phase,netConnected:s.netConnected,public:n.public,room:n.publicRoom,cloud:n.cloud,seeking:n.seeking,rehosts:(n.log||[]).filter(l=>/host/i.test(JSON.stringify(l))).length}})()');
+const isPublic = code => /^(LOBBY|PUB\d\d)$/.test(code || '');
 const A = await launch({port: pa});
 const C = await launch({port: pc});
 let B;
@@ -25,7 +28,7 @@ try {
   await A.eval('document.getElementById("publicBtn").click()');
   const aPlay = await until(() => A.eval('DEAD_ENDS.state.phase==="play"'), {timeout: 30000, label: 'A play'}).then(() => true).catch(() => false);
   let la = await lobby(A);
-  check('A: PLAY ONLINE alone hosts the public room and starts', aPlay && la.netMode === 'host' && la.code === 'LOBBY', `${Date.now() - t0} ms ${JSON.stringify(la)}`);
+  check('A: PLAY ONLINE alone hosts the public room and starts', aPlay && la.netMode === 'host' && isPublic(la.code), `${Date.now() - t0} ms ${JSON.stringify(la)}`);
   await until(() => A.eval('DEAD_ENDS.state.peerOpen'), {timeout: 20000, label: 'A peer open'}).catch(() => {});
 
   B = await A.sibling();
@@ -52,7 +55,7 @@ try {
   t0 = Date.now();
   const recovered = await until(async () => {
     const b = await lobby(B), c = await lobby(C);
-    const hosts = [b, c].filter(x => x.netMode === 'host' && x.code === 'LOBBY' && x.phase === 'play');
+    const hosts = [b, c].filter(x => x.netMode === 'host' && isPublic(x.code) && x.phase === 'play');
     const clients = [b, c].filter(x => x.netMode === 'client' && x.netConnected && x.phase === 'play');
     return hosts.length === 1 && clients.length === 1 ? {b, c} : null;
   }, {timeout: 60000, every: 1000, label: 'rehost'}).catch(() => null);

@@ -1,0 +1,96 @@
+{
+  "checks": [
+    {
+      "name": "bots rescue downed teammate during live preparation",
+      "pass": true,
+      "detail": {
+        "down": false,
+        "hp": 35,
+        "rescues": 1,
+        "stage": true,
+        "door": false
+      }
+    },
+    {
+      "name": "ammo pickup cannot overfill 14-round upgraded rifle",
+      "pass": true,
+      "detail": {
+        "ammo": [
+          14,
+          8,
+          15
+        ],
+        "reserves": [
+          140,
+          56,
+          9999
+        ]
+      }
+    },
+    {
+      "name": "legacy checkpoints migrate, invalid upgrade flags rejected",
+      "pass": true,
+      "detail": {
+        "old": {
+          "hp": 65,
+          "meds": 1,
+          "bombs": 1,
+          "molotovs": 1,
+          "weapon": 0,
+          "dead": false,
+          "upgrade14": {
+            "rifle": false,
+            "auto": false
+          }
+        },
+        "rejected": true
+      }
+    },
+    {
+      "name": "crowded nonempty snapshot survives Claude JSON/base64 wire codec",
+      "pass": true,
+      "detail": {
+        "encoded": 16658,
+        "decoded": 203,
+        "source": 203,
+        "propFields": 6,
+        "keys": 1
+      }
+    },
+    {
+      "name": "valid shove cannot interrupt a special through closed steel",
+      "pass": true,
+      "detail": {
+        "valid": true,
+        "wind": 0.7,
+        "hp": 730
+      }
+    },
+    {
+      "name": "downed teammate physically prevents starting shutter closure",
+      "pass": true,
+      "detail": {
+        "closed": false,
+        "open": true
+      }
+    },
+    {
+      "name": "destination remains vulnerable until closed",
+      "pass": true,
+      "detail": {
+        "hp": 90,
+        "phase": "play"
+      }
+    },
+    {
+      "name": "native menu/pause/resume/F2 Senses controls render",
+      "pass": true,
+      "detail": {
+        "F2_senses": "visible",
+        "pauseResume": true
+      }
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

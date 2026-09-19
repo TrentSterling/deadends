@@ -1,0 +1,224 @@
+{
+  "checks": [
+    {
+      "name": "one-click first player opens local public squad",
+      "pass": true,
+      "detail": {
+        "seconds": 1.32,
+        "phase": "play",
+        "mode": "host",
+        "slot": 0,
+        "room": "LOBBY",
+        "ready": true,
+        "connected": false,
+        "humans": 1,
+        "log": [
+          {
+            "at": 2605.3,
+            "event": "local fallback",
+            "detail": "network"
+          }
+        ]
+      }
+    },
+    {
+      "name": "one-click second tab joins and ACKs readiness",
+      "pass": true,
+      "detail": {
+        "seconds": 0.87,
+        "phase": "play",
+        "mode": "client",
+        "slot": 1,
+        "room": "LOBBY",
+        "ready": true,
+        "connected": true,
+        "humans": 2,
+        "log": []
+      }
+    },
+    {
+      "name": "remote native keyboard input moves host-authoritative survivor",
+      "pass": true,
+      "detail": {
+        "delta": 109.7
+      }
+    },
+    {
+      "name": "starting door open-close replicated",
+      "pass": true,
+      "detail": {
+        "id": 88,
+        "type": "shelterDoor",
+        "x": 724,
+        "y": 2624,
+        "w": 25,
+        "h": 128,
+        "hp": 0,
+        "maxhp": 0,
+        "solid": true,
+        "destroyed": false,
+        "open": false,
+        "amount": 0.6499999999999999,
+        "vertical": true,
+        "alarm": false,
+        "alarming": 0
+      }
+    },
+    {
+      "name": "Claude tactical door field retained",
+      "pass": true,
+      "detail": {
+        "id": 10,
+        "open": true
+      }
+    },
+    {
+      "name": "four players automatically share one room",
+      "pass": true,
+      "detail": {
+        "phase": "play",
+        "mode": "host",
+        "slot": 0,
+        "room": "LOBBY",
+        "ready": true,
+        "connected": false,
+        "humans": 4,
+        "log": [
+          {
+            "at": 2605.3,
+            "event": "local fallback",
+            "detail": "network"
+          },
+          {
+            "at": 5383.5,
+            "event": "player ready",
+            "detail": "1"
+          },
+          {
+            "at": 9465.1,
+            "event": "player ready",
+            "detail": "2"
+          },
+          {
+            "at": 11388.8,
+            "event": "player ready",
+            "detail": "3"
+          }
+        ]
+      }
+    },
+    {
+      "name": "fifth player opens overflow public squad instead of full-room loop",
+      "pass": true,
+      "detail": {
+        "phase": "play",
+        "mode": "host",
+        "slot": 0,
+        "room": "PUB02",
+        "ready": true,
+        "connected": false,
+        "humans": 1,
+        "log": [
+          {
+            "at": 2092.2,
+            "event": "local fallback",
+            "detail": "network"
+          }
+        ]
+      }
+    },
+    {
+      "name": "client leaves, AI takes over",
+      "pass": true,
+      "detail": {
+        "slot": 1,
+        "bot": true
+      }
+    }
+  ],
+  "errors": [],
+  "notes": [
+    "Native BroadcastChannel between opener/popup about:blank pages sharing an inherited origin.",
+    "PeerJS discovery failure injected to exercise offline local fallback. Not an internet test."
+  ],
+  "states": [
+    {
+      "phase": "play",
+      "mode": "host",
+      "slot": 0,
+      "room": "LOBBY",
+      "ready": true,
+      "connected": false,
+      "humans": 3,
+      "log": [
+        {
+          "at": 2605.3,
+          "event": "local fallback",
+          "detail": "network"
+        },
+        {
+          "at": 5383.5,
+          "event": "player ready",
+          "detail": "1"
+        },
+        {
+          "at": 9465.1,
+          "event": "player ready",
+          "detail": "2"
+        },
+        {
+          "at": 11388.8,
+          "event": "player ready",
+          "detail": "3"
+        }
+      ]
+    },
+    {
+      "phase": "menu",
+      "mode": "solo",
+      "slot": 0,
+      "room": "",
+      "ready": false,
+      "connected": false,
+      "humans": 0,
+      "log": []
+    },
+    {
+      "phase": "play",
+      "mode": "client",
+      "slot": 2,
+      "room": "LOBBY",
+      "ready": true,
+      "connected": true,
+      "humans": 3,
+      "log": []
+    },
+    {
+      "phase": "play",
+      "mode": "client",
+      "slot": 3,
+      "room": "LOBBY",
+      "ready": true,
+      "connected": true,
+      "humans": 3,
+      "log": []
+    },
+    {
+      "phase": "play",
+      "mode": "host",
+      "slot": 0,
+      "room": "PUB02",
+      "ready": true,
+      "connected": false,
+      "humans": 1,
+      "log": [
+        {
+          "at": 2092.2,
+          "event": "local fallback",
+          "detail": "network"
+        }
+      ]
+    }
+  ],
+  "pass": true
+}

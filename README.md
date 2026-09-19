@@ -11,7 +11,8 @@ Left 4 Dead pacing in a Flash-game body. Safe room to safe room. Reach the red d
 | Path | What |
 |---|---|
 | `index.html` | The game. One file, no build step. Canvas 2D, procedural art and audio, GOAP squad AI, AI Director, PeerJS 1.5.5 from CDN for internet co-op. |
-| `versions/` | Frozen builds: v12 to v14 from the ChatGPT sessions, v15 and v16 as shipped, `v17-chatgpt` and `v18-chatgpt` raw drops (forked from v14, no co-op layers), and v18 as shipped. Kept for diffing and regression hunting. |
+| `versions/` | Frozen builds: v12 to v14 from the ChatGPT sessions, v15 and v16 as shipped, `v17-chatgpt` and `v18-chatgpt` raw drops (forked from v14, no co-op layers), v18 as shipped, `v19-chatgpt` (built on shipped v18) and v19 as shipped (19.5). Kept for diffing and regression hunting. |
+| `chatgpt/v19/` | ChatGPT v19 release notes, QA receipts and its Python/Playwright harness, kept for reference. Not part of the game. |
 | `CHANGELOG.md` | Per-version notes, v15 onward. |
 | `NOTES.md` | Tribal knowledge handoff from the original ChatGPT sessions: design intent, systems, performance history, regressions, do-not-touch list. Read it before changing anything structural. |
 | `tools/` | Zero-dependency headless verification (Chrome DevTools Protocol from Node). |

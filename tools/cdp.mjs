@@ -13,7 +13,7 @@ export async function launch({port, width = 1280, height = 800, headless = true,
   const args = [
     headless ? '--headless=new' : '', `--remote-debugging-port=${port}`, `--user-data-dir=${dir}`,
     `--window-size=${width},${height}`, '--use-gl=angle', gpu ? '--use-angle=d3d11' : '--use-angle=swiftshader', gpu ? '' : '--enable-unsafe-swiftshader',
-    '--no-first-run', '--no-default-browser-check', '--autoplay-policy=no-user-gesture-required', '--hide-scrollbars',
+    '--no-first-run', '--no-default-browser-check', '--autoplay-policy=no-user-gesture-required', '--mute-audio', '--hide-scrollbars',
   ].filter(Boolean);
   const proc = spawn(CHROME, args, {stdio: 'ignore'});
   let info;

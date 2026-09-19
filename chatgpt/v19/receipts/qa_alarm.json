@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "name": "Ordinary prep fire creates no scripted horde",
+      "pass": true,
+      "detail": {
+        "alarm": false,
+        "carAlarm": 0,
+        "stage": true,
+        "elapsed": 0,
+        "spawned": 0,
+        "alive": 0,
+        "doorOpen": false
+      }
+    },
+    {
+      "name": "Shot alarm calls a mob before departure",
+      "pass": true,
+      "detail": {
+        "alarm": true,
+        "carAlarm": 3.6999999999997675,
+        "stage": true,
+        "elapsed": 0,
+        "spawned": 24,
+        "alive": 19,
+        "doorOpen": false
+      }
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

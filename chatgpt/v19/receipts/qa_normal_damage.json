@@ -1,0 +1,3351 @@
+{
+  "runs": [
+    {
+      "mode": "classic",
+      "map": 0,
+      "seed": 31987,
+      "invulnerable": false,
+      "pass": true,
+      "secondsWall": 2.87,
+      "final": {
+        "t": 90.79999999999613,
+        "map": 0,
+        "phase": "win",
+        "zombies": 42,
+        "mission": {
+          "active": false,
+          "elapsed": 0,
+          "fuel": 0,
+          "alarm": false,
+          "done": true,
+          "relayDone": false
+        },
+        "director": "BUILD",
+        "progress": 1,
+        "players": [
+          {
+            "id": 0,
+            "x": 4759,
+            "y": 617,
+            "hp": 86,
+            "down": false,
+            "dead": false,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              26,
+              8,
+              15
+            ],
+            "reserves": [
+              209,
+              56,
+              9999
+            ]
+          },
+          {
+            "id": 1,
+            "x": 4922,
+            "y": 549,
+            "hp": 59,
+            "down": false,
+            "dead": false,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [
+              "move"
+            ],
+            "step": 1,
+            "ammo": [
+              6,
+              8,
+              15
+            ],
+            "reserves": [
+              215,
+              56,
+              9999
+            ]
+          },
+          {
+            "id": 2,
+            "x": 4752,
+            "y": 586,
+            "hp": 100,
+            "down": false,
+            "dead": false,
+            "intent": "COVERING REVIVE",
+            "goal": "cover",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              0,
+              6,
+              15
+            ],
+            "reserves": [
+              120,
+              5,
+              9999
+            ]
+          },
+          {
+            "id": 3,
+            "x": 4863,
+            "y": 617,
+            "hp": 91,
+            "down": false,
+            "dead": false,
+            "intent": "COVERING REVIVE",
+            "goal": "cover",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              0,
+              8,
+              15
+            ],
+            "reserves": [
+              240,
+              56,
+              9999
+            ]
+          }
+        ],
+        "simTime": 92.96666666666268,
+        "seal": {
+          "closing": true,
+          "closed": true,
+          "amount": 1,
+          "closer": 0
+        },
+        "staging": false
+      },
+      "trace": [
+        {
+          "t": 2.833333333333328,
+          "map": 0,
+          "phase": "play",
+          "zombies": 196,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 0.10986183252880669,
+          "players": [
+            {
+              "id": 0,
+              "x": 1087,
+              "y": 2536,
+              "hp": 93,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                15,
+                8,
+                15
+              ],
+              "reserves": [
+                180,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 818,
+              "y": 2859,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                21,
+                8,
+                15
+              ],
+              "reserves": [
+                180,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 947,
+              "y": 2717,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                30,
+                7,
+                15
+              ],
+              "reserves": [
+                180,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 805,
+              "y": 2799,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                22,
+                8,
+                15
+              ],
+              "reserves": [
+                180,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 4.999999999999988,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 32.83333333333275,
+          "map": 0,
+          "phase": "play",
+          "zombies": 160,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 0.5420623273800975,
+          "players": [
+            {
+              "id": 0,
+              "x": 2747,
+              "y": 1463,
+              "hp": 93,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                12,
+                8,
+                15
+              ],
+              "reserves": [
+                118,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 2547,
+              "y": 1771,
+              "hp": 59,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                4,
+                8,
+                15
+              ],
+              "reserves": [
+                101,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 2570,
+              "y": 1623,
+              "hp": 52,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                6,
+                0,
+                15
+              ],
+              "reserves": [
+                178,
+                38,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 2402,
+              "y": 1552,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "RELOADING",
+              "goal": "reload",
+              "plan": [
+                "reload"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                15
+              ],
+              "reserves": [
+                121,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 34.9999999999993,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 62.83333333333105,
+          "map": 0,
+          "phase": "play",
+          "zombies": 13,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "RELAX",
+          "progress": 0.8162467150335356,
+          "players": [
+            {
+              "id": 0,
+              "x": 3838,
+              "y": 980,
+              "hp": 86,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                1,
+                8,
+                15
+              ],
+              "reserves": [
+                27,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 3761,
+              "y": 944,
+              "hp": 59,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                23,
+                8,
+                15
+              ],
+              "reserves": [
+                8,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 3714,
+              "y": 877,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                29,
+                4,
+                15
+              ],
+              "reserves": [
+                151,
+                14,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 3527,
+              "y": 1002,
+              "hp": 91,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                16,
+                8,
+                15
+              ],
+              "reserves": [
+                30,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 64.9999999999976,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 90.79999999999613,
+          "map": 0,
+          "phase": "win",
+          "zombies": 42,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 1,
+          "players": [
+            {
+              "id": 0,
+              "x": 4759,
+              "y": 617,
+              "hp": 86,
+              "down": false,
+              "dead": false,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                26,
+                8,
+                15
+              ],
+              "reserves": [
+                209,
+                56,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 4922,
+              "y": 549,
+              "hp": 59,
+              "down": false,
+              "dead": false,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                6,
+                8,
+                15
+              ],
+              "reserves": [
+                215,
+                56,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 4752,
+              "y": 586,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                6,
+                15
+              ],
+              "reserves": [
+                120,
+                5,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 4863,
+              "y": 617,
+              "hp": 91,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                15
+              ],
+              "reserves": [
+                240,
+                56,
+                9999
+              ]
+            }
+          ],
+          "simTime": 92.96666666666268,
+          "seal": {
+            "closing": true,
+            "closed": true,
+            "amount": 1,
+            "closer": 0
+          },
+          "staging": false
+        }
+      ]
+    },
+    {
+      "mode": "classic",
+      "map": 1,
+      "seed": 31987,
+      "invulnerable": false,
+      "pass": true,
+      "secondsWall": 3.64,
+      "final": {
+        "t": 142.6166666666723,
+        "map": 1,
+        "phase": "win",
+        "zombies": 35,
+        "mission": {
+          "active": false,
+          "elapsed": 11.000000000000126,
+          "fuel": 2,
+          "alarm": false,
+          "done": true,
+          "relayDone": false
+        },
+        "director": "FADE",
+        "progress": 1,
+        "players": [
+          {
+            "id": 0,
+            "x": 4300,
+            "y": 950,
+            "hp": 0,
+            "down": true,
+            "dead": true,
+            "intent": "EVADING",
+            "goal": "evade",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              0,
+              8,
+              7
+            ],
+            "reserves": [
+              119,
+              48,
+              9903
+            ]
+          },
+          {
+            "id": 1,
+            "x": 4431,
+            "y": 1073,
+            "hp": 0,
+            "down": true,
+            "dead": true,
+            "intent": "EVADING",
+            "goal": "evade",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              0,
+              8,
+              9
+            ],
+            "reserves": [
+              0,
+              48,
+              9999
+            ]
+          },
+          {
+            "id": 2,
+            "x": 4695,
+            "y": 462,
+            "hp": 45,
+            "down": false,
+            "dead": false,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              9,
+              0,
+              15
+            ],
+            "reserves": [
+              46,
+              0,
+              9999
+            ]
+          },
+          {
+            "id": 3,
+            "x": 3669,
+            "y": 412,
+            "hp": 0,
+            "down": true,
+            "dead": true,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              0,
+              8,
+              3
+            ],
+            "reserves": [
+              0,
+              48,
+              9954
+            ]
+          }
+        ],
+        "simTime": 144.46666666667377,
+        "seal": {
+          "closing": true,
+          "closed": true,
+          "amount": 1,
+          "closer": 2
+        },
+        "staging": false
+      },
+      "trace": [
+        {
+          "t": 3.1499999999999937,
+          "map": 1,
+          "phase": "play",
+          "zombies": 165,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 0.13365840177302785,
+          "players": [
+            {
+              "id": 0,
+              "x": 1214,
+              "y": 2705,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                15,
+                8,
+                15
+              ],
+              "reserves": [
+                180,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 1035,
+              "y": 2836,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                21,
+                8,
+                15
+              ],
+              "reserves": [
+                179,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 947,
+              "y": 2728,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                30,
+                4,
+                15
+              ],
+              "reserves": [
+                180,
+                47,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 902,
+              "y": 2822,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                21,
+                8,
+                15
+              ],
+              "reserves": [
+                179,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 4.999999999999988,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 33.1499999999994,
+          "map": 1,
+          "phase": "play",
+          "zombies": 99,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "RELAX",
+          "progress": 0.42865971010051235,
+          "players": [
+            {
+              "id": 0,
+              "x": 1057,
+              "y": 1794,
+              "hp": 82,
+              "down": false,
+              "dead": false,
+              "intent": "SCAVENGING",
+              "goal": "loot",
+              "plan": [
+                "move",
+                "loot"
+              ],
+              "step": 0,
+              "ammo": [
+                19,
+                8,
+                15
+              ],
+              "reserves": [
+                119,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 1487,
+              "y": 1884,
+              "hp": 59,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                28,
+                8,
+                15
+              ],
+              "reserves": [
+                118,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 1367,
+              "y": 1760,
+              "hp": 84,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                30,
+                2,
+                15
+              ],
+              "reserves": [
+                151,
+                42,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 1338,
+              "y": 1915,
+              "hp": 57,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                30,
+                8,
+                15
+              ],
+              "reserves": [
+                137,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 34.9999999999993,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 63.149999999997696,
+          "map": 1,
+          "phase": "play",
+          "zombies": 110,
+          "mission": {
+            "active": true,
+            "elapsed": 1.1500000000000008,
+            "fuel": 2,
+            "alarm": false,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "RELAX",
+          "progress": 0.5531822453673934,
+          "players": [
+            {
+              "id": 0,
+              "x": 2947,
+              "y": 1510,
+              "hp": 82,
+              "down": false,
+              "dead": false,
+              "intent": "ON THE OBJECTIVE",
+              "goal": "operate",
+              "plan": [
+                "operate"
+              ],
+              "step": 1,
+              "ammo": [
+                0,
+                8,
+                12
+              ],
+              "reserves": [
+                119,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 2916,
+              "y": 1562,
+              "hp": 59,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                20,
+                8,
+                15
+              ],
+              "reserves": [
+                93,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 2848,
+              "y": 1645,
+              "hp": 84,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                27,
+                0,
+                15
+              ],
+              "reserves": [
+                139,
+                41,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 2785,
+              "y": 1713,
+              "hp": 57,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                19,
+                8,
+                15
+              ],
+              "reserves": [
+                107,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 64.9999999999976,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 93.149999999996,
+          "map": 1,
+          "phase": "play",
+          "zombies": 69,
+          "mission": {
+            "active": false,
+            "elapsed": 11.000000000000126,
+            "fuel": 2,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 0.7206024367529685,
+          "players": [
+            {
+              "id": 0,
+              "x": 3465,
+              "y": 1066,
+              "hp": 29,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                0
+              ],
+              "reserves": [
+                119,
+                48,
+                9967
+              ]
+            },
+            {
+              "id": 1,
+              "x": 3386,
+              "y": 1081,
+              "hp": 28,
+              "down": false,
+              "dead": false,
+              "intent": "MEDIC",
+              "goal": "healAlly",
+              "plan": [
+                "move",
+                "healAlly"
+              ],
+              "step": 1,
+              "ammo": [
+                18,
+                8,
+                15
+              ],
+              "reserves": [
+                1,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 3369,
+              "y": 880,
+              "hp": 44,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                24,
+                1,
+                15
+              ],
+              "reserves": [
+                139,
+                13,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 3446,
+              "y": 1101,
+              "hp": 59,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                15
+              ],
+              "reserves": [
+                45,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 94.9999999999959,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 123.1499999999943,
+          "map": 1,
+          "phase": "play",
+          "zombies": 57,
+          "mission": {
+            "active": false,
+            "elapsed": 11.000000000000126,
+            "fuel": 2,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "FADE",
+          "progress": 0.8453674240148678,
+          "players": [
+            {
+              "id": 0,
+              "x": 4300,
+              "y": 950,
+              "hp": 0,
+              "down": true,
+              "dead": false,
+              "intent": "EVADING",
+              "goal": "evade",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                8
+              ],
+              "reserves": [
+                119,
+                48,
+                9903
+              ]
+            },
+            {
+              "id": 1,
+              "x": 4423,
+              "y": 1068,
+              "hp": 6,
+              "down": false,
+              "dead": false,
+              "intent": "RESCUING",
+              "goal": "rescue",
+              "plan": [
+                "sidearm",
+                "clear",
+                "move",
+                "revive"
+              ],
+              "step": 1,
+              "ammo": [
+                0,
+                8,
+                10
+              ],
+              "reserves": [
+                0,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 4510,
+              "y": 401,
+              "hp": 23,
+              "down": false,
+              "dead": false,
+              "intent": "PATCHING UP",
+              "goal": "healSelf",
+              "plan": [
+                "heal"
+              ],
+              "step": 0,
+              "ammo": [
+                20,
+                0,
+                15
+              ],
+              "reserves": [
+                108,
+                0,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 4485,
+              "y": 498,
+              "hp": 17,
+              "down": false,
+              "dead": false,
+              "intent": "EVADING",
+              "goal": "evade",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                1
+              ],
+              "reserves": [
+                0,
+                48,
+                9984
+              ]
+            }
+          ],
+          "simTime": 124.99999999999419,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 142.6166666666723,
+          "map": 1,
+          "phase": "win",
+          "zombies": 35,
+          "mission": {
+            "active": false,
+            "elapsed": 11.000000000000126,
+            "fuel": 2,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "FADE",
+          "progress": 1,
+          "players": [
+            {
+              "id": 0,
+              "x": 4300,
+              "y": 950,
+              "hp": 0,
+              "down": true,
+              "dead": true,
+              "intent": "EVADING",
+              "goal": "evade",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                7
+              ],
+              "reserves": [
+                119,
+                48,
+                9903
+              ]
+            },
+            {
+              "id": 1,
+              "x": 4431,
+              "y": 1073,
+              "hp": 0,
+              "down": true,
+              "dead": true,
+              "intent": "EVADING",
+              "goal": "evade",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                9
+              ],
+              "reserves": [
+                0,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 4695,
+              "y": 462,
+              "hp": 45,
+              "down": false,
+              "dead": false,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                9,
+                0,
+                15
+              ],
+              "reserves": [
+                46,
+                0,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 3669,
+              "y": 412,
+              "hp": 0,
+              "down": true,
+              "dead": true,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                3
+              ],
+              "reserves": [
+                0,
+                48,
+                9954
+              ]
+            }
+          ],
+          "simTime": 144.46666666667377,
+          "seal": {
+            "closing": true,
+            "closed": true,
+            "amount": 1,
+            "closer": 2
+          },
+          "staging": false
+        }
+      ]
+    },
+    {
+      "mode": "classic",
+      "map": 2,
+      "seed": 31987,
+      "invulnerable": false,
+      "pass": true,
+      "secondsWall": 2.42,
+      "final": {
+        "t": 86.6333333333297,
+        "map": 2,
+        "phase": "win",
+        "zombies": 7,
+        "mission": {
+          "active": false,
+          "elapsed": 15.000000000000325,
+          "fuel": 0,
+          "alarm": false,
+          "done": true,
+          "relayDone": false
+        },
+        "director": "RELAX",
+        "progress": 1,
+        "players": [
+          {
+            "id": 0,
+            "x": 4758,
+            "y": 2213,
+            "hp": 30,
+            "down": false,
+            "dead": false,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              0,
+              8,
+              15
+            ],
+            "reserves": [
+              0,
+              48,
+              9999
+            ]
+          },
+          {
+            "id": 1,
+            "x": 4848,
+            "y": 2169,
+            "hp": 100,
+            "down": false,
+            "dead": false,
+            "intent": "COVERING REVIVE",
+            "goal": "cover",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              0,
+              8,
+              15
+            ],
+            "reserves": [
+              0,
+              48,
+              9986
+            ]
+          },
+          {
+            "id": 2,
+            "x": 4740,
+            "y": 2107,
+            "hp": 82,
+            "down": false,
+            "dead": false,
+            "intent": "COVERING REVIVE",
+            "goal": "cover",
+            "plan": [
+              "move"
+            ],
+            "step": 1,
+            "ammo": [
+              30,
+              0,
+              15
+            ],
+            "reserves": [
+              137,
+              0,
+              9999
+            ]
+          },
+          {
+            "id": 3,
+            "x": 4920,
+            "y": 2172,
+            "hp": 40,
+            "down": false,
+            "dead": false,
+            "intent": "COVERING REVIVE",
+            "goal": "cover",
+            "plan": [],
+            "step": 0,
+            "ammo": [
+              3,
+              8,
+              15
+            ],
+            "reserves": [
+              0,
+              48,
+              9999
+            ]
+          }
+        ],
+        "simTime": 87.98333333332963,
+        "seal": {
+          "closing": true,
+          "closed": true,
+          "amount": 1,
+          "closer": 0
+        },
+        "staging": false
+      },
+      "trace": [
+        {
+          "t": 3.649999999999992,
+          "map": 2,
+          "phase": "play",
+          "zombies": 172,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 0.12621447842578334,
+          "players": [
+            {
+              "id": 0,
+              "x": 725,
+              "y": 2151,
+              "hp": 93,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                10,
+                8,
+                15
+              ],
+              "reserves": [
+                180,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 563,
+              "y": 2180,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                20,
+                8,
+                15
+              ],
+              "reserves": [
+                179,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 507,
+              "y": 2187,
+              "hp": 93,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                30,
+                5,
+                15
+              ],
+              "reserves": [
+                180,
+                47,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 448,
+              "y": 2251,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                23,
+                8,
+                15
+              ],
+              "reserves": [
+                179,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 4.999999999999988,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 33.64999999999937,
+          "map": 2,
+          "phase": "play",
+          "zombies": 131,
+          "mission": {
+            "active": false,
+            "elapsed": 15.000000000000325,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "RELAX",
+          "progress": 0.39053754239545607,
+          "players": [
+            {
+              "id": 0,
+              "x": 2019,
+              "y": 1447,
+              "hp": 93,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                5,
+                8,
+                15
+              ],
+              "reserves": [
+                119,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 1980,
+              "y": 1555,
+              "hp": 91,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                19,
+                8,
+                15
+              ],
+              "reserves": [
+                117,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 1891,
+              "y": 1569,
+              "hp": 61,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                25,
+                4,
+                15
+              ],
+              "reserves": [
+                172,
+                27,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 1996,
+              "y": 1697,
+              "hp": 92,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [],
+              "step": 0,
+              "ammo": [
+                21,
+                8,
+                15
+              ],
+              "reserves": [
+                117,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 34.9999999999993,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 63.64999999999767,
+          "map": 2,
+          "phase": "play",
+          "zombies": 61,
+          "mission": {
+            "active": false,
+            "elapsed": 15.000000000000325,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "FADE",
+          "progress": 0.8540920039213059,
+          "players": [
+            {
+              "id": 0,
+              "x": 3755,
+              "y": 2167,
+              "hp": 44,
+              "down": false,
+              "dead": false,
+              "intent": "PATCHING UP",
+              "goal": "healSelf",
+              "plan": [
+                "getSafe",
+                "heal"
+              ],
+              "step": 1,
+              "ammo": [
+                11,
+                8,
+                15
+              ],
+              "reserves": [
+                26,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 3795,
+              "y": 2235,
+              "hp": 63,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                12,
+                8,
+                15
+              ],
+              "reserves": [
+                25,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 3921,
+              "y": 1989,
+              "hp": 38,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                22,
+                0,
+                15
+              ],
+              "reserves": [
+                167,
+                7,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 3892,
+              "y": 2027,
+              "hp": 61,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                27,
+                8,
+                15
+              ],
+              "reserves": [
+                26,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 64.9999999999976,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 86.6333333333297,
+          "map": 2,
+          "phase": "win",
+          "zombies": 7,
+          "mission": {
+            "active": false,
+            "elapsed": 15.000000000000325,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "RELAX",
+          "progress": 1,
+          "players": [
+            {
+              "id": 0,
+              "x": 4758,
+              "y": 2213,
+              "hp": 30,
+              "down": false,
+              "dead": false,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                15
+              ],
+              "reserves": [
+                0,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 4848,
+              "y": 2169,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                15
+              ],
+              "reserves": [
+                0,
+                48,
+                9986
+              ]
+            },
+            {
+              "id": 2,
+              "x": 4740,
+              "y": 2107,
+              "hp": 82,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                30,
+                0,
+                15
+              ],
+              "reserves": [
+                137,
+                0,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 4920,
+              "y": 2172,
+              "hp": 40,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [],
+              "step": 0,
+              "ammo": [
+                3,
+                8,
+                15
+              ],
+              "reserves": [
+                0,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 87.98333333332963,
+          "seal": {
+            "closing": true,
+            "closed": true,
+            "amount": 1,
+            "closer": 0
+          },
+          "staging": false
+        }
+      ]
+    },
+    {
+      "mode": "classic",
+      "map": 3,
+      "seed": 31987,
+      "invulnerable": false,
+      "pass": true,
+      "secondsWall": 2.6,
+      "final": {
+        "t": 71.4166666666639,
+        "map": 3,
+        "phase": "win",
+        "zombies": 24,
+        "mission": {
+          "active": false,
+          "elapsed": 37.11666666666584,
+          "fuel": 0,
+          "alarm": false,
+          "done": true,
+          "relayDone": true
+        },
+        "director": "FADE",
+        "progress": 1,
+        "players": [
+          {
+            "id": 0,
+            "x": 4758,
+            "y": 1261,
+            "hp": 91,
+            "down": false,
+            "dead": false,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              6,
+              8,
+              15
+            ],
+            "reserves": [
+              0,
+              48,
+              9999
+            ]
+          },
+          {
+            "id": 1,
+            "x": 4333,
+            "y": 1675,
+            "hp": 0,
+            "down": true,
+            "dead": true,
+            "intent": "EVADING",
+            "goal": "evade",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              4,
+              8,
+              7
+            ],
+            "reserves": [
+              26,
+              48,
+              9999
+            ]
+          },
+          {
+            "id": 2,
+            "x": 4826,
+            "y": 1219,
+            "hp": 76,
+            "down": false,
+            "dead": false,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [],
+            "step": 0,
+            "ammo": [
+              14,
+              0,
+              15
+            ],
+            "reserves": [
+              180,
+              0,
+              9999
+            ]
+          },
+          {
+            "id": 3,
+            "x": 4856,
+            "y": 1251,
+            "hp": 26,
+            "down": false,
+            "dead": false,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              22,
+              8,
+              15
+            ],
+            "reserves": [
+              25,
+              48,
+              9999
+            ]
+          }
+        ],
+        "simTime": 73.0666666666638,
+        "seal": {
+          "closing": true,
+          "closed": true,
+          "amount": 1,
+          "closer": 0
+        },
+        "staging": false
+      },
+      "trace": [
+        {
+          "t": 3.349999999999993,
+          "map": 3,
+          "phase": "play",
+          "zombies": 158,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 0.11492182606418684,
+          "players": [
+            {
+              "id": 0,
+              "x": 976,
+              "y": 1942,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                17,
+                8,
+                15
+              ],
+              "reserves": [
+                180,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 982,
+              "y": 2128,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                19,
+                8,
+                15
+              ],
+              "reserves": [
+                179,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 868,
+              "y": 2212,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                30,
+                4,
+                15
+              ],
+              "reserves": [
+                180,
+                47,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 980,
+              "y": 2262,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                24,
+                8,
+                15
+              ],
+              "reserves": [
+                179,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 4.999999999999988,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 33.34999999999939,
+          "map": 3,
+          "phase": "play",
+          "zombies": 140,
+          "mission": {
+            "active": false,
+            "elapsed": 16.000000000000373,
+            "fuel": 0,
+            "alarm": true,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "PEAK",
+          "progress": 0.5830569026470609,
+          "players": [
+            {
+              "id": 0,
+              "x": 3409,
+              "y": 2784,
+              "hp": 68,
+              "down": false,
+              "dead": false,
+              "intent": "RELOADING",
+              "goal": "reload",
+              "plan": [
+                "reload"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                15
+              ],
+              "reserves": [
+                118,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 2960,
+              "y": 2857,
+              "hp": 68,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                29,
+                8,
+                15
+              ],
+              "reserves": [
+                88,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 3064,
+              "y": 2704,
+              "hp": 92,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                22,
+                0,
+                15
+              ],
+              "reserves": [
+                180,
+                28,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 2974,
+              "y": 2818,
+              "hp": 60,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                4,
+                8,
+                15
+              ],
+              "reserves": [
+                118,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 34.9999999999993,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 63.349999999997685,
+          "map": 3,
+          "phase": "play",
+          "zombies": 80,
+          "mission": {
+            "active": false,
+            "elapsed": 37.11666666666584,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": true
+          },
+          "director": "FADE",
+          "progress": 0.9452128389107127,
+          "players": [
+            {
+              "id": 0,
+              "x": 4443,
+              "y": 1288,
+              "hp": 98,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                9,
+                8,
+                15
+              ],
+              "reserves": [
+                26,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 4437,
+              "y": 1510,
+              "hp": 26,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                21,
+                8,
+                15
+              ],
+              "reserves": [
+                26,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 4315,
+              "y": 1406,
+              "hp": 76,
+              "down": false,
+              "dead": false,
+              "intent": "MEDIC",
+              "goal": "healAlly",
+              "plan": [
+                "move",
+                "healAlly"
+              ],
+              "step": 1,
+              "ammo": [
+                22,
+                4,
+                15
+              ],
+              "reserves": [
+                180,
+                0,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 4373,
+              "y": 1467,
+              "hp": 38,
+              "down": false,
+              "dead": false,
+              "intent": "MEDIC",
+              "goal": "healAlly",
+              "plan": [
+                "move",
+                "clear",
+                "healAlly"
+              ],
+              "step": 0,
+              "ammo": [
+                28,
+                8,
+                15
+              ],
+              "reserves": [
+                25,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 64.9999999999976,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 71.4166666666639,
+          "map": 3,
+          "phase": "win",
+          "zombies": 24,
+          "mission": {
+            "active": false,
+            "elapsed": 37.11666666666584,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": true
+          },
+          "director": "FADE",
+          "progress": 1,
+          "players": [
+            {
+              "id": 0,
+              "x": 4758,
+              "y": 1261,
+              "hp": 91,
+              "down": false,
+              "dead": false,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                6,
+                8,
+                15
+              ],
+              "reserves": [
+                0,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 4333,
+              "y": 1675,
+              "hp": 0,
+              "down": true,
+              "dead": true,
+              "intent": "EVADING",
+              "goal": "evade",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                4,
+                8,
+                7
+              ],
+              "reserves": [
+                26,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 4826,
+              "y": 1219,
+              "hp": 76,
+              "down": false,
+              "dead": false,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [],
+              "step": 0,
+              "ammo": [
+                14,
+                0,
+                15
+              ],
+              "reserves": [
+                180,
+                0,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 4856,
+              "y": 1251,
+              "hp": 26,
+              "down": false,
+              "dead": false,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                22,
+                8,
+                15
+              ],
+              "reserves": [
+                25,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 73.0666666666638,
+          "seal": {
+            "closing": true,
+            "closed": true,
+            "amount": 1,
+            "closer": 0
+          },
+          "staging": false
+        }
+      ]
+    },
+    {
+      "mode": "classic",
+      "map": 4,
+      "seed": 31987,
+      "invulnerable": false,
+      "pass": true,
+      "secondsWall": 2.3,
+      "final": {
+        "t": 84.31666666666317,
+        "map": 4,
+        "phase": "win",
+        "zombies": 34,
+        "mission": {
+          "active": false,
+          "elapsed": 17.000000000000316,
+          "fuel": 0,
+          "alarm": false,
+          "done": true,
+          "relayDone": false
+        },
+        "director": "BUILD",
+        "progress": 1,
+        "players": [
+          {
+            "id": 0,
+            "x": 4757,
+            "y": 677,
+            "hp": 48,
+            "down": false,
+            "dead": false,
+            "intent": "GETTING INSIDE",
+            "goal": "escape",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              0,
+              8,
+              2
+            ],
+            "reserves": [
+              0,
+              48,
+              9999
+            ]
+          },
+          {
+            "id": 1,
+            "x": 4818,
+            "y": 598,
+            "hp": 71,
+            "down": false,
+            "dead": false,
+            "intent": "COVERING REVIVE",
+            "goal": "cover",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              16,
+              8,
+              15
+            ],
+            "reserves": [
+              9,
+              48,
+              9999
+            ]
+          },
+          {
+            "id": 2,
+            "x": 4712,
+            "y": 647,
+            "hp": 100,
+            "down": false,
+            "dead": false,
+            "intent": "COVERING REVIVE",
+            "goal": "cover",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              29,
+              0,
+              15
+            ],
+            "reserves": [
+              116,
+              14,
+              9999
+            ]
+          },
+          {
+            "id": 3,
+            "x": 4829,
+            "y": 639,
+            "hp": 53,
+            "down": false,
+            "dead": false,
+            "intent": "COVERING REVIVE",
+            "goal": "cover",
+            "plan": [
+              "move"
+            ],
+            "step": 0,
+            "ammo": [
+              5,
+              8,
+              15
+            ],
+            "reserves": [
+              0,
+              48,
+              9999
+            ]
+          }
+        ],
+        "simTime": 86.48333333332971,
+        "seal": {
+          "closing": true,
+          "closed": true,
+          "amount": 1,
+          "closer": 0
+        },
+        "staging": false
+      },
+      "trace": [
+        {
+          "t": 2.833333333333328,
+          "map": 4,
+          "phase": "play",
+          "zombies": 175,
+          "mission": {
+            "active": false,
+            "elapsed": 0,
+            "fuel": 0,
+            "alarm": false,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 0.12651553904199844,
+          "players": [
+            {
+              "id": 0,
+              "x": 1262,
+              "y": 2817,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "ADVANCING",
+              "goal": "advance",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                16,
+                8,
+                15
+              ],
+              "reserves": [
+                180,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 993,
+              "y": 2877,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                22,
+                8,
+                15
+              ],
+              "reserves": [
+                179,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 926,
+              "y": 2793,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                30,
+                6,
+                15
+              ],
+              "reserves": [
+                180,
+                47,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 936,
+              "y": 2885,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                22,
+                8,
+                15
+              ],
+              "reserves": [
+                179,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 4.999999999999988,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 32.83333333333275,
+          "map": 4,
+          "phase": "play",
+          "zombies": 111,
+          "mission": {
+            "active": true,
+            "elapsed": 8.816666666666684,
+            "fuel": 0,
+            "alarm": false,
+            "done": false,
+            "relayDone": false
+          },
+          "director": "RELAX",
+          "progress": 0.5031755463359425,
+          "players": [
+            {
+              "id": 0,
+              "x": 2693,
+              "y": 1923,
+              "hp": 50,
+              "down": false,
+              "dead": false,
+              "intent": "ON THE OBJECTIVE",
+              "goal": "operate",
+              "plan": [
+                "operate"
+              ],
+              "step": 1,
+              "ammo": [
+                0,
+                8,
+                15
+              ],
+              "reserves": [
+                118,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 2827,
+              "y": 1771,
+              "hp": 71,
+              "down": false,
+              "dead": false,
+              "intent": "RELOADING",
+              "goal": "reload",
+              "plan": [
+                "reload"
+              ],
+              "step": 0,
+              "ammo": [
+                14,
+                8,
+                15
+              ],
+              "reserves": [
+                118,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 2568,
+              "y": 1709,
+              "hp": 68,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                3,
+                1,
+                15
+              ],
+              "reserves": [
+                176,
+                38,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 2550,
+              "y": 1752,
+              "hp": 68,
+              "down": false,
+              "dead": false,
+              "intent": "RELOADING",
+              "goal": "reload",
+              "plan": [
+                "reload"
+              ],
+              "step": 0,
+              "ammo": [
+                29,
+                8,
+                15
+              ],
+              "reserves": [
+                90,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 34.9999999999993,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 62.83333333333105,
+          "map": 4,
+          "phase": "play",
+          "zombies": 33,
+          "mission": {
+            "active": false,
+            "elapsed": 17.000000000000316,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "FADE",
+          "progress": 0.7776617952943446,
+          "players": [
+            {
+              "id": 0,
+              "x": 3726,
+              "y": 1548,
+              "hp": 48,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 1,
+              "ammo": [
+                27,
+                8,
+                15
+              ],
+              "reserves": [
+                26,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 3694,
+              "y": 1520,
+              "hp": 71,
+              "down": false,
+              "dead": false,
+              "intent": "MEDIC",
+              "goal": "healAlly",
+              "plan": [
+                "move",
+                "healAlly"
+              ],
+              "step": 0,
+              "ammo": [
+                20,
+                8,
+                15
+              ],
+              "reserves": [
+                40,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 3745,
+              "y": 1455,
+              "hp": 47,
+              "down": false,
+              "dead": false,
+              "intent": "RELOADING",
+              "goal": "reload",
+              "plan": [
+                "reload"
+              ],
+              "step": 0,
+              "ammo": [
+                18,
+                2,
+                15
+              ],
+              "reserves": [
+                131,
+                25,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 4160,
+              "y": 1608,
+              "hp": 53,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING",
+              "goal": "fight",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                29,
+                8,
+                15
+              ],
+              "reserves": [
+                28,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 64.9999999999976,
+          "seal": {
+            "closing": false,
+            "closed": false,
+            "amount": 0,
+            "closer": -1
+          },
+          "staging": false
+        },
+        {
+          "t": 84.31666666666317,
+          "map": 4,
+          "phase": "win",
+          "zombies": 34,
+          "mission": {
+            "active": false,
+            "elapsed": 17.000000000000316,
+            "fuel": 0,
+            "alarm": false,
+            "done": true,
+            "relayDone": false
+          },
+          "director": "BUILD",
+          "progress": 1,
+          "players": [
+            {
+              "id": 0,
+              "x": 4757,
+              "y": 677,
+              "hp": 48,
+              "down": false,
+              "dead": false,
+              "intent": "GETTING INSIDE",
+              "goal": "escape",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                0,
+                8,
+                2
+              ],
+              "reserves": [
+                0,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 1,
+              "x": 4818,
+              "y": 598,
+              "hp": 71,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                16,
+                8,
+                15
+              ],
+              "reserves": [
+                9,
+                48,
+                9999
+              ]
+            },
+            {
+              "id": 2,
+              "x": 4712,
+              "y": 647,
+              "hp": 100,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                29,
+                0,
+                15
+              ],
+              "reserves": [
+                116,
+                14,
+                9999
+              ]
+            },
+            {
+              "id": 3,
+              "x": 4829,
+              "y": 639,
+              "hp": 53,
+              "down": false,
+              "dead": false,
+              "intent": "COVERING REVIVE",
+              "goal": "cover",
+              "plan": [
+                "move"
+              ],
+              "step": 0,
+              "ammo": [
+                5,
+                8,
+                15
+              ],
+              "reserves": [
+                0,
+                48,
+                9999
+              ]
+            }
+          ],
+          "simTime": 86.48333333332971,
+          "seal": {
+            "closing": true,
+            "closed": true,
+            "amount": 1,
+            "closer": 0
+          },
+          "staging": false
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "kind": "Actual shipping AI, controls, navigation and objective execution; accelerated fixed ticks, no teleport or forced gates.",
+  "pass": true
+}
