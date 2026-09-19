@@ -1,5 +1,13 @@
 # Changelog
 
+## v19.6 (2026-09-19) Your own tracers, and a Left 4 Dead door
+
+Two fixes from Trent's first two-window session on v19.5, both in `tools/polish-v19.py` on top of the same ChatGPT v19 drop.
+
+- A client never saw its own tracers after its first reload (the host and other clients saw them fine). The reload countdown ends one step below zero and stays there, that value rides to the client in snapshots, and the client's predicted shot tested it for truthiness, so a reload of -1/60 blocked local prediction for the rest of the run. The muzzle flash and ammo still arrived from the host, which is why the gun looked alive. The countdown now clamps to zero and the check is numeric. This was v13-era code; it only became obvious once a second human played for a while.
+- The destination safehouse door works like Left 4 Dead. v19 refused to close while any infected stood in the room and ended the chapter the instant the door shut. Now anyone inside can close it whenever the doorway itself is clear (a survivor or infected standing in the door still blocks it, with a prompt saying so). A closed door is solid, and any survivor can open it again from either side; bots walk up and open it. The chapter ends only when every survivor who is still alive is inside. Downed survivors outside keep the run going until they bleed out or get pulled in. Closing with teammates outside announces it. Infected cannot break the door. Host-authoritative; clients get door state through the existing seal rows, and now rebuild collision when it changes.
+- Tooling: `tools/tracer.mjs` (drop-in client drains a clip, reloads, fires again; builds its own debug copy to count the client's predicted tracers; fails on 19.5, passes on 19.6) and `tools/safedoor.mjs` (10 checks: close with teammates outside, no early finish, reopen from outside, doorway block, bleed-out ends the chapter). Gates on this build: verify 17/17, campaign 5/5, coop 18/18, tracer 4/4, safedoor 10/10. The lobby gate was not run: it uses the real public rooms and Trent was playing in LOBBY at the time; the public-room code is untouched since 19.5 (7/7).
+
 ## v19.5 (2026-09-19) Living streets / one-click co-op
 
 ChatGPT's v19, built on the shipped v18 this time (its base hash matches commit 3e8807d), so the v15 transport and the door and seal replication came along. v19 replaced the v16 public room with its own discovery. `tools/polish-v19.py` rebuilds `index.html` from `versions/dead_ends_v19-chatgpt.html` with the only two things that shipped after ChatGPT took its base: the reshot og-image meta and the 19.5 build label. Release notes, QA receipts and ChatGPT's own harness are in `chatgpt/v19/`.
