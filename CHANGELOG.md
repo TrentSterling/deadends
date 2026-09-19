@@ -10,6 +10,8 @@ ChatGPT's visual overhaul (its v15 readability pass, v17 environment art and cha
 - Visual diagnostic views under F2 dev tools: normal, values, actors, environment, silhouette, plus a labels toggle (`DEAD_ENDS.setVisuals(view, labels)`, `DEAD_ENDS.getVisuals()`).
 - Everything from v15 and v16 is present: base64 plus chunked PeerJS transport, replicated doors and seal, invite links, callsigns, social meta, PLAY ONLINE public room, em dash sweep.
 - Tooling: the sprite grading reads every cache back through `getImageData`, which takes minutes under SwiftShader, so `tools/cdp.mjs` now launches headless Chrome on the real GPU (ANGLE d3d11) by default; `GPU=0` restores software rendering. Gates on this build: verify 17/17, campaign 5/5, coop 18/18, lobby 7/7.
+- Hardware acceleration is required for now. CPU-backed caches fix the boot but then draw at 0 fps under software GL, and a CPU-paint plus one-time GPU copy did the same, so the experiment was dropped rather than chased.
+- og-image.png reshot from the v18 menu (fire, blood, squad) with `tools/og-shot.mjs`; social meta bumped to `?v=2` so cards refetch it.
 
 ## v16 (2026-09-17) Public room
 

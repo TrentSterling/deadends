@@ -27,14 +27,14 @@ rep('<title>DEAD ENDS — a game by Tront</title>', '<title>DEAD ENDS by Tront</
 rep('<meta property="og:title" content="DEAD ENDS — by Tront">',
     '<meta property="og:title" content="DEAD ENDS by Tront">\n'
     '<meta property="og:url" content="https://tront.xyz/deadends/">\n'
-    '<meta property="og:image" content="https://tront.xyz/deadends/og-image.png?v=1">\n'
+    '<meta property="og:image" content="https://tront.xyz/deadends/og-image.png?v=2">\n'
     '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">\n'
     '<link rel="canonical" href="https://tront.xyz/deadends/">')
 rep('<meta name="twitter:card" content="summary">',
     '<meta name="twitter:card" content="summary_large_image">\n'
     '<meta name="twitter:title" content="DEAD ENDS by Tront">\n'
     '<meta name="twitter:description" content="Top-down co-op zombie escape. Four survivors, huge hordes, one red door. Free in the browser.">\n'
-    '<meta name="twitter:image" content="https://tront.xyz/deadends/og-image.png?v=1">')
+    '<meta name="twitter:image" content="https://tront.xyz/deadends/og-image.png?v=2">')
 
 # ---- em dashes out of player-facing strings (v15) ------------------------------
 rep('<span id="distance">— m</span>', '<span id="distance">0 m</span>')
@@ -89,6 +89,11 @@ rep('<p class="note">Open slots use AI. Friends can join mid-run.</p>',
     '<p class="note">Open slots use AI. Anyone can drop into the public room mid-run. Private rooms need the code or invite link.</p>')
 rep('data-state="idle">Host a game or enter a room code.</div>', 'data-state="idle">Play online, host a private room, or enter a code.</div>')
 rep("netStatus('Host a game or enter a room code.')", "netStatus('Play online, host a private room, or enter a code.')")
+
+# ---- Known: v18 grades every sprite cache through getImageData, and under software GL (SwiftShader,
+# ---- remote desktop, no driver) that readback is about a second per cache, so boot takes minutes.
+# ---- CPU-backed caches (willReadFrequently) fix boot but then draw at 0 fps there, and a CPU-paint
+# ---- plus one-time GPU copy did the same. Hardware acceleration is required for now; not pursued.
 
 # ---- v15 + v16 blocks after the v18 block, then the build credit wins ----------
 for tag in ('DEAD ENDS v15', 'DEAD ENDS v16'):
