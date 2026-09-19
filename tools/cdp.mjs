@@ -6,11 +6,13 @@ import {join} from 'node:path';
 
 const CHROME = process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
-export async function launch({port, width = 1280, height = 800, headless = true} = {}) {
+// v18 grades every sprite cache through getImageData; under SwiftShader that readback takes minutes, so the
+// harnesses use the real GPU (ANGLE d3d11) by default. GPU=0 in the environment restores software rendering.
+export async function launch({port, width = 1280, height = 800, headless = true, gpu = process.env.GPU !== '0'} = {}) {
   const dir = mkdtempSync(join(tmpdir(), 'de-chrome-'));
   const args = [
     headless ? '--headless=new' : '', `--remote-debugging-port=${port}`, `--user-data-dir=${dir}`,
-    `--window-size=${width},${height}`, '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader',
+    `--window-size=${width},${height}`, '--use-gl=angle', gpu ? '--use-angle=d3d11' : '--use-angle=swiftshader', gpu ? '' : '--enable-unsafe-swiftshader',
     '--no-first-run', '--no-default-browser-check', '--autoplay-policy=no-user-gesture-required', '--hide-scrollbars',
   ].filter(Boolean);
   const proc = spawn(CHROME, args, {stdio: 'ignore'});
@@ -43,7 +45,7 @@ export async function launch({port, width = 1280, height = 800, headless = true}
     await call('Page.enable'); await call('Runtime.enable'); await call('Log.enable');
     await call('Emulation.setDeviceMetricsOverride', {width, height, deviceScaleFactor: 1, mobile: false});
     const page = {
-      logs, proc, dir, targetId,
+      logs, proc, dir, targetId, call,
       goto: url => call('Page.navigate', {url}),
       eval: async (expr) => { const r = await call('Runtime.evaluate', {expression: expr, returnByValue: true, awaitPromise: true}); if (r.exceptionDetails) throw new Error('eval: ' + (r.exceptionDetails.exception?.description || r.exceptionDetails.text)); return r.result.value; },
       shot: async (file, clip) => { const {data} = await call('Page.captureScreenshot', clip ? {format: 'png', clip: {scale: 1, ...clip}} : {format: 'png'}); const fs = await import('node:fs'); fs.writeFileSync(file, Buffer.from(data, 'base64')); return file; },

@@ -1,5 +1,16 @@
 # Changelog
 
+## v18 (2026-09-19) Readable by design
+
+ChatGPT's visual overhaul (its v15 readability pass, v17 environment art and chapter identity, v18 baked materials) merged onto the live v16 line. ChatGPT forked from v14, so its drops carry none of the co-op fixes; `tools/polish-v18.py` rebuilds `index.html` from the raw drop (`versions/dead_ends_v18-chatgpt.html`) plus every v15 and v16 edit and block. Wire format is unchanged, so the room namespace stays `v16`.
+
+- Environment materials (floors, walls, roofs, room dressing, the bridge water mask) are authored per chapter theme and baked once into the world canvas, below actors and hazards. This replaces the stacked transparency wrappers of the v15 to v17 drops.
+- Cached sprites (props, bodies, stains, fragments) are colour graded once at bake time instead of being drawn at reduced alpha, so solid objects stay solid and survivors outrank debris after big explosions. Fresh pools stay vivid; the baked layer uses dried, darker stains. Kill, corpse and stamp counts are not reduced.
+- Survivors have four large coat panels and a bright head read; infected have ragged asymmetric silhouettes with one shape per attack. Pickups are physical items instead of token circles and label stacks.
+- Visual diagnostic views under F2 dev tools: normal, values, actors, environment, silhouette, plus a labels toggle (`DEAD_ENDS.setVisuals(view, labels)`, `DEAD_ENDS.getVisuals()`).
+- Everything from v15 and v16 is present: base64 plus chunked PeerJS transport, replicated doors and seal, invite links, callsigns, social meta, PLAY ONLINE public room, em dash sweep.
+- Tooling: the sprite grading reads every cache back through `getImageData`, which takes minutes under SwiftShader, so `tools/cdp.mjs` now launches headless Chrome on the real GPU (ANGLE d3d11) by default; `GPU=0` restores software rendering. Gates on this build: verify 17/17, campaign 5/5, coop 18/18, lobby 7/7.
+
 ## v16 (2026-09-17) Public room
 
 - PLAY ONLINE on the main menu. It looks for the always-on public room (code `LOBBY`), joins it if someone is there, otherwise hosts it and starts the run at once so later arrivals drop in mid-chapter. Two tabs with no code and no link land in the same game in about a second (BroadcastChannel); a second browser or machine joins over WebRTC in about three.
