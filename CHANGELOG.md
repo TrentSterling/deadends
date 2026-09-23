@@ -1,5 +1,14 @@
 # Changelog
 
+## v23 (2026-09-22) Focus HUD, sticky throwables (plus v20 to v22.1)
+
+ChatGPT's v23, built on its v22.1, which descends from the shipped v19.6 (tracer fix, Left 4 Dead door and og meta were already inside). The site jumps from 19.6 straight to 23, so this also ships the unhosted v20 (light, atmosphere and controller support), v21 (exaggerated materials, stronger contrast, prettier lights) and v22.1 (lighting repair, soft edges, bounded cost). `tools/polish-v23.py` rebuilds `index.html` from `versions/dead_ends_v23-chatgpt.html` and carries over the SEO About block, nothing else. Release notes and QA receipts in `chatgpt/v23/`.
+
+- Focus HUD: health, stamina, weapon name, silhouette and ammo (or item count) sit right under your survivor. Reload progress, low ammo, critical health and bleed-out states. Options: Near survivor (default), Top center or Classic corners; Standard or Large size. Pointer-transparent.
+- Pipe bombs and Molotovs stay equipped while the stack has any left; the last throw returns to your last firearm. One click, one throw; holding through the last throw does not start firing the gun.
+- Wire format unchanged (protocol19), but the host must run v23 for the new throwable policy online.
+- Gates: verify 17/17, campaign 5/5, coop 18/18, tracer 4/4, safedoor 10/10. Lobby not run (it joins the real public rooms); public-room code untouched since 19.5.
+
 ## v19.6 (2026-09-19) Your own tracers, and a Left 4 Dead door
 
 Two fixes from Trent's first two-window session on v19.5, both in `tools/polish-v19.py` on top of the same ChatGPT v19 drop.
