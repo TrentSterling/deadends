@@ -1,0 +1,8 @@
+{
+  "base": "dead_ends_v24.html",
+  "base_sha256": "5a3cec7b2d7fa7d4e50dadd0cd16dbcd1dcb210d4768c4de1e82e2b4370121ee",
+  "output": "dead_ends_v24_1.html",
+  "sha256": "7aad68040a9506642e87c170c46d74c7871ea7ea2dc83b1320c5a7bedcdbb264",
+  "base_reconstruction_pass": true,
+  "exact_input_replacements": 3
+}

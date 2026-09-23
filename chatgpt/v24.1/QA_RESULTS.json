@@ -1,0 +1,979 @@
+{
+  "build": "DEAD ENDS v24.1",
+  "source": {
+    "base": "dead_ends_v24.html",
+    "base_sha256": "5a3cec7b2d7fa7d4e50dadd0cd16dbcd1dcb210d4768c4de1e82e2b4370121ee",
+    "output": "dead_ends_v24_1.html",
+    "sha256": "7aad68040a9506642e87c170c46d74c7871ea7ea2dc83b1320c5a7bedcdbb264",
+    "base_reconstruction_pass": true,
+    "exact_input_replacements": 3
+  },
+  "passed": true,
+  "checksPassed": 61,
+  "pairedReproduction": {
+    "method": "Native Chromium mouse chord events in both builds; 60 Hz fixed simulation after release. Identical stage and inputs.",
+    "rows": [
+      {
+        "file": "dead_ends_v24.html",
+        "immediatelyAfterBothReleased": {
+          "ammo": 29,
+          "down": true,
+          "right": false,
+          "primary": true
+        },
+        "afterAnotherHalfSecond": {
+          "ammo": 24,
+          "down": true,
+          "right": false,
+          "primary": true
+        },
+        "unwantedShotsAfterRelease": 5,
+        "errors": []
+      },
+      {
+        "file": "dead_ends_v24_1.html",
+        "immediatelyAfterBothReleased": {
+          "ammo": 29,
+          "down": false,
+          "right": false,
+          "primary": false
+        },
+        "afterAnotherHalfSecond": {
+          "ammo": 29,
+          "down": false,
+          "right": false,
+          "primary": false
+        },
+        "unwantedShotsAfterRelease": 0,
+        "errors": []
+      }
+    ],
+    "reproduced_old_bug": true,
+    "fixed_same_sequence": true
+  },
+  "suites": {
+    "input": {
+      "checks": [
+        {
+          "name": "Unmodified startup + real Play Solo button",
+          "pass": true,
+          "detail": {
+            "build": "24.1",
+            "phase": "play"
+          }
+        },
+        {
+          "name": "Stationary continuous fire still works; release stops new shots",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              0,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              0,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native chord press ('left', 'right'), release ('left', 'right')",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              27,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              27,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native chord press ('left', 'right'), release ('right', 'left')",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              27,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              27,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native chord press ('right', 'left'), release ('right', 'left')",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              27,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              27,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native chord press ('right', 'left'), release ('left', 'right')",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              28,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              28,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native chord press ('left', 'middle'), release ('left', 'middle')",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              27,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              27,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native chord press ('left', 'middle'), release ('middle', 'left')",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              27,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              27,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native chord press ('middle', 'left'), release ('middle', 'left')",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              27,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              27,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native chord press ('middle', 'left'), release ('left', 'middle')",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              28,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              28,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Alternating firearms with chorded releases never latches fire",
+          "pass": true,
+          "detail": [
+            {
+              "ammoAfterRelease": [
+                29,
+                8,
+                15
+              ],
+              "ammoAfter45Ticks": [
+                29,
+                8,
+                15
+              ],
+              "secondaryHeld": false
+            },
+            {
+              "ammoAfterRelease": [
+                29,
+                7,
+                15
+              ],
+              "ammoAfter45Ticks": [
+                29,
+                7,
+                15
+              ],
+              "secondaryHeld": false
+            },
+            {
+              "ammoAfterRelease": [
+                29,
+                7,
+                14
+              ],
+              "ammoAfter45Ticks": [
+                29,
+                7,
+                14
+              ],
+              "secondaryHeld": false
+            },
+            {
+              "ammoAfterRelease": [
+                27,
+                7,
+                14
+              ],
+              "ammoAfter45Ticks": [
+                27,
+                7,
+                14
+              ],
+              "secondaryHeld": false
+            },
+            {
+              "ammoAfterRelease": [
+                27,
+                6,
+                14
+              ],
+              "ammoAfter45Ticks": [
+                27,
+                6,
+                14
+              ],
+              "secondaryHeld": false
+            }
+          ]
+        },
+        {
+          "name": "RMB intermediate release stops automatic shoving too",
+          "pass": true,
+          "detail": {
+            "before": 0.4666666666666663,
+            "after": 0
+          }
+        },
+        {
+          "name": "Releasing a captured click over the inventory rack stops firing",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              29,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              29,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Release outside the viewport stops the captured click",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              29,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              29,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Capture failure + HUD consuming release still clears in window capture phase",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              29,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              29,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Dragging a held UI click onto the world does not start shooting",
+          "pass": true,
+          "detail": [
+            30,
+            8,
+            15
+          ]
+        },
+        {
+          "name": "Lost pointer capture stops fire; held hover cannot rearm; fresh click can",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              29,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              29,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Injected pointercancel discards an unsimulated throw, next click works",
+          "pass": true,
+          "detail": {
+            "afterCancel": 2,
+            "afterNewClick": 1
+          }
+        },
+        {
+          "name": "Injected stale flag heals on actual zero-button hover",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              28,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              28,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Injected focus loss + resume while physically held does not rearm",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              28,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              28,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Injected hidden-page transition clears BOTH buttons",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              28,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              28,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native Escape pause/resume cancels a held mouse action",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              28,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              28,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Native map open/close does not resurrect held firing",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              28,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              28,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Equipment wheel cancels fire, releasing Q cannot resume it",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              29,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              29,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "pipe bombs: one per held click, stays selected, no fallback auto-fire",
+          "pass": true,
+          "detail": [
+            {
+              "count": 2,
+              "selected": 3
+            },
+            {
+              "count": 1,
+              "selected": 3
+            },
+            {
+              "count": 0,
+              "selected": 0
+            }
+          ]
+        },
+        {
+          "name": "Molotovs: one per held click, stays selected, no fallback auto-fire",
+          "pass": true,
+          "detail": [
+            {
+              "count": 2,
+              "selected": 4
+            },
+            {
+              "count": 1,
+              "selected": 4
+            },
+            {
+              "count": 0,
+              "selected": 0
+            }
+          ]
+        },
+        {
+          "name": "Full click/release BETWEEN simulation ticks still throws once",
+          "pass": true,
+          "detail": [
+            2,
+            1
+          ]
+        },
+        {
+          "name": "Axe finishes committed swing but does not repeat after a chorded release",
+          "pass": true,
+          "detail": {
+            "onRelease": 2,
+            "after150Ticks": 2
+          }
+        },
+        {
+          "name": "Medkit held use and release-before-fallback-fire remain intact",
+          "pass": true,
+          "detail": {
+            "health": 95,
+            "meds": 1,
+            "gunAmmoWhileHeld": 30
+          }
+        },
+        {
+          "name": "Unrelated injected touch release cannot cancel a held mouse button",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              29,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              29,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Neutral mouse sample cannot clear separate touch-stick firing",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              28,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              28,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Virtual controller held fire and release still operate independently",
+          "pass": true,
+          "detail": {
+            "ammoAfterRelease": [
+              26,
+              8,
+              15
+            ],
+            "ammoAfter45Ticks": [
+              26,
+              8,
+              15
+            ],
+            "secondaryHeld": false
+          }
+        },
+        {
+          "name": "Neutral mouse event cannot clear gamepad final-throw latch",
+          "pass": true,
+          "detail": {
+            "gunAmmoWhileTriggerHeld": 30
+          }
+        },
+        {
+          "name": "60 randomized firearm/chord/release rounds with post-release ammo assertions",
+          "pass": true,
+          "detail": {
+            "seed": 241,
+            "rounds": 60,
+            "allReleasesStoppedShots": true
+          }
+        },
+        {
+          "name": "Final game rendering and focus HUD smoke",
+          "pass": true,
+          "detail": {
+            "fatal": "",
+            "hud": "M4 CARBINE",
+            "readbacks": 0
+          }
+        }
+      ],
+      "errors": [],
+      "method": "Real Chromium mouse/keyboard events and real simulation with fixed 60 Hz test steps. Specific lost-event, lifecycle and touch cases are explicitly injected. Gamepad API is virtual. No internet/public-room access.",
+      "pass": true
+    },
+    "network": {
+      "method": "Native browser mouse input in two distinct contexts. Isolated simulated Peer-compatible broker using the actual game JSON/base64/chunk protocol. No internet, public lobby, NAT or WebRTC verification. Native game loops, not fixed ticks.",
+      "checks": [
+        {
+          "name": "Private host/client readiness and retained v24 protocol",
+          "pass": true,
+          "detail": {
+            "protocol": 24,
+            "slot": 1,
+            "transport": "peer"
+          }
+        },
+        {
+          "name": "Remote LMB/RMB chord release stops actual host gunfire",
+          "pass": true,
+          "detail": {
+            "hostAmmoAfterRelease": [
+              27,
+              8,
+              15
+            ],
+            "hostAmmo650msLater": [
+              27,
+              8,
+              15
+            ]
+          }
+        },
+        {
+          "name": "Remote weapon alternation and both-button release leave no stale host input",
+          "pass": true,
+          "detail": [
+            {
+              "hostAmmoAfterRelease": [
+                27,
+                7,
+                15
+              ],
+              "hostAmmo650msLater": [
+                27,
+                7,
+                15
+              ]
+            },
+            {
+              "hostAmmoAfterRelease": [
+                27,
+                7,
+                14
+              ],
+              "hostAmmo650msLater": [
+                27,
+                7,
+                14
+              ]
+            },
+            {
+              "hostAmmoAfterRelease": [
+                25,
+                7,
+                14
+              ],
+              "hostAmmo650msLater": [
+                25,
+                7,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Remote sticky bombs retain until empty and final held click cannot fire fallback",
+          "pass": true,
+          "detail": [
+            {
+              "count": 1,
+              "selection": 3,
+              "shoot": false
+            },
+            {
+              "count": 0,
+              "selection": 0,
+              "shoot": false
+            },
+            {
+              "hostAmmoAfterRelease": [
+                25,
+                7,
+                14
+              ],
+              "hostAmmo650msLater": [
+                25,
+                7,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Injected client focus loss sends neutral input without pausing host",
+          "pass": true,
+          "detail": {
+            "hostAmmoAfterRelease": [
+              23,
+              7,
+              14
+            ],
+            "hostAmmo650msLater": [
+              23,
+              7,
+              14
+            ]
+          }
+        }
+      ],
+      "errors": [],
+      "wire": {
+        "network": {
+          "protocol": 24,
+          "encoding": "40-byte quantized infected records; deltas against periodic keyframe; reliable ordered events",
+          "byteMethod": "Exact packed-buffer byte lengths plus UTF-8 JSON metadata size. Application payload estimate, not on-wire traffic. Browser data-channel counters are separate.",
+          "outBytes": 124569,
+          "inBytes": 670596,
+          "unpackedStateJSONBytes": 0,
+          "messages": 275,
+          "keyframes": 0,
+          "deltas": 0,
+          "resyncs": 0,
+          "backpressureSkips": 0,
+          "outBytesPerSecond": 13661,
+          "inBytesPerSecond": 73293,
+          "roundTripEstimateMs": 31.70000000006985,
+          "jitterMs": 16.523939044051627,
+          "queues": [
+            {
+              "slot": 0,
+              "buffered": 458
+            }
+          ],
+          "browserDataChannels": null,
+          "transport": "peer",
+          "public": false,
+          "publicRoom": 1,
+          "ready": true,
+          "cloud": "online",
+          "registering": false,
+          "seeking": false,
+          "localOnly": false,
+          "expectedEpoch": 1,
+          "epoch": 1,
+          "malformedPackets": 0,
+          "stalePackets": 0,
+          "chunksReassembled": 0,
+          "chunkedMessages": 0,
+          "readyPeers": [],
+          "hostMigration": false,
+          "publicHostLoss": "Find another public round; no in-flight world migration",
+          "log": [
+            {
+              "at": 2954.4,
+              "event": "local discovery unavailable",
+              "detail": "BroadcastChannel is not a constructor"
+            }
+          ]
+        },
+        "broker": {
+          "sent": 276,
+          "received": 201,
+          "maxMessage": 458,
+          "connections": 1,
+          "errors": []
+        }
+      },
+      "pass": true
+    },
+    "v24_gameplay": {
+      "method": "Original v24 targeted gameplay fixture suite, only expected build label changed to 24.1. Fixed simulation/staged actors. Not a full campaign rerun.",
+      "errors": [],
+      "checks": [
+        {
+          "name": "V23 focus HUD, soft lighting and controller retained",
+          "pass": true,
+          "detail": "player"
+        },
+        {
+          "name": "V24 isolated protocol and base initialization",
+          "pass": true,
+          "detail": 24
+        },
+        {
+          "name": "Pharmacy has framed door plus glass exit and reachable rewards",
+          "pass": true,
+          "detail": {
+            "room": {
+              "id": "pharmacy",
+              "x": 28,
+              "y": 32,
+              "w": 10,
+              "h": 7,
+              "name": "PHARMACY",
+              "c": "#8ba9a1",
+              "label": "MERCER PHARMACY",
+              "reward": "medicine",
+              "window": 95
+            },
+            "window": 95
+          }
+        },
+        {
+          "name": "Closed pharmacy door blocks rays, opens and closes normally",
+          "pass": true,
+          "detail": {
+            "amount": 1
+          }
+        },
+        {
+          "name": "Closing refuses to crush an actor in the threshold",
+          "pass": true,
+          "detail": true
+        },
+        {
+          "name": "Glass admits sight, blocks bullets and restores solid flag",
+          "pass": true,
+          "detail": {
+            "los": 115,
+            "bullet": 50
+          }
+        },
+        {
+          "name": "Glass takes damage, shatters, opens nav, and persists debris",
+          "pass": true,
+          "detail": {
+            "debris": 22
+          }
+        },
+        {
+          "name": "Workshop damaged door, boarded exit, and main-entry clearance",
+          "pass": true,
+          "detail": {
+            "door": 61
+          }
+        },
+        {
+          "name": "Boards block sight until damaged away; broken glass is traversable",
+          "pass": true,
+          "detail": 0
+        },
+        {
+          "name": "Awake infected can batter a window obstructing a known target",
+          "pass": true,
+          "detail": {
+            "before": 155,
+            "after": 137
+          }
+        },
+        {
+          "name": "Use starter rack to equip axe, then exchange it for sidearm",
+          "pass": true,
+          "detail": true
+        },
+        {
+          "name": "Axe windup delays damage; blade sweep hits front not behind",
+          "pass": true,
+          "detail": {
+            "front": 124,
+            "behind": 220,
+            "ammo": 15
+          }
+        },
+        {
+          "name": "One hit per actor per swing, with a three-target cleave limit",
+          "pass": true,
+          "detail": [
+            204,
+            204,
+            223.2,
+            300,
+            300,
+            300
+          ]
+        },
+        {
+          "name": "Axe range and solid-door occlusion prevent phantom hits",
+          "pass": true,
+          "detail": {
+            "foe": 300,
+            "door": 68
+          }
+        },
+        {
+          "name": "Axe chops boards across the same physical aperture",
+          "pass": true,
+          "detail": 0
+        },
+        {
+          "name": "Manual weapon switch cancels the active attack",
+          "pass": true,
+          "detail": true
+        },
+        {
+          "name": "Downed / fuel-carrying axe owner uses actual pistol",
+          "pass": true,
+          "detail": true
+        },
+        {
+          "name": "Shove remains independent of axe and cannot repeat window damage on cooldown",
+          "pass": true,
+          "detail": {
+            "hp": 33
+          }
+        },
+        {
+          "name": "Axe save flags survive strict validation and reject bad types",
+          "pass": true,
+          "detail": {
+            "rifle": true,
+            "auto": false,
+            "axe": true
+          }
+        },
+        {
+          "name": "Snapshots contain persistent axe and swing state",
+          "pass": true,
+          "detail": {
+            "axe": true,
+            "timer": 0.78,
+            "seq": 1
+          }
+        },
+        {
+          "name": "Source lighting preferences and no-readback path unchanged",
+          "pass": true,
+          "detail": {
+            "lighting": "balanced",
+            "readbacks": 0
+          }
+        }
+      ],
+      "pass": true
+    }
+  },
+  "limitations": [
+    "No fresh full-campaign route run.",
+    "Virtual Gamepad API, not physical controller testing.",
+    "Network uses an isolated simulated Peer-compatible broker; not native WebRTC/NAT verification.",
+    "Focus/cancel/hidden-event fault cases are injected.",
+    "No public rooms, live website or repository modified."
+  ],
+  "rejectedFixtureRun": {
+    "file": "qa_input_first_fixture_run.json",
+    "counted": false,
+    "reason": "Three harness mistakes corrected (native-method evaluation, pending vs active capture, unspecified initial medkit count); entire final suite rerun."
+  }
+}

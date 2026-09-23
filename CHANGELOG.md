@@ -1,5 +1,13 @@
 # Changelog
 
+## v24.1 (2026-09-23) Break & Enter, mouse-release hotfix
+
+ChatGPT's v24 ("Break & Enter": fire axe, doors, windows) plus its v24.1 hotfix, built on v23. `tools/polish-v24.py` rebuilds `index.html` from `versions/dead_ends_v24.1-chatgpt.html` and carries over the SEO About block, nothing else. Release notes and QA receipts in `chatgpt/v24.1/`.
+
+- Fixed: fire with left, press right, release left then right, and the game kept firing (Pointer Events report intermediate releases on pointermove, and only `event.button` was cleared on pointerup). Now the whole `buttons` mask is reconciled on down/move/up, releases are read in window capture phase, and cancel, capture loss, blur, hidden page, menus and the equipment wheel all clear it.
+- v24 moved public discovery to a new protocol24 namespace, so everyone needs this build to meet in public rooms. Every player also needs it for the mouse fix (it is a local input bug).
+- Gates: verify 17/17, campaign 5/5, coop 18/18, tracer 4/4, safedoor 10/10. Lobby not run (it joins the real public rooms).
+
 ## v23 (2026-09-22) Focus HUD, sticky throwables (plus v20 to v22.1)
 
 ChatGPT's v23, built on its v22.1, which descends from the shipped v19.6 (tracer fix, Left 4 Dead door and og meta were already inside). The site jumps from 19.6 straight to 23, so this also ships the unhosted v20 (light, atmosphere and controller support), v21 (exaggerated materials, stronger contrast, prettier lights) and v22.1 (lighting repair, soft edges, bounded cost). `tools/polish-v23.py` rebuilds `index.html` from `versions/dead_ends_v23-chatgpt.html` and carries over the SEO About block, nothing else. Release notes and QA receipts in `chatgpt/v23/`.
