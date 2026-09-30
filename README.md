@@ -2,7 +2,9 @@
 
 A top-down co-op zombie escape game by Tront (Trent Sterling). Five chapters, four survivors, huge hordes, smart AI squadmates, and one last push to slam the safehouse door.
 
-Play: https://tront.xyz/deadends/
+Play the native GPU build: https://tront.xyz/deadends/?nativegpu=1
+
+Published v29.1 includes After Hours chapters, action hearing, GOAP smoothing, GPU text, native WebGPU world rendering with WebGL2 fallback, and generous safehouse door reach. The ordinary URL retains the Canvas reference path. Add `&textgl=1` to force native WebGL2. Native rendering and online co-op remain experimental.
 
 Left 4 Dead pacing in a Flash-game body. Safe room to safe room. Reach the red door, get everyone inside, seal it. PLAY ONLINE drops you into the public room with whoever is there (or opens it if empty); private rooms use a code or invite link. The AI fills empty slots. Online co-op is experimental.
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## v29.1 (2026-09-30) Native GPU candidate and door interaction grace
+
+- Publish the owner-playtested candidate. Native WebGPU world and glyphs use `?nativegpu=1`; add `&textgl=1` for WebGL2. The ordinary URL retains the reference renderer.
+- Includes After Hours route and encounter variety, GOAP smoothing, GPU glyph UI, action hearing, cached art and sound, dirty terrain uploads and changed normal/material region uploads. Persistent carnage, locked interpolation and full GOAP remain.
+- Both safehouse doors use their full frame plus generous interaction reach, with extra margin while closing. Inside bots keep the final door sealed; humans and returning bots can reopen it. Doorway blocking and victory rules remain.
+- Current source checks: 59/59 door checks per renderer, safehouse10/10, carried journey10/10, campaigns5/5; smoke17/17, tracers4/4, private WebRTC20/20, renderer43/43, WebGPU recovery28/28, WebGL2 recovery29/29, isolated lobby flow7/7.
+- Native rendering remains experimental: the measured 6x CPU budget is still unmet. Online co-op remains experimental. The detailed profiling and screenshot archive is retained locally.
+
 ## v24.1 (2026-09-23) Break & Enter, mouse-release hotfix
 
 ChatGPT's v24 ("Break & Enter": fire axe, doors, windows) plus its v24.1 hotfix, built on v23. `tools/polish-v24.py` rebuilds `index.html` from `versions/dead_ends_v24.1-chatgpt.html` and carries over the SEO About block, nothing else. Release notes and QA receipts in `chatgpt/v24.1/`.
